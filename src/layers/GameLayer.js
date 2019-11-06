@@ -49,13 +49,13 @@ class GameLayer extends Layer {
     cargarObjetoMapa(simbolo, x, y) {
         switch(simbolo) {
             case "0":
-                this.mapa.addTile(new Tile(x, y, null), x, y);
+                this.mapa.addTile(new Tile(x, y, new Team("#21c24d", "green", "G")), x, y);
                 break;
             case "R":
-                this.mapa.addTile(new Tile(x, y, "R"), x, y);
+                this.mapa.addTile(new Tile(x, y, new Team("#cf2d2d", "red", "R")), x, y);
                 break;
             case "A":
-                this.mapa.addTile(new Tile(x, y, "A"), x, y);
+                this.mapa.addTile(new Tile(x, y, new Team("#4343e8", "blue", "A")), x, y);
                 break;
         }
     }

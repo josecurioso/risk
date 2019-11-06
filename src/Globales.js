@@ -11,7 +11,7 @@ entradas.gamepad = 3;
 var entrada = entradas.pulsaciones;
 var escaladoMinimo = 1;
 
-var nivelActual = 1;
+var nivelActual = 0;
 
 var estados = {};
 

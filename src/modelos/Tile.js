@@ -44,23 +44,15 @@ class Tile extends Modelo {
     shouldDrawBorder(tile) {
         if (tile === null || tile === undefined)
             return true;
-        return tile.equipo !== this.equipo;
+        return tile.equipo.code !== this.equipo.code;
     }
 
     getStrokeColor() {
-        if (this.equipo === "R")
-            return "red";
-        else if (this.equipo === "A")
-            return "blue";
-        return "green";
+        return this.equipo.getStrokeColor();
     }
 
     getFillColor() {
-        if (this.equipo === "R")
-            return "#cf2d2d";
-        else if (this.equipo === "A")
-            return "#4343e8";
-        return "#21c24d";
+        return this.equipo.getFillColor();
     }
 
 }
