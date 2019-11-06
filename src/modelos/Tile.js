@@ -1,8 +1,8 @@
 class Tile extends Modelo {
 
-    constructor(x, y, equipo) {
+    constructor(x, y, continente) {
         super("", x, y);
-        this.equipo = equipo;
+        this.continente = continente;
         this.tileSize = 8;
         this.x *= this.tileSize;
         this.y *= this.tileSize;
@@ -44,15 +44,15 @@ class Tile extends Modelo {
     shouldDrawBorder(tile) {
         if (tile === null || tile === undefined)
             return true;
-        return tile.equipo.code !== this.equipo.code;
+        return tile.continente.code !== this.continente.code;
     }
 
     getStrokeColor() {
-        return this.equipo.getStrokeColor();
+        return this.continente.strokeColor;
     }
 
     getFillColor() {
-        return this.equipo.getFillColor();
+        return this.continente.fillColor;
     }
 
 }

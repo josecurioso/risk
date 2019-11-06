@@ -7,7 +7,6 @@ class GameLayer extends Layer {
 
     iniciar() {
         this.mapa = new Mapa(60, 60);
-
         this.cargarMapa("res/"+nivelActual+".txt");
     }
 
@@ -15,16 +14,13 @@ class GameLayer extends Layer {
 
     }
 
-
     dibujar () {
         this.mapa.dibujar();
     }
 
-
     procesarControles( ){
 
     }
-
 
     cargarMapa(ruta){
         let fichero = new XMLHttpRequest();
@@ -63,6 +59,4 @@ class GameLayer extends Layer {
     calcularPulsaciones(pulsaciones) {
 
     }
-
-
 }
