@@ -10,6 +10,7 @@ class GameLayer extends Layer {
 
         this.cargarMapa("res/"+nivelActual+"_continents.txt");
         //this.cargarMapa("res/"+nivelActual+"_provinces.txt");
+
     }
 
     actualizar (){
