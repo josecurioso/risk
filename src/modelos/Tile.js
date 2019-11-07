@@ -1,10 +1,10 @@
 class Tile extends Modelo {
 
-    constructor(x, y, continente) {
+    constructor(x, y, continente, provincia) {
         super("", x, y);
         this.continente = continente;
+        this.province = provincia; //Represent
         this.tileSize = 8;
-        this.province = 1; //Represent
         this.region = 1;
         this.x *= this.tileSize;
         this.y *= this.tileSize;
@@ -46,7 +46,7 @@ class Tile extends Modelo {
     shouldDrawBorder(tile) {
         if (tile === null || tile === undefined)
             return true;
-        return tile.continente.code !== this.continente.code;
+        return tile.continente.code !== this.continente.code || tile.province.code !== this.province.code;
     }
 
     getStrokeColor() {

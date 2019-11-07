@@ -3,12 +3,42 @@ class GameLayer extends Layer {
     constructor() {
         super();
         this.iniciar();
+
+
+
     }
 
     iniciar() {
         this.mapa = new Mapa(60, 80);
 
-        this.cargarMapa("res/" + nivelActual + "_continents.txt");
+        this.continentes = {
+            'A': new Continente("#c26100", "#ff8600", [], 0, "A"),
+            'B': new Continente("#064f00", "#109c00", [], 0, "B"),
+            'C': new Continente("#0040ae", "#0052f2", [], 0, "C"),
+            'D': new Continente("#c2ac04", "#f3dc04", [], 0, "D"),
+            'E': new Continente("#c50002", "#fb0002", [], 0, "E"),
+            'F': new Continente("#ae0570", "#da0594", [], 0, "F"),
+        };
+
+        this.provincias = {
+            'A': new Provincia([], "A"),
+            'B': new Provincia([], "B"),
+            'C': new Provincia([], "C"),
+            'D': new Provincia([], "D"),
+            'E': new Provincia([], "E"),
+            'F': new Provincia([], "F"),
+            'G': new Provincia([], "G"),
+            'H': new Provincia([], "H"),
+            'I': new Provincia([], "I"),
+            'J': new Provincia([], "J"),
+            'K': new Provincia([], "K"),
+            'L': new Provincia([], "L"),
+            'M': new Provincia([], "M"),
+            'N': new Provincia([], "N"),
+        };
+
+
+        this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
         //this.cargarMapa("res/"+nivelActual+"_provinces.txt");
 
     }
@@ -23,46 +53,43 @@ class GameLayer extends Layer {
     procesarControles() {
     }
 
-    cargarMapa(ruta) {
-        let fichero = new XMLHttpRequest();
-        fichero.open("GET", ruta, false);
+    cargarMapa(rutaContinentes, rutaProvincias) {
+        let ficheroC = new XMLHttpRequest();
+        let ficheroP = new XMLHttpRequest();
+        ficheroC.open("GET", rutaContinentes, false);
+        ficheroP.open("GET", rutaProvincias, false);
 
-        fichero.onreadystatechange = function () {
-            let texto = fichero.responseText;
-            let lineas = texto.split('\n');
-            for (let i = 0; i < lineas.length; i++) {
-                let linea = lineas[i];
-                for (let j = 0; j < linea.length; j++) {
-                    let simbolo = linea[j];
-                    //console.log("Coor: " + i + " " + j);
-                    this.cargarObjetoMapa(simbolo, j, i);
+        ficheroC.onreadystatechange = function () {
+            ficheroP.onreadystatechange = function () {
+                let textoC = ficheroC.responseText;
+                let textoP = ficheroP.responseText;
+                let lineasC = textoC.split('\n');
+                let lineasP = textoP.split('\n');
+                for (let i = 0; i < lineasC.length; i++) {
+                    let lineaC = lineasC[i];
+                    let lineaP = lineasP[i];
+                    for (let j = 0; j < lineaC.length; j++) {
+                        let simboloC = lineaC[j];
+                        let simboloP = lineaP[j];
+                        //console.log("Coor: " + i + " " + j);
+                        this.cargarObjetoMapa(simboloC, simboloP, j, i);
+                    }
                 }
-            }
+            }.bind(this);
         }.bind(this);
 
-        fichero.send(null);
+        ficheroC.send(null);
+        ficheroP.send(null);
     }
 
-    cargarObjetoMapa(simbolo, x, y) {
-        switch (simbolo) {
-            case "A":
-                this.mapa.addTile(new Tile(x, y, new Continente("#c26100", "#ff8600", "A")), x, y);
-                break;
-            case "B":
-                this.mapa.addTile(new Tile(x, y, new Continente("#064f00", "#109c00", "B")), x, y);
-                break;
-            case "C":
-                this.mapa.addTile(new Tile(x, y, new Continente("#0040ae", "#0052f2", "C")), x, y);
-                break;
-            case "D":
-                this.mapa.addTile(new Tile(x, y, new Continente("#c2ac04", "#f3dc04", "D")), x, y);
-                break;
-            case "E":
-                this.mapa.addTile(new Tile(x, y, new Continente("#c50002", "#fb0002", "E")), x, y);
-                break;
-            case "F":
-                this.mapa.addTile(new Tile(x, y, new Continente("#ae0570", "#da0594", "F")), x, y);
-                break;
+    cargarObjetoMapa(simboloC, simboloP, x, y) {
+        if(this.continentes[simboloC] !== undefined && this.provincias[simboloP] !== undefined) {
+            let tile = new Tile(x, y, this.continentes[simboloC], this.provincias[simboloP]);
+            if(!this.continentes[simboloC].provincias.includes(this.provincias[simboloP])){
+                this.continentes[simboloC].provincias.push(this.provincias[simboloP]);
+            }
+            this.provincias[simboloP].tiles.push(tile);
+            this.mapa.addTile(tile, x, y);
         }
     }
 
