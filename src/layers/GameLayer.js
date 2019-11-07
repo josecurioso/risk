@@ -16,16 +16,13 @@ class GameLayer extends Layer {
 
     }
 
-
     dibujar () {
         this.mapa.dibujar();
     }
 
-
     procesarControles( ){
 
     }
-
 
     cargarMapa(ruta){
         let fichero = new XMLHttpRequest();
@@ -73,6 +70,4 @@ class GameLayer extends Layer {
     calcularPulsaciones(pulsaciones) {
 
     }
-
-
 }

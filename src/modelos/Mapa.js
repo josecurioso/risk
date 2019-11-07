@@ -7,15 +7,15 @@ class Mapa extends Modelo {
 
         // Aquí sx y sy se usan de forma confusa (al revés)
         this.tiles = new Array(sy);
-        for(let i=0; i<sy; i++) {
+        for(let i = 0; i < sy; i++) {
             this.tiles[i] = new Array(sx);
         }
     }
 
     dibujar() {
         super.dibujar();
-        for (let y = 0;y < this.sy;y++) {
-            for (let x = 0;x < this.sx;x++) {
+        for (let y = 0; y < this.sy; y++) {
+            for (let x = 0; x < this.sx; x++) {
                 let tile = this.tiles[y][x];
                 if (tile) {
                     tile.dibujar(
@@ -32,5 +32,4 @@ class Mapa extends Modelo {
     addTile(tile, px, py) {
         this.tiles[px][py] = tile;
     }
-
 }

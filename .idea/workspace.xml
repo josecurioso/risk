@@ -2,17 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f745157f-24dc-48cc-980e-882cb54a1032" name="Default" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/res/0_continents.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/res/0_provinces.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/res/0_small_map_backup.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/0.txt" beforeDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/Team.js" beforeDir="false" />
+>>>>>>> f977bcdaf1549c882807b425f1c3d9e43f0fcb1c
       <change beforePath="$PROJECT_DIR$/src/layers/GameLayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/layers/GameLayer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modelos/Mapa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelos/Mapa.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modelos/Tile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelos/Tile.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,13 +37,27 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$/res" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/modelos" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+>>>>>>> f977bcdaf1549c882807b425f1c3d9e43f0fcb1c
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+<<<<<<< HEAD
       <recent name="D:\Documentos\Git\risk\res" />
+=======
+      <recent name="D:\repos\risk\src\modelos" />
+>>>>>>> f977bcdaf1549c882807b425f1c3d9e43f0fcb1c
       <recent name="C:\Users\Miguel\Documents\Personal\Universidad\SEV\risk\res" />
       <recent name="C:\En proceso\Uniovi\SOF - Asignaturas\Videojuegos\2020 USAR ESTO PARA LAS PRACTICAS\2 -\partirDeEste\s2\res" />
       <recent name="C:\Users\jordansoy\WebstormProjects\s2\res" />
@@ -47,6 +65,7 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Miguel\Documents\Personal\Universidad\SEV\risk\res" />
     </key>
+<<<<<<< HEAD
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -59,6 +78,8 @@
         </RuleState>
       </list>
     </option>
+=======
+>>>>>>> f977bcdaf1549c882807b425f1c3d9e43f0fcb1c
   </component>
   <component name="RunManager">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/risk/index.html" useBuiltInWebServerPort="true">
@@ -108,7 +129,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
