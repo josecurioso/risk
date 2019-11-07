@@ -46,22 +46,22 @@ class GameLayer extends Layer {
     cargarObjetoMapa(simbolo, x, y) {
         switch (simbolo) {
             case "A":
-                this.mapa.addTile(new Tile(x, y, new Team("#c26100", "#ff8600", "A")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Continente("#c26100", "#ff8600", "A")), x, y);
                 break;
             case "B":
-                this.mapa.addTile(new Tile(x, y, new Team("#064f00", "#109c00", "B")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Continente("#064f00", "#109c00", "B")), x, y);
                 break;
             case "C":
-                this.mapa.addTile(new Tile(x, y, new Team("#0040ae", "#0052f2", "C")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Continente("#0040ae", "#0052f2", "C")), x, y);
                 break;
             case "D":
-                this.mapa.addTile(new Tile(x, y, new Team("#c2ac04", "#f3dc04", "D")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Continente("#c2ac04", "#f3dc04", "D")), x, y);
                 break;
             case "E":
-                this.mapa.addTile(new Tile(x, y, new Team("#c50002", "#fb0002", "E")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Continente("#c50002", "#fb0002", "E")), x, y);
                 break;
             case "F":
-                this.mapa.addTile(new Tile(x, y, new Team("#ae0570", "#da0594", "F")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Continente("#ae0570", "#da0594", "F")), x, y);
                 break;
         }
     }
