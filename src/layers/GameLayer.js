@@ -41,6 +41,8 @@ class GameLayer extends Layer {
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
         //this.cargarMapa("res/"+nivelActual+"_provinces.txt");
 
+        this.testCentroid();
+
     }
 
     actualizar() {
@@ -108,6 +110,56 @@ class GameLayer extends Layer {
                 }
             }
         }
+    }
 
+    testCentroid() {
+        for (let key in this.provincias)
+            if (this.provincias.hasOwnProperty(key)){
+                let centroid = GameLayer.calculateTilesCentroid(this.provincias[key].tiles);
+                this.provincias[key].centroid = centroid;
+                console.log("Calculated centroid: " + centroid.x + " " + centroid.y + " (for " + this.provincias[key].code + " province)");
+            }
+    }
+
+    static calculateTilesCentroid(tiles) {
+        let points = [];
+        for(let i=0; i<tiles.length; i++) {
+            let point = {
+                x: tiles[i].px,
+                y: tiles[i].py,
+            };
+            points.push(point);
+        }
+        return GameLayer.getPointsCentroid(points);
+    }
+
+    static getPointsCentroid(points){
+        let centroid = {x: 0, y: 0};
+        let bX = 0, bY = 0;
+        let sX = 150, sY = 150;
+        for(let i = 0; i < points.length; i++) {
+            let point = points[i];
+            if(point.x < sX)
+                sX = point.x;
+            if(point.x > bX)
+                bX = point.x;
+            if(point.y < sY)
+                sY = point.y;
+            if(point.y > bY)
+                bY = point.y;
+        }
+        let meanX = ((bX-sX)/2)+sX;
+        let meanY = ((bY-sY)/2)+sY;
+
+        let minDist = 500;
+        for(let i = 0; i < points.length; i++) {
+            points[i].dist = Math.sqrt(Math.pow(points[i].x - meanX, 2)+Math.pow(points[i].y - meanY, 2));
+            if(points[i].dist < minDist) {
+                centroid.x = points[i].x;
+                centroid.y = points[i].y;
+                minDist = points[i].dist;
+            }
+        }
+        return centroid;
     }
 }
