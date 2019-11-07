@@ -5,6 +5,7 @@ class Mapa extends Modelo {
         this.sx = sx;
         this.sy = sy;
 
+        // Aquí sx y sy se usan de forma confusa (al revés)
         this.tiles = new Array(sy);
         for(let i=0; i<sy; i++) {
             this.tiles[i] = new Array(sx);

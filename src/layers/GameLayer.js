@@ -6,9 +6,10 @@ class GameLayer extends Layer {
     }
 
     iniciar() {
-        this.mapa = new Mapa(60, 60);
+        this.mapa = new Mapa(60, 80);
 
-        this.cargarMapa("res/"+nivelActual+".txt");
+        this.cargarMapa("res/"+nivelActual+"_continents.txt");
+        //this.cargarMapa("res/"+nivelActual+"_provinces.txt");
     }
 
     actualizar (){
@@ -48,14 +49,23 @@ class GameLayer extends Layer {
 
     cargarObjetoMapa(simbolo, x, y) {
         switch(simbolo) {
-            case "0":
-                this.mapa.addTile(new Tile(x, y, new Team("#21c24d", "green", "G")), x, y);
-                break;
-            case "R":
-                this.mapa.addTile(new Tile(x, y, new Team("#cf2d2d", "red", "R")), x, y);
-                break;
             case "A":
-                this.mapa.addTile(new Tile(x, y, new Team("#4343e8", "blue", "A")), x, y);
+                this.mapa.addTile(new Tile(x, y, new Team("#c26100", "#ff8600", "A")), x, y);
+                break;
+            case "B":
+                this.mapa.addTile(new Tile(x, y, new Team("#064f00", "#109c00", "B")), x, y);
+                break;
+            case "C":
+                this.mapa.addTile(new Tile(x, y, new Team("#0040ae", "#0052f2", "C")), x, y);
+                break;
+            case "D":
+                this.mapa.addTile(new Tile(x, y, new Team("#c2ac04", "#f3dc04", "D")), x, y);
+                break;
+            case "E":
+                this.mapa.addTile(new Tile(x, y, new Team("#c50002", "#fb0002", "E")), x, y);
+                break;
+            case "F":
+                this.mapa.addTile(new Tile(x, y, new Team("#ae0570", "#da0594", "F")), x, y);
                 break;
         }
     }

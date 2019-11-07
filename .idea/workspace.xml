@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f745157f-24dc-48cc-980e-882cb54a1032" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/Team.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/0_continents.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/0_provinces.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/0_small_map_backup.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Globales.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Globales.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/0.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/layers/GameLayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/layers/GameLayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelos/Mapa.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelos/Mapa.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modelos/Tile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelos/Tile.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,56 +25,27 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>colision</find>
-      <find>actual</find>
-      <find>cargarOb</find>
-      <find>enemigos =</find>
-      <find>procesarControles</find>
-      <find>ac</find>
-      <find>disparo</find>
-      <find>disparo =</find>
-      <find>disparar</find>
-      <find>disparar()</find>
-      <find>cargarMapa</find>
-      <find>splice</find>
-      <find>procesarControl</find>
-      <find>moverAbajo</find>
-      <find>actuali</find>
-      <find>actualizar</find>
-      <find>calcularPulsa</find>
-      <find>procesaro</find>
-      <find>dibujar</find>
-      <find>32</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-36" />
-    <option name="y" value="122" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
   </component>
   <component name="ProjectId" id="1TFe8mKZ6GjBaFtxBALx3Hxbobs" />
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/res" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Miguel\Documents\Personal\Universidad\SEV\risk\res" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Documentos\Git\risk\res" />
       <recent name="C:\Users\Miguel\Documents\Personal\Universidad\SEV\risk\res" />
       <recent name="C:\En proceso\Uniovi\SOF - Asignaturas\Videojuegos\2020 USAR ESTO PARA LAS PRACTICAS\2 -\partirDeEste\s2\res" />
       <recent name="C:\Users\jordansoy\WebstormProjects\s2\res" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Miguel\Documents\Personal\Universidad\SEV\risk\res" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -123,7 +96,7 @@
       <workItem from="1571831755969" duration="6099000" />
       <workItem from="1571994067420" duration="3759000" />
       <workItem from="1572025992473" duration="694000" />
-      <workItem from="1573060115892" duration="837000" />
+      <workItem from="1573060115892" duration="9731000" />
     </task>
     <servers />
   </component>

@@ -4,6 +4,8 @@ class Tile extends Modelo {
         super("", x, y);
         this.equipo = equipo;
         this.tileSize = 8;
+        this.province = 1; //Represent
+        this.region = 1;
         this.x *= this.tileSize;
         this.y *= this.tileSize;
     }
