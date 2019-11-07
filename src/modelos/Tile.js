@@ -2,9 +2,11 @@ class Tile extends Modelo {
 
     constructor(x, y, continente, provincia) {
         super("", x, y);
+        this.px = 0;
+        this.py = 0;
         this.continente = continente;
         this.province = provincia; //Represent
-        this.tileSize = 8;
+        this.tileSize = tileSize;
         this.region = 1;
         this.x *= this.tileSize;
         this.y *= this.tileSize;

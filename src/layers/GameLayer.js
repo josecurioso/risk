@@ -94,6 +94,20 @@ class GameLayer extends Layer {
     }
 
     calcularPulsaciones(pulsaciones) {
+        for(let i=0; i<pulsaciones.length; i++) {
+            if ( pulsaciones[i].tipo === tipoPulsacion.inicio) {
+                let clickedTile = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
+                if(clickedTile !== undefined) {
+                    console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
+                    console.log("   Coords: " + pulsaciones[i].x + ", " + pulsaciones[i].y);
+                    console.log("   Continente: " + clickedTile.continente.code);
+                    console.log("   Provincia: " + clickedTile.province.code);
+                }
+                else {
+                    console.log("Click en agua");
+                }
+            }
+        }
 
     }
 }

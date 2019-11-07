@@ -4,6 +4,8 @@ var tipoPulsacion = {}; // tipos
 tipoPulsacion.inicio = 1;
 tipoPulsacion.mantener = 2;
 
+var tileSize = 8;
+
 var entradas = {}; // tipos
 entradas.pulsaciones = 1;
 entradas.teclado = 2;

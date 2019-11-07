@@ -30,6 +30,14 @@ class Mapa extends Modelo {
     }
 
     addTile(tile, px, py) {
+        tile.px = px;
+        tile.py = py;
         this.tiles[px][py] = tile;
+    }
+
+    getTileForCoords(x, y){
+        let px = Math.ceil(x/tileSize)-1;
+        let py = Math.ceil(y/tileSize)-1;
+        return this.tiles[px][py];
     }
 }

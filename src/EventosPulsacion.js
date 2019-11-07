@@ -8,23 +8,21 @@ window.addEventListener('touchleave', eliminarTouch, false);
 function touchstart( event) {
     var touches = event.changedTouches;
     for (var i=0; i<touches.length; i++) {
-        agregarPulsacion( touches[i].identifier,
-            tipoPulsacion.inicio, touches[i]);
+        //agregarPulsacion( touches[i].identifier, tipoPulsacion.inicio, touches[i]);
     }
 }
 
 function touchmove( event) {
     var touches = event.changedTouches;
     for (var i=0; i<touches.length; i++) {
-        agregarPulsacion( touches[i].identifier,
-            tipoPulsacion.mantener, touches[i]);
+        //agregarPulsacion( touches[i].identifier, tipoPulsacion.mantener, touches[i]);
     }
 }
 
 function eliminarTouch ( event) {
     var touches = event.changedTouches;
     for (var i=0; i<touches.length; i++) {
-        eliminarPulsacion( touches[i].identifier);
+        //eliminarPulsacion( touches[i].identifier);
     }
 }
 
@@ -32,7 +30,7 @@ function eliminarTouch ( event) {
 
 
 
-            window.addEventListener('mousedown', mousedown);
+window.addEventListener('mousedown', mousedown);
 window.addEventListener('mousemove', mousemove);
 window.addEventListener('mouseup', mouseup);
 
@@ -44,7 +42,7 @@ function mousemove (event){
     if (pulsaciones.length == 0 ||
         event.timeStamp - pulsaciones[0].timeStamp > 10 ) {
 
-        agregarPulsacion(1, tipoPulsacion.mantener, event);
+        //agregarPulsacion(1, tipoPulsacion.mantener, event);
     }
 
 }
