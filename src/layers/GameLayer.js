@@ -8,34 +8,34 @@ class GameLayer extends Layer {
     iniciar() {
         this.mapa = new Mapa(60, 80);
 
-        this.cargarMapa("res/"+nivelActual+"_continents.txt");
+        this.cargarMapa("res/" + nivelActual + "_continents.txt");
         //this.cargarMapa("res/"+nivelActual+"_provinces.txt");
 
     }
 
-    actualizar (){
+    actualizar() {
     }
 
-    dibujar () {
+    dibujar() {
         this.mapa.dibujar();
     }
 
-    procesarControles( ){
+    procesarControles() {
     }
 
-    cargarMapa(ruta){
+    cargarMapa(ruta) {
         let fichero = new XMLHttpRequest();
         fichero.open("GET", ruta, false);
 
         fichero.onreadystatechange = function () {
             let texto = fichero.responseText;
             let lineas = texto.split('\n');
-            for (let i = 0; i < lineas.length; i++){
+            for (let i = 0; i < lineas.length; i++) {
                 let linea = lineas[i];
-                for (let j = 0; j < linea.length; j++){
+                for (let j = 0; j < linea.length; j++) {
                     let simbolo = linea[j];
                     //console.log("Coor: " + i + " " + j);
-                    this.cargarObjetoMapa(simbolo,j,i);
+                    this.cargarObjetoMapa(simbolo, j, i);
                 }
             }
         }.bind(this);
@@ -44,7 +44,7 @@ class GameLayer extends Layer {
     }
 
     cargarObjetoMapa(simbolo, x, y) {
-        switch(simbolo) {
+        switch (simbolo) {
             case "A":
                 this.mapa.addTile(new Tile(x, y, new Team("#c26100", "#ff8600", "A")), x, y);
                 break;
