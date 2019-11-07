@@ -13,7 +13,6 @@ class GameLayer extends Layer {
     }
 
     actualizar (){
-
     }
 
     dibujar () {
@@ -21,7 +20,6 @@ class GameLayer extends Layer {
     }
 
     procesarControles( ){
-
     }
 
     cargarMapa(ruta){

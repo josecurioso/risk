@@ -1,13 +1,19 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeUnidades) {
-        this.jugadorActual = null;
+    constructor(gestorDeUnidades, playerOrder) {
+        this.playerOrder = playerOrder;
+        this.listPos = 0;
+        this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount = 0;
         this.gestorDeUnidades = gestorDeUnidades;
     }
 
-    changePlayer(jugador) {
-        this.jugadorActual = jugador;
+    changePlayer() {
+        this.listPos++;
+        if(this.listPos === this.playerOrder.length) {
+            this.listPos = 0;
+        }
+        this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount++;
     }
 
