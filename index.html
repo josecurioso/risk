@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <meta charset="utf-8"/>
+    <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="0" http-equiv="Expires"/>
 
     <title>RISK</title>
     <style>
-        * { padding: 0; margin: 0; }
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
         canvas {
             background: #eee;
             display: block;
@@ -18,8 +22,7 @@
 </head>
 <body>
 
-<canvas id="canvas" width="600" height="320"></canvas>
-
+<canvas height="320" id="canvas" width="600"></canvas>
 
 <script src="src/logic/Continente.js"></script>
 <script src="src/logic/GestorDeUnidades.js"></script>
@@ -29,18 +32,17 @@
 <script src="src/logic/Jugador.js"></script>
 <script src="src/logic/Provincia.js"></script>
 
-
 <script src="src/modelos/Modelo.js"></script>
-    <script src="src/modelos/Fondo.js"></script>
-    <script src="src/modelos/Texto.js"></script>
-    <script src="src/modelos/Tile.js"></script>
-    <script src="src/modelos/Boton.js"></script>
-    <script src="src/modelos/Pad.js"></script>
-    <script src="src/modelos/Mapa.js"></script>
+<script src="src/modelos/Fondo.js"></script>
+<script src="src/modelos/Texto.js"></script>
+<script src="src/modelos/Tile.js"></script>
+<script src="src/modelos/Boton.js"></script>
+<script src="src/modelos/Pad.js"></script>
+<script src="src/modelos/Mapa.js"></script>
 
 <script src="src/layers/Layer.js"></script>
-    <script src="src/layers/GameLayer.js"></script>
-    <script src="src/layers/MenuLayer.js"></script>
+<script src="src/layers/GameLayer.js"></script>
+<script src="src/layers/MenuLayer.js"></script>
 
 <script src="src/graficos/Animacion.js"></script>
 

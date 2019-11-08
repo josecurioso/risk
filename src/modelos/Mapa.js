@@ -7,7 +7,7 @@ class Mapa extends Modelo {
 
         // Aquí sx y sy se usan de forma confusa (al revés)
         this.tiles = new Array(sy);
-        for(let i = 0; i < sy; i++) {
+        for (let i = 0; i < sy; i++) {
             this.tiles[i] = new Array(sx);
         }
     }
@@ -35,9 +35,9 @@ class Mapa extends Modelo {
         this.tiles[px][py] = tile;
     }
 
-    getTileForCoords(x, y){
-        let px = Math.ceil(x/tileSize)-1;
-        let py = Math.ceil(y/tileSize)-1;
+    getTileForCoords(x, y) {
+        let px = Math.ceil(x / tileSize) - 1;
+        let py = Math.ceil(y / tileSize) - 1;
         return this.tiles[px][py];
     }
 }

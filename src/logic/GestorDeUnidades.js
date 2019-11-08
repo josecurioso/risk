@@ -10,11 +10,11 @@ class GestorDeUnidades {
         let max = this.totalProvincias;
         let min = Math.round(this.totalProvincias / 4);
         let step = 0;
-        for(let i = 0; i < max; i++) {
-            if(i <= min) {
+        for (let i = 0; i < max; i++) {
+            if (i <= min) {
                 unitsRatioMap.set(i, minUnits);
             } else {
-                if(step >= 2) {
+                if (step >= 2) {
                     step = 0;
                     minUnits++;
                 }

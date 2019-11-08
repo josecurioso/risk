@@ -7,35 +7,35 @@ class MenuLayer extends Layer {
 
     iniciar() {
         this.fondo =
-            new Fondo(imagenes.menu_fondo,480*0.5,320*0.5);
+            new Fondo(imagenes.menu_fondo, 480 * 0.5, 320 * 0.5);
         this.boton =
-            new Boton(imagenes.boton_jugar,480*0.5,320*0.7);
+            new Boton(imagenes.boton_jugar, 480 * 0.5, 320 * 0.7);
     }
 
-    dibujar (){
+    dibujar() {
         this.fondo.dibujar();
         this.boton.dibujar();
     }
 
-    calcularPulsaciones(pulsaciones){
+    calcularPulsaciones(pulsaciones) {
         this.boton.pulsado = false;
 
-        for(var i=0; i < pulsaciones.length; i++){
-            if (this.boton.contienePunto(pulsaciones[i].x , pulsaciones[i].y) ){
+        for (let i = 0; i < pulsaciones.length; i++) {
+            if (this.boton.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                 this.boton.pulsado = true;
-                if ( pulsaciones[i].tipo == tipoPulsacion.inicio) {
+                if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
                     controles.continuar = true;
                 }
             }
         }
 
         // No pulsado - Botón Disparo
-        if ( !this.boton.pulsado ){
+        if (!this.boton.pulsado) {
             controles.continuar = false;
         }
     }
 
-    procesarControles( ) {
+    procesarControles() {
         // siguiente pantalla
         if (controles.continuar) {
             gameLayer = new GameLayer();
@@ -43,5 +43,4 @@ class MenuLayer extends Layer {
             controles.continuar = false;
         }
     }
-
 }
