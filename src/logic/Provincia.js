@@ -3,6 +3,8 @@ class Provincia {
     constructor(tiles, code) {
         this.tiles = tiles;
         this.code = code;
+        this.climate = null;
+        this.hasSea = null;
     }
 
     calculateMidPosition() {

@@ -54,6 +54,7 @@ class GameLayer extends Layer {
         this.botonAtacar = new Boton(imagenes.attack, 600*0.95, 320*0.9);
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
+        this.addProvinceInfo("res/" + nivelActual + "_info.json");
         this.calculateCentroids();
     }
 
@@ -118,6 +119,8 @@ class GameLayer extends Layer {
                     console.log("   Coords: " + pulsaciones[i].x + ", " + pulsaciones[i].y);
                     console.log("   Continente: " + clickedTile.continente.code);
                     console.log("   Provincia: " + clickedTile.province.code);
+                    console.log("   Climate: " + clickedTile.province.climate);
+                    console.log("   hasSea? " + clickedTile.province.hasSea);
                 } else {
                     console.log("Click en agua");
                 }
@@ -131,5 +134,19 @@ class GameLayer extends Layer {
                 this.provincias[key].calculateCentroid();
                 console.log("Calculated centroid: " + this.provincias[key].centroid.x + " " + this.provincias[key].centroid.y + " (for " + this.provincias[key].code + " province)");
             }
+    }
+
+    addProvinceInfo(rutaInfo) {
+        let ficheroI = new XMLHttpRequest();
+        ficheroI.open("GET", rutaInfo, false);
+        ficheroI.onreadystatechange = function() {
+            let text = ficheroI.responseText;
+            let json = JSON.parse(text);
+            for (let key in this.provincias) {
+                if (this.provincias.hasOwnProperty(key)) {
+                    this.provincias[key].climate = climates[json.key.climate];
+                }
+            }
+        }.bind(this);
     }
 }

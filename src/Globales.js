@@ -1,10 +1,15 @@
+// game variables
+
+var tileSize = 8;
+var climates = ["desert", "tropical", "tundra", "oceanic"];
+
+// old variables
+
 var pulsaciones = []; // actuales registradas
 
 var tipoPulsacion = {}; // tipos
 tipoPulsacion.inicio = 1;
 tipoPulsacion.mantener = 2;
-
-var tileSize = 8;
 
 var entradas = {}; // tipos
 entradas.pulsaciones = 1;
