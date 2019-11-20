@@ -53,6 +53,9 @@ class GameLayer extends Layer {
         this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600*0.45, 320*0.97);
         this.botonAtacar = new Boton(imagenes.attack, 600*0.95, 320*0.9);
 
+        this.clickedProvinces = [];
+        this.isPlayerSelecting = false;
+
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
         this.addProvinceInfo("res/" + nivelActual + "_info.json");
         this.calculateCentroids();
@@ -121,8 +124,28 @@ class GameLayer extends Layer {
                     console.log("   Provincia: " + clickedTile.province.code);
                     console.log("   Climate: " + clickedTile.province.climate);
                     console.log("   hasSea? " + clickedTile.province.hasSea);
+
+                    if(this.gameState == gameStates.playerMoving && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un movimiento
+                        this.clickedProvinces.push(clickedTile.province);
+                        if(this.clickedProvinces.length == 2 && this.validateMove(clickedTile[0], clickedTile[1])) {
+                            //Show prompt for number of units to move
+                        }
+                        else {
+                            // Show message informing of invalid move
+                        }
+                    }
+                    else if(this.gameState == gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
+                        this.clickedProvinces.push(clickedTile.province);
+                        if(this.clickedProvinces.length == 2 && this.validateAttack(clickedTile[0], clickedTile[1])) {
+                            //Show prompt for number of units to attack
+                        }
+                        else {
+                            // Show message informing of invalid attack
+                        }
+                    }
                 } else {
                     console.log("Click en agua");
+                    //Aqui irán los clicks en elementos del hud
                 }
             }
         }
@@ -153,5 +176,31 @@ class GameLayer extends Layer {
             }
         }.bind(this);
         ficheroI.send(null);
+    }
+
+    clickAttack() {
+        this.gameState = gameStates.playerAttacking;
+        this.isPlayerSelecting = true;
+    }
+
+    clickMove() {
+        this.gameState = gameStates.playerMoving;
+        this.isPlayerSelecting = true;
+    }
+
+    validateAttack(provinceA, provinceB) {
+        //This method checks
+        //  -Provinces are connected
+        //  -Province A belongs to current player
+        //  -Province B does NOT belong to current player
+        return false;
+    }
+
+    validateMove(provinceA, provinceB) {
+        //This method checks
+        //  -Provinces are connected
+        //  -Province A belongs to current player
+        //  -Province B also belongs to current player
+        return false;
     }
 }

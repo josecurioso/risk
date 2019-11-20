@@ -3,6 +3,11 @@
 var tileSize = 8;
 var climates = ["desert", "tropical", "snowy", "oceanic"];
 
+var gameStates = {
+    playerAttacking : 1,
+    playerMoving : 2,
+}
+
 // old variables
 
 var pulsaciones = []; // actuales registradas
