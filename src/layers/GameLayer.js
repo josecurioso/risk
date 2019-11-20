@@ -9,6 +9,8 @@ class GameLayer extends Layer {
         this.mapa = new Mapa(60, 80);
 
         this.jugadores = ["Miguel", "Nacho", "Jose"];
+        // this.jugadores = this.requestPlayerNames();
+        this.numeroJugadores = this.jugadores.length;
         this.gestorDeUnidades = new GestorDeUnidades(25, 3);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
 
@@ -50,11 +52,12 @@ class GameLayer extends Layer {
             'Z': new Provincia([], "Z"),
         };
 
-        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600*0.45, 320*0.97);
-        this.botonAtacar = new Boton(imagenes.attack, 600*0.95, 320*0.9);
+        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.97);
+        this.botonAtacar = new Boton(imagenes.attack, 600 * 0.95, 320 * 0.9);
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
         this.addProvinceInfo("res/" + nivelActual + "_info.json");
+        this.addContinentInfo("res/" + nivelActual + "_info.json");
         this.calculateCentroids();
     }
 
@@ -139,7 +142,7 @@ class GameLayer extends Layer {
     addProvinceInfo(rutaInfo) {
         let ficheroI = new XMLHttpRequest();
         ficheroI.open("GET", rutaInfo, false);
-        ficheroI.onreadystatechange = function() {
+        ficheroI.onreadystatechange = function () {
             let text = ficheroI.responseText;
             let json = JSON.parse(text);
             console.log(json);
@@ -148,10 +151,35 @@ class GameLayer extends Layer {
                     if (this.provincias.hasOwnProperty(key)) {
                         this.provincias[key].climate = climates[json[key].climate];
                         this.provincias[key].hasSea = json[key].hasSea;
+                        this.provincias[key].connections = json[key].connections;
                     }
                 }
             }
         }.bind(this);
         ficheroI.send(null);
+    }
+
+    addContinentInfo(rutaInfo) {
+        let ficheroI = new XMLHttpRequest();
+        ficheroI.open("GET", rutaInfo, false);
+        ficheroI.onreadystatechange = function () {
+            let text = ficheroI.responseText;
+            let json = JSON.parse(text);
+            console.log(json);
+            for (let key in this.continentes) {
+                if (this.continentes.hasOwnProperty(key)) {
+                    if (this.continentes.hasOwnProperty(key)) {
+                        this.continentes[key].bonus = json[key].bonus;
+                    }
+                }
+            }
+        }.bind(this);
+        ficheroI.send(null);
+    }
+
+    requestPlayerNames() {
+        let names = [];
+        // dialogo para pedir nombres...
+        return names;
     }
 }

@@ -1,0 +1,132 @@
+{
+  "A": {
+    "climate": 2,
+    "hasSea": true,
+    "connections": ["B", "S", "U"]
+  },
+  "B": {
+    "climate": 3,
+    "hasSea": true,
+    "connections": ["A", "C", "U"]
+  },
+  "C": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["B", "D"]
+  },
+  "D": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["C", "V", "T-"]
+  },
+  "E": {
+    "climate": 0,
+    "hasSea": true,
+    "connections": ["V"]
+  },
+  "F": {
+    "climate": 2,
+    "hasSea": true,
+    "connections": ["W", "S-", "X", "G"]
+  },
+  "G": {
+    "climate": 3,
+    "hasSea": true,
+    "connections": ["W", "I", "P", "X", "Q", "F"]
+  },
+  "H": {
+    "climate": 0,
+    "hasSea": false,
+    "connections": ["T", "J", "U"]
+  },
+  "I": {
+    "climate": 0,
+    "hasSea": true,
+    "connections": ["P", "G", "U"]
+  },
+  "J": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["H", "Z-", "U", "T"]
+  },
+  "K": {
+    "climate": 2,
+    "hasSea": true,
+    "connections": ["L", "Q", "X"]
+  },
+  "L": {
+    "climate": 3,
+    "hasSea": true,
+    "connections": ["K", "P", "M", "Q"]
+  },
+  "M": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["P", "R", "O", "L"]
+  },
+  "N": {
+    "climate": 0,
+    "hasSea": true,
+    "connections": ["Y"]
+  },
+  "O": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["M", "Y-"]
+  },
+  "P": {
+    "climate": 3,
+    "hasSea": false,
+    "connections": ["Q", "G", "R", "M", "L", "I"]
+  },
+  "Q": {
+    "climate": 3,
+    "hasSea": false,
+    "connections": ["P", "G", "L", "X", "K"]
+  },
+  "R": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["M", "P"]
+  },
+  "S": {
+    "climate": 2,
+    "hasSea": true,
+    "connections": ["A", "F-"]
+  },
+  "T": {
+    "climate": 0,
+    "hasSea": true,
+    "connections": ["U", "H", "J", "D-"]
+  },
+  "U": {
+    "climate": 0,
+    "hasSea": true,
+    "connections": ["W-", "T", "I", "H", "J"]
+  },
+  "V": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["D", "E"]
+  },
+  "W": {
+    "climate": 3,
+    "hasSea": true,
+    "connections": ["G", "F", "U-"]
+  },
+  "X": {
+    "climate": 2,
+    "hasSea": true,
+    "connections": ["Q", "G", "F", "K"]
+  },
+  "Y": {
+    "climate": 0,
+    "hasSea": true,
+    "connections": ["N", "O-"]
+  },
+  "Z": {
+    "climate": 1,
+    "hasSea": true,
+    "connections": ["J-"]
+  }
+}
