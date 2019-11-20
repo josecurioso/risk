@@ -5,6 +5,7 @@ class Provincia {
         this.code = code;
         this.climate = null;
         this.hasSea = null;
+        this.connections = null;
     }
 
     calculateMidPosition() {
