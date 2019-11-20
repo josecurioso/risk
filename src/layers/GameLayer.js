@@ -3,9 +3,6 @@ class GameLayer extends Layer {
     constructor() {
         super();
         this.iniciar();
-
-
-
     }
 
     iniciar() {
@@ -57,9 +54,7 @@ class GameLayer extends Layer {
         this.botonAtacar = new Boton(imagenes.attack, 600*0.95, 320*0.9);
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
-
         this.calculateCentroids();
-
     }
 
     actualizar() {
@@ -104,9 +99,9 @@ class GameLayer extends Layer {
     }
 
     cargarObjetoMapa(simboloC, simboloP, x, y) {
-        if(this.continentes[simboloC] !== undefined && this.provincias[simboloP] !== undefined) {
+        if (this.continentes[simboloC] !== undefined && this.provincias[simboloP] !== undefined) {
             let tile = new Tile(x, y, this.continentes[simboloC], this.provincias[simboloP]);
-            if(!this.continentes[simboloC].provincias.includes(this.provincias[simboloP])){
+            if (!this.continentes[simboloC].provincias.includes(this.provincias[simboloP])) {
                 this.continentes[simboloC].provincias.push(this.provincias[simboloP]);
             }
             this.provincias[simboloP].tiles.push(tile);
@@ -115,16 +110,15 @@ class GameLayer extends Layer {
     }
 
     calcularPulsaciones(pulsaciones) {
-        for(let i=0; i<pulsaciones.length; i++) {
-            if ( pulsaciones[i].tipo === tipoPulsacion.inicio) {
+        for (let i = 0; i < pulsaciones.length; i++) {
+            if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
                 let clickedTile = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
-                if(clickedTile !== undefined) {
+                if (clickedTile !== undefined) {
                     console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
                     console.log("   Coords: " + pulsaciones[i].x + ", " + pulsaciones[i].y);
                     console.log("   Continente: " + clickedTile.continente.code);
                     console.log("   Provincia: " + clickedTile.province.code);
-                }
-                else {
+                } else {
                     console.log("Click en agua");
                 }
             }
@@ -133,7 +127,7 @@ class GameLayer extends Layer {
 
     calculateCentroids() {
         for (let key in this.provincias)
-            if (this.provincias.hasOwnProperty(key)){
+            if (this.provincias.hasOwnProperty(key)) {
                 this.provincias[key].calculateCentroid();
                 console.log("Calculated centroid: " + this.provincias[key].centroid.x + " " + this.provincias[key].centroid.y + " (for " + this.provincias[key].code + " province)");
             }

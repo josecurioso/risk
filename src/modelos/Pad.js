@@ -4,11 +4,11 @@ class Pad extends Boton {
         super(imagenes.pad, x, y)
     }
 
-    obtenerOrientacionX(pX){
+    obtenerOrientacionX(pX) {
         return pX - this.x;
     }
 
-    obtenerOrientacionY(pY){
+    obtenerOrientacionY(pY) {
         return pY - this.y;
     }
 
