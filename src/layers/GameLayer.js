@@ -11,6 +11,10 @@ class GameLayer extends Layer {
     iniciar() {
         this.mapa = new Mapa(60, 80);
 
+        this.jugadores = ["Miguel", "Nacho", "Jose"];
+        this.gestorDeUnidades = new GestorDeUnidades(25, 3);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
+
         this.continentes = {
             'A': new Continente("#c26100", "#ff8600", [], 0, "A"),
             'B': new Continente("#064f00", "#109c00", [], 0, "B"),
@@ -49,6 +53,8 @@ class GameLayer extends Layer {
             'Z': new Provincia([], "Z"),
         };
 
+        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600*0.45, 320*0.97);
+        this.botonAtacar = new Boton(imagenes.attack, 600*0.95, 320*0.9);
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
 
@@ -61,6 +67,8 @@ class GameLayer extends Layer {
 
     dibujar() {
         this.mapa.dibujar();
+        this.turnoActual.dibujar();
+        this.botonAtacar.dibujar();
     }
 
     procesarControles() {
@@ -127,7 +135,7 @@ class GameLayer extends Layer {
         for (let key in this.provincias)
             if (this.provincias.hasOwnProperty(key)){
                 this.provincias[key].calculateCentroid();
-                console.log("Calculated centroid: " + this.provincias[key].x + " " + this.provincias[key].y + " (for " + this.provincias[key].code + " province)");
+                console.log("Calculated centroid: " + this.provincias[key].centroid.x + " " + this.provincias[key].centroid.y + " (for " + this.provincias[key].code + " province)");
             }
     }
 }
