@@ -142,11 +142,16 @@ class GameLayer extends Layer {
         ficheroI.onreadystatechange = function() {
             let text = ficheroI.responseText;
             let json = JSON.parse(text);
+            console.log(json);
             for (let key in this.provincias) {
                 if (this.provincias.hasOwnProperty(key)) {
-                    this.provincias[key].climate = climates[json.key.climate];
+                    if (this.provincias.hasOwnProperty(key)) {
+                        this.provincias[key].climate = climates[json[key].climate];
+                        this.provincias[key].hasSea = json[key].hasSea;
+                    }
                 }
             }
         }.bind(this);
+        ficheroI.send(null);
     }
 }

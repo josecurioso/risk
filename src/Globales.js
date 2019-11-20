@@ -1,7 +1,7 @@
 // game variables
 
 var tileSize = 8;
-var climates = ["desert", "tropical", "tundra", "oceanic"];
+var climates = ["desert", "tropical", "snowy", "oceanic"];
 
 // old variables
 

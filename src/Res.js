@@ -6,10 +6,10 @@ var imagenes = {
     menu_fondo : "res/menu_fondo.png",
     boton_jugar : "res/boton_jugar.png",
     fondo_mar : "res/fondo.jpg",
-    attack: "res/attack_small.png"
+    attack: "res/attack_small.png",
     menu_fondo: "res/menu_fondo.png",
     boton_jugar: "res/boton_jugar.png",
-    fondo_mar: "res/fondo.jpg"
+    fondo_mar: "res/fondo.jpg",
 };
 
 var rutasImagenes = Object.values(imagenes);

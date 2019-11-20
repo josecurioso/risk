@@ -1,6 +1,106 @@
 {
   "A": {
-    "climate": "tundra",
+    "climate": 2,
+    "hasSea": true
+  },
+  "B": {
+    "climate": 3,
+    "hasSea": true
+  },
+  "C": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "D": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "E": {
+    "climate": 0,
+    "hasSea": true
+  },
+  "F": {
+    "climate": 2,
+    "hasSea": true
+  },
+  "G": {
+    "climate": 3,
+    "hasSea": true
+  },
+  "H": {
+    "climate": 0,
+    "hasSea": false
+  },
+  "I": {
+    "climate": 0,
+    "hasSea": true
+  },
+  "J": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "K": {
+    "climate": 2,
+    "hasSea": true
+  },
+  "L": {
+    "climate": 3,
+    "hasSea": true
+  },
+  "M": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "N": {
+    "climate": 0,
+    "hasSea": true
+  },
+  "O": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "P": {
+    "climate": 3,
+    "hasSea": false
+  },
+  "Q" : {
+    "climate": 3,
+    "hasSea": false
+  },
+  "R": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "S": {
+    "climate": 2,
+    "hasSea": true
+  },
+  "T": {
+    "climate": 0,
+    "hasSea": true
+  },
+  "U": {
+    "climate": 0,
+    "hasSea": true
+  },
+  "V": {
+    "climate": 1,
+    "hasSea": true
+  },
+  "W": {
+    "climate": 3,
+    "hasSea": true
+  },
+  "X": {
+    "climate": 2,
+    "hasSea": true
+  },
+  "Y": {
+    "climate": 0,
+    "hasSea": true
+  },
+  "Z": {
+    "climate": 0,
     "hasSea": true
   }
 }
