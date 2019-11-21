@@ -9,6 +9,10 @@ class GestorDeTurnos {
         this.gestorDaDados = new GestorDeDados();
     }
 
+    getCurrentPlayer() {
+        return this.jugadorActual;
+    }
+
     changePlayer() {
         this.listPos++;
         if (this.listPos === this.playerOrder.length) {

@@ -130,21 +130,18 @@ class GameLayer extends Layer {
                     console.log("   Climate: " + clickedTile.province.climate);
                     console.log("   hasSea? " + clickedTile.province.hasSea);
 
-                    if(this.gameState == gameStates.playerMoving && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un movimiento
+                    if (this.gameState === gameStates.playerMoving && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un movimiento
                         this.clickedProvinces.push(clickedTile.province);
-                        if(this.clickedProvinces.length == 2 && this.validateMove(clickedTile[0], clickedTile[1])) {
+                        if (this.clickedProvinces.length === 2 && this.validateMove(clickedTile[0], clickedTile[1])) {
                             //Show prompt for number of units to move
-                        }
-                        else {
+                        } else {
                             // Show message informing of invalid move
                         }
-                    }
-                    else if(this.gameState == gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
+                    } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
                         this.clickedProvinces.push(clickedTile.province);
-                        if(this.clickedProvinces.length == 2 && this.validateAttack(clickedTile[0], clickedTile[1])) {
+                        if (this.clickedProvinces.length === 2 && this.validateAttack(clickedTile[0], clickedTile[1])) {
                             //Show prompt for number of units to attack
-                        }
-                        else {
+                        } else {
                             // Show message informing of invalid attack
                         }
                     }
@@ -195,21 +192,70 @@ class GameLayer extends Layer {
         this.isPlayerSelecting = true;
     }
 
+    /*
+        This method checks:
+            * Provinces are connected
+            * Province A belongs to current player
+            * Province B does NOT belong to current player
+     */
     validateAttack(provinceA, provinceB) {
-        //This method checks
-        //  -Provinces are connected
-        //  -Province A belongs to current player
-        //  -Province B does NOT belong to current player
-        return false;
+        return (this.provincesConnectedByGround(provinceA, provinceB) || this.provincesConnectedBySea(provinceA, provinceB)) && this.currentPlayerHasProvince(provinceA) && !this.currentPlayerHasProvince(provinceB);
     }
 
+    /*
+        This method checks:
+            * Provinces are connected
+            * Province A belongs to current player
+            * Province B also belongs to current player
+     */
     validateMove(provinceA, provinceB) {
-        //This method checks
-        //  -Provinces are connected
-        //  -Province A belongs to current player
-        //  -Province B also belongs to current player
-        return false;
+        return (this.provincesConnectedByGround(provinceA, provinceB) || this.provincesConnectedBySea(provinceA, provinceB)) && this.currentPlayerHasProvince(provinceA) && this.currentPlayerHasProvince(provinceB);
     }
+
+    currentPlayerHasProvince(province) {
+        let result = false;
+        if (province !== null) {
+            this.gestorDeTurnos.getCurrentPlayer().conqueredTerritories.forEach(p => {
+                if (p.code === province.code) {
+                    result = true;
+                }
+            });
+        }
+        return result;
+    }
+
+    provincesConnectedByGround(provinceA, provinceB) {
+        let result1 = false;
+        let result2 = false;
+        provinceA.getAdjacentProvincesByGround().forEach(p => {
+            if (p === provinceB.code) {
+                result1 = true;
+            }
+        });
+        provinceB.getAdjacentProvincesByGround().forEach(p => {
+            if (p === provinceA.code) {
+                result2 = true;
+            }
+        });
+        return result1 && result2;
+    }
+
+    provincesConnectedBySea(provinceA, provinceB) {
+        let result1 = false;
+        let result2 = false;
+        provinceA.getAdjacentProvincesBySea().forEach(p => {
+            if (p === provinceB.code) {
+                result1 = true;
+            }
+        });
+        provinceB.getAdjacentProvincesBySea().forEach(p => {
+            if (p === provinceA.code) {
+                result2 = true;
+            }
+        });
+        return result1 && result2;
+    }
+
     addContinentInfo(rutaInfo) {
         let ficheroI = new XMLHttpRequest();
         ficheroI.open("GET", rutaInfo, false);
