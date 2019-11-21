@@ -53,8 +53,10 @@ class GameLayer extends Layer {
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(this.provincias).length, 3);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
 
-        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.97);
-        this.botonAtacar = new Boton(imagenes.attack, 600 * 0.95, 320 * 0.9);
+        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.925);
+        this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
+        this.botonSummary = new Boton(imagenes.summary, 600 * 0.055, 320 * 0.9, true);
+        this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
 
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
@@ -70,8 +72,10 @@ class GameLayer extends Layer {
 
     dibujar() {
         this.mapa.dibujar();
-        this.turnoActual.dibujar();
         this.botonAtacar.dibujar();
+        this.botonSummary.dibujar();
+        this.turnOverlay.dibujar();
+        this.turnoActual.dibujar();
         this.drawConnectionsBySea();
     }
 
@@ -146,8 +150,18 @@ class GameLayer extends Layer {
                         }
                     }
                 } else {
-                    console.log("Click en agua");
                     //Aqui irán los clicks en elementos del hud
+                    if(this.botonSummary.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        //summary
+                        console.log("Button summary clicked");
+                    }
+                    else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        //atacar
+                        console.log("Button attack clicked");
+                    }
+                    else{
+                        console.log("Click en agua");
+                    }
                 }
             }
         }
