@@ -26,6 +26,8 @@ class Tile extends Modelo {
         // Edges
         contexto.beginPath();
         contexto.strokeStyle = "black";
+        contexto.lineWidth = 2;
+        contexto.setLineDash([]);
         if (this.shouldDrawBorder(up)) {
             contexto.moveTo(this.x, this.y);
             contexto.lineTo(this.x + this.tileSize, this.y);

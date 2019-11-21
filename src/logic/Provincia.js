@@ -74,4 +74,25 @@ class Provincia {
         }
         return centroid;
     }
+
+    getAdjacentProvincesByGround() {
+        let result = [];
+        this.connections.forEach(p => {
+            if (!p.includes("-")) {
+                result.push(p);
+            }
+        });
+        return result;
+    }
+
+    getAdjacentProvincesBySea() {
+        let result = [];
+        this.connections.forEach(p => {
+            if (p.includes("-")) {
+                p = p.substring(0, p.length - 1);
+                result.push(p);
+            }
+        });
+        return result;
+    }
 }

@@ -8,12 +8,6 @@ class GameLayer extends Layer {
     iniciar() {
         this.mapa = new Mapa(60, 80);
 
-        this.jugadores = ["Miguel", "Nacho", "Jose"];
-        // this.jugadores = this.requestPlayerNames();
-        this.numeroJugadores = this.jugadores.length;
-        this.gestorDeUnidades = new GestorDeUnidades(25, 3);
-        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
-
         this.continentes = {
             'A': new Continente("#c26100", "#ff8600", [], 0, "A"),
             'B': new Continente("#064f00", "#109c00", [], 0, "B"),
@@ -52,6 +46,13 @@ class GameLayer extends Layer {
             'Z': new Provincia([], "Z"),
         };
 
+        this.jugadores = ["Miguel", "Nacho", "Jose"];
+        // this.jugadores = this.requestPlayerNames();
+        this.numeroJugadores = this.jugadores.length;
+
+        this.gestorDeUnidades = new GestorDeUnidades(Object.keys(this.provincias).length, 3);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
+
         this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.97);
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.95, 320 * 0.9);
 
@@ -59,8 +60,8 @@ class GameLayer extends Layer {
         this.isPlayerSelecting = false;
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
-        this.addProvinceInfo("res/" + nivelActual + "_info.json");
-        this.addContinentInfo("res/" + nivelActual + "_info.json");
+        this.addProvinceInfo("res/" + nivelActual + "_info_provinces.json");
+        this.addContinentInfo("res/" + nivelActual + "_info_continents.json");
         this.calculateCentroids();
     }
 
@@ -71,6 +72,7 @@ class GameLayer extends Layer {
         this.mapa.dibujar();
         this.turnoActual.dibujar();
         this.botonAtacar.dibujar();
+        this.drawConnectionsBySea();
     }
 
     procesarControles() {
@@ -168,7 +170,7 @@ class GameLayer extends Layer {
         ficheroI.onreadystatechange = function () {
             let text = ficheroI.responseText;
             let json = JSON.parse(text);
-            console.log(json);
+            // console.log(json);
             for (let key in this.provincias) {
                 if (this.provincias.hasOwnProperty(key)) {
                     if (this.provincias.hasOwnProperty(key)) {
@@ -214,7 +216,7 @@ class GameLayer extends Layer {
         ficheroI.onreadystatechange = function () {
             let text = ficheroI.responseText;
             let json = JSON.parse(text);
-            console.log(json);
+            // console.log(json);
             for (let key in this.continentes) {
                 if (this.continentes.hasOwnProperty(key)) {
                     if (this.continentes.hasOwnProperty(key)) {
@@ -230,5 +232,25 @@ class GameLayer extends Layer {
         let names = [];
         // dialogo para pedir nombres...
         return names;
+    }
+
+    drawConnectionsBySea() {
+        for (let key in this.provincias) {
+            if (this.provincias.hasOwnProperty(key)) {
+                let adj = this.provincias[key].getAdjacentProvincesBySea();
+                if (adj.length !== 0) {
+                    adj.forEach(p => {
+                        // console.log(p);
+                        contexto.beginPath();
+                        contexto.strokeStyle = "black";
+                        contexto.setLineDash([3, 9]);
+                        // console.log("Centroid1 (" + this.provincias[key].centroid.x + ", " + this.provincias[key].centroid.y + ") - Centroid2 (" + this.provincias[p].centroid.x + ", " + this.provincias[p].centroid.y + ")");
+                        contexto.moveTo(this.provincias[key].centroid.x * tileSize, this.provincias[key].centroid.y * tileSize);
+                        contexto.lineTo(this.provincias[p].centroid.x * tileSize, this.provincias[p].centroid.y * tileSize);
+                        contexto.stroke();
+                    });
+                }
+            }
+        }
     }
 }

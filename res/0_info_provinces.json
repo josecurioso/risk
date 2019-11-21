@@ -2,131 +2,238 @@
   "A": {
     "climate": 2,
     "hasSea": true,
-    "connections": ["B", "S", "U"]
+    "connections": [
+      "B",
+      "S"
+    ]
   },
   "B": {
     "climate": 3,
     "hasSea": true,
-    "connections": ["A", "C", "U"]
+    "connections": [
+      "A",
+      "C",
+      "U"
+    ]
   },
   "C": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["B", "D"]
+    "connections": [
+      "B",
+      "D"
+    ]
   },
   "D": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["C", "V", "T-"]
+    "connections": [
+      "C",
+      "V",
+      "T-"
+    ]
   },
   "E": {
     "climate": 0,
     "hasSea": true,
-    "connections": ["V"]
+    "connections": [
+      "V"
+    ]
   },
   "F": {
     "climate": 2,
     "hasSea": true,
-    "connections": ["W", "S-", "X", "G"]
+    "connections": [
+      "W",
+      "S-",
+      "X",
+      "G"
+    ]
   },
   "G": {
     "climate": 3,
     "hasSea": true,
-    "connections": ["W", "I", "P", "X", "Q", "F"]
+    "connections": [
+      "W",
+      "I",
+      "P",
+      "X",
+      "Q",
+      "F"
+    ]
   },
   "H": {
     "climate": 0,
     "hasSea": false,
-    "connections": ["T", "J", "U"]
+    "connections": [
+      "T",
+      "J",
+      "U"
+    ]
   },
   "I": {
     "climate": 0,
     "hasSea": true,
-    "connections": ["P", "G", "U"]
+    "connections": [
+      "P",
+      "G",
+      "U"
+    ]
   },
   "J": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["H", "Z-", "U", "T"]
+    "connections": [
+      "H",
+      "Z-",
+      "U",
+      "T"
+    ]
   },
   "K": {
     "climate": 2,
     "hasSea": true,
-    "connections": ["L", "Q", "X"]
+    "connections": [
+      "L",
+      "Q",
+      "X"
+    ]
   },
   "L": {
     "climate": 3,
     "hasSea": true,
-    "connections": ["K", "P", "M", "Q"]
+    "connections": [
+      "K",
+      "P",
+      "M",
+      "Q"
+    ]
   },
   "M": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["P", "R", "O", "L"]
+    "connections": [
+      "P",
+      "R",
+      "O",
+      "L"
+    ]
   },
   "N": {
     "climate": 0,
     "hasSea": true,
-    "connections": ["Y"]
+    "connections": [
+      "Y"
+    ]
   },
   "O": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["M", "Y-"]
+    "connections": [
+      "M",
+      "Y-"
+    ]
   },
   "P": {
     "climate": 3,
     "hasSea": false,
-    "connections": ["Q", "G", "R", "M", "L", "I"]
+    "connections": [
+      "Q",
+      "G",
+      "R",
+      "M",
+      "L",
+      "I"
+    ]
   },
   "Q": {
     "climate": 3,
     "hasSea": false,
-    "connections": ["P", "G", "L", "X", "K"]
+    "connections": [
+      "P",
+      "G",
+      "L",
+      "X",
+      "K"
+    ]
   },
   "R": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["M", "P"]
+    "connections": [
+      "M",
+      "P"
+    ]
   },
   "S": {
     "climate": 2,
     "hasSea": true,
-    "connections": ["A", "F-"]
+    "connections": [
+      "A",
+      "F-"
+    ]
   },
   "T": {
     "climate": 0,
     "hasSea": true,
-    "connections": ["U", "H", "J", "D-"]
+    "connections": [
+      "U",
+      "H",
+      "J",
+      "D-",
+      "W-"
+    ]
   },
   "U": {
     "climate": 0,
     "hasSea": true,
-    "connections": ["W-", "T", "I", "H", "J"]
+    "connections": [
+      "T",
+      "I",
+      "H",
+      "J"
+    ]
   },
   "V": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["D", "E"]
+    "connections": [
+      "D",
+      "E"
+    ]
   },
   "W": {
     "climate": 3,
     "hasSea": true,
-    "connections": ["G", "F", "U-"]
+    "connections": [
+      "G",
+      "F",
+      "T-"
+    ]
   },
   "X": {
     "climate": 2,
     "hasSea": true,
-    "connections": ["Q", "G", "F", "K"]
+    "connections": [
+      "Q",
+      "G",
+      "F",
+      "K"
+    ]
   },
   "Y": {
     "climate": 0,
     "hasSea": true,
-    "connections": ["N", "O-"]
+    "connections": [
+      "N",
+      "O-"
+    ]
   },
   "Z": {
     "climate": 1,
     "hasSea": true,
-    "connections": ["J-"]
+    "connections": [
+      "J-"
+    ]
   }
 }
