@@ -48,10 +48,12 @@ class GameLayer extends Layer {
 
         this.jugadores = ["Miguel", "Nacho", "Jose"];
         // this.jugadores = this.requestPlayerNames();
+        // acordarse de meter la IA -> this.jugadores.push(new IA().playerIA);
         this.numeroJugadores = this.jugadores.length;
 
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(this.provincias).length, 3);
-        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.jugadores);
+        this.gestorDeTerritorios = new GestorDeTerritorios();
 
         this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.925);
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
@@ -233,68 +235,12 @@ class GameLayer extends Layer {
         this.isPlayerSelecting = true;
     }
 
-    /*
-    This method checks:
-        * Provinces are connected
-        * Province A belongs to current player
-        * Province B does NOT belong to current player
-    */
     validateAttack(provinceA, provinceB) {
-        return (this.provincesConnectedByGround(provinceA, provinceB) || this.provincesConnectedBySea(provinceA, provinceB)) && this.currentPlayerHasProvince(provinceA) && !this.currentPlayerHasProvince(provinceB);
+        return this.gestorDeTerritorios.validateAttack(provinceA, provinceB);
     }
 
-    /*
-    This method checks:
-        * Provinces are connected
-        * Province A belongs to current player
-        * Province B also belongs to current player
-    */
     validateMove(provinceA, provinceB) {
-        return (this.provincesConnectedByGround(provinceA, provinceB) || this.provincesConnectedBySea(provinceA, provinceB)) && this.currentPlayerHasProvince(provinceA) && this.currentPlayerHasProvince(provinceB);
-    }
-
-    currentPlayerHasProvince(province) {
-        let result = false;
-        if (province !== null) {
-            this.gestorDeTurnos.getCurrentPlayer().conqueredTerritories.forEach(p => {
-                if (p.code === province.code) {
-                    result = true;
-                }
-            });
-        }
-        return result;
-    }
-
-    provincesConnectedByGround(provinceA, provinceB) {
-        let result1 = false;
-        let result2 = false;
-        provinceA.getAdjacentProvincesByGround().forEach(p => {
-            if (p === provinceB.code) {
-                result1 = true;
-            }
-        });
-        provinceB.getAdjacentProvincesByGround().forEach(p => {
-            if (p === provinceA.code) {
-                result2 = true;
-            }
-        });
-        return result1 && result2;
-    }
-
-    provincesConnectedBySea(provinceA, provinceB) {
-        let result1 = false;
-        let result2 = false;
-        provinceA.getAdjacentProvincesBySea().forEach(p => {
-            if (p === provinceB.code) {
-                result1 = true;
-            }
-        });
-        provinceB.getAdjacentProvincesBySea().forEach(p => {
-            if (p === provinceA.code) {
-                result2 = true;
-            }
-        });
-        return result1 && result2;
+        return this.gestorDeTerritorios.validateMove(provinceA, provinceB);
     }
 
     addContinentInfo(rutaInfo) {

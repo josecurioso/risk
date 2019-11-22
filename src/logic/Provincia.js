@@ -8,6 +8,7 @@ class Provincia {
         this.connections = null;
         this.owner = null;
         this.units = 0;
+        this.hasFarm = [false, 0]; // true si hay granja, el valor representa cuánto se va a sumar
     }
 
     calculateMidPosition() {
