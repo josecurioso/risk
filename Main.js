@@ -1,6 +1,8 @@
 // Canvas y contexto del Canvas
 var canvas = document.getElementById("canvas");
+//var canvasText = document.getElementById("canvasText");
 var contexto = canvas.getContext("2d");
+//var contextoText = canvasText.getContext("2d");
 var escaladoMinimo = 1;
 
 // Controles
@@ -14,6 +16,7 @@ var menuLayer;
 // Inicio capas y bucle del juego
 function iniciarJuego() {
     menuLayer = new GameLayer();
+    //menuLayer = new MenuLayer();
     layer = menuLayer;
     setInterval(loop, 1000 / 30);
 }
@@ -50,5 +53,9 @@ function resize() {
     canvas.width = canvas.width * escaladoMinimo;
     canvas.height = canvas.height * escaladoMinimo;
 
+    //canvasText.width = canvasText.width * escaladoMinimo;
+    //canvasText.height = canvasText.height * escaladoMinimo;
+
     contexto.scale(escaladoMinimo, escaladoMinimo);
+    //contextoText.scale(escaladoMinimo, escaladoMinimo);
 }

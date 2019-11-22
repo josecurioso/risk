@@ -10,7 +10,7 @@ class Modelo {
     }
 
     estaEnPantalla() {
-        return (this.x - gameLayer.scrollX) - this.ancho / 2 <= 480 &&
+        return (this.x - gameLayer.scrollX) - this.ancho / 2 <= 600 &&
             (this.x - gameLayer.scrollX) + this.ancho / 2 >= 0 &&
             this.y - this.alto / 2 <= 320 &&
             this.y + this.alto / 2 >= 0;

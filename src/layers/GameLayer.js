@@ -58,6 +58,8 @@ class GameLayer extends Layer {
         this.botonSummary = new Boton(imagenes.summary, 600 * 0.055, 320 * 0.9, true);
         this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
 
+
+
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
         this.gameState = gameStates.gameInit;
@@ -71,6 +73,8 @@ class GameLayer extends Layer {
     actualizar() {
     }
 
+
+
     dibujar() {
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
@@ -78,6 +82,21 @@ class GameLayer extends Layer {
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.drawConnectionsBySea();
+
+
+        /*
+        if(this.gameState === gameStates.gameInit) {
+            this.renderInput();
+        }
+        else {
+            this.mapa.dibujar();
+            this.botonAtacar.dibujar();
+            this.botonSummary.dibujar();
+            this.turnOverlay.dibujar();
+            this.turnoActual.dibujar();
+            this.drawConnectionsBySea();
+        }
+        */
     }
 
     procesarControles() {
