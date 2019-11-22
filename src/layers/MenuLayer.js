@@ -28,7 +28,6 @@ class MenuLayer extends Layer {
         this.boton_remove.pulsado = false;
 
         for (let i = 0; i < pulsaciones.length; i++) {
-            console.log("pulsacion")
             if (this.boton_empezar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                 this.boton_empezar.pulsado = true;
                 if (pulsaciones[i].tipo === tipoPulsacion.inicio) {

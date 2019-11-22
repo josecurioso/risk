@@ -53,7 +53,7 @@ class GameLayer extends Layer {
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(this.provincias).length, 3);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.jugadores);
 
-        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.925);
+        this.turnoActual = new Texto(this.gestorDeTurnos.jugadorActual, 600 * 0.45, 320 * 0.925, "20px Arial");
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
         this.botonSummary = new Boton(imagenes.summary, 600 * 0.055, 320 * 0.9, true);
         this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
@@ -143,8 +143,7 @@ class GameLayer extends Layer {
     }
 
     calcularPulsaciones(pulsaciones) {
-        let g = new GestorDeEventos(this.provincias, this.gestorDeTurnos, "res/0_info_bonus.json");
-        g.loadEventsFile();
+        console.log("entra")
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
                 if(this.gameState !== gameStates.gameInit){
