@@ -1,13 +1,17 @@
 class Texto {
 
-    constructor(valor, x, y) {
+    constructor(valor, x, y, sizeFont) {
         this.valor = valor;
         this.x = x;
         this.y = y;
+        if(sizeFont == undefined){
+            this.sizeFont = "20px Arial";
+        }
+        this.sizeFont = sizeFont;
     }
 
     dibujar() {
-        contexto.font = "20px Arial";
+        contexto.font = this.sizeFont;
         contexto.fillStyle = "white";
         contexto.textAlign = "left";
         contexto.fillText(this.valor, this.x, this.y);

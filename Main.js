@@ -16,7 +16,7 @@ var menuLayer;
 // Inicio capas y bucle del juego
 function iniciarJuego() {
     menuLayer = new GameLayer();
-    //menuLayer = new MenuLayer();
+    menuLayer = new MenuLayer();
     layer = menuLayer;
     setInterval(loop, 1000 / 30);
 }

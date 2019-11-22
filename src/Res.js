@@ -3,7 +3,7 @@ var imagenes = {
     tile_neutra: "res/tile_neutra.png", // colores de las tiles ya no se necesitan, se pinta directamente desde el canvas
     tile_roja: "res/tile_roja.png",
     tile_azul: "res/tile_azul.png",
-    menu_fondo: "res/menu_fondo.png",
+    menu_fondo: "res/menu.png",
     attack: "res/attack_new_small.png",
     boton_empezar: "res/empezar.png",
     boton_add: "res/add_players.png",
