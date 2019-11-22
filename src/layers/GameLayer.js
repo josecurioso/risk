@@ -143,6 +143,8 @@ class GameLayer extends Layer {
     }
 
     calcularPulsaciones(pulsaciones) {
+        let g = new GestorDeEventos(this.provincias, this.gestorDeTurnos, "res/0_info_bonus.json");
+        g.loadEventsFile();
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
                 if(this.gameState !== gameStates.gameInit){
@@ -232,21 +234,21 @@ class GameLayer extends Layer {
     }
 
     /*
-        This method checks:
-            * Provinces are connected
-            * Province A belongs to current player
-            * Province B does NOT belong to current player
-     */
+    This method checks:
+        * Provinces are connected
+        * Province A belongs to current player
+        * Province B does NOT belong to current player
+    */
     validateAttack(provinceA, provinceB) {
         return (this.provincesConnectedByGround(provinceA, provinceB) || this.provincesConnectedBySea(provinceA, provinceB)) && this.currentPlayerHasProvince(provinceA) && !this.currentPlayerHasProvince(provinceB);
     }
 
     /*
-        This method checks:
-            * Provinces are connected
-            * Province A belongs to current player
-            * Province B also belongs to current player
-     */
+    This method checks:
+        * Provinces are connected
+        * Province A belongs to current player
+        * Province B also belongs to current player
+    */
     validateMove(provinceA, provinceB) {
         return (this.provincesConnectedByGround(provinceA, provinceB) || this.provincesConnectedBySea(provinceA, provinceB)) && this.currentPlayerHasProvince(provinceA) && this.currentPlayerHasProvince(provinceB);
     }

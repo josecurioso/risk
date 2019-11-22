@@ -1,0 +1,42 @@
+{
+  "negativeBonuses": {
+    "tsunami": [
+      0.25,
+      ""
+    ],
+    "sandstorm": [
+      0.15,
+      "desert"
+    ],
+    "hurricane": [
+      0.15,
+      "tropical"
+    ],
+    "snowstorm": [
+      0.15,
+      "snowy"
+    ],
+    "floods": [
+      0.15,
+      "oceanic"
+    ]
+  },
+  "positiveBonuses": {
+    "oasis": [
+      0.2,
+      "desert"
+    ],
+    "igloo": [
+      0.2,
+      "snowy"
+    ],
+    "beach": [
+      0.2,
+      "tropical"
+    ],
+    "farm": [
+      0.2,
+      "oceanic"
+    ]
+  }
+}

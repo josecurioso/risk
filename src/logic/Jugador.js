@@ -28,6 +28,7 @@ class Jugador {
     }
 
     conquestProvince(province) {
+        province.owner = this.teamCode;
         this.conqueredTerritories.push(province);
     }
 
@@ -35,45 +36,60 @@ class Jugador {
         this.provinceDefended = province;
     }
 
+    incrementUnits(units, province) {
+        if(province.owner === this.teamCode) {
+            this.totalUnits += units;
+            province.units += units;
+        } else {
+            console.log("Not the owner, cannot add");
+        }
+    }
+
     substractUnits(units, province) {
-        // total del jugador
-        this.totalUnits -= units;
-        for (let i = 0; i < this.valueOneUnits.length; i++) {
-            if (this.valueOneUnits[i].province === province) {
-                if (units > 0) {
-                    i = i - 1;
-                    this.valueOneUnits.splice(i, 1);
-                    units--;
-                } else {
-                    break;
-                }
-            }
+        if(province.owner === this.teamCode) {
+            this.totalUnits -= units;
+            province.units -= units;
+        } else {
+            console.log("Not the owner, cannot substract");
         }
-        if (units > 0) {
-            for (let i = 0; i < this.valueThreeUnits.length; i++) {
-                if (this.valueThreeUnits[i].province === province) {
-                    if (units > 0) {
-                        i = i - 1;
-                        this.valueThreeUnits.splice(i, 1);
-                        units -= 3;
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-        if (units > 0) {
-            for (let i = 0; i < this.valueFiveUnits.length; i++) {
-                if (this.valueFiveUnits[i].province === province) {
-                    if (units > 0) {
-                        i = i - 1;
-                        this.valueFiveUnits.splice(i, 1);
-                        units -= 5;
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
+
+        // this.totalUnits -= units;
+        // for (let i = 0; i < this.valueOneUnits.length; i++) {
+        //     if (this.valueOneUnits[i].province === province) {
+        //         if (units > 0) {
+        //             i = i - 1;
+        //             this.valueOneUnits.splice(i, 1);
+        //             units--;
+        //         } else {
+        //             break;
+        //         }
+        //     }
+        // }
+        // if (units > 0) {
+        //     for (let i = 0; i < this.valueThreeUnits.length; i++) {
+        //         if (this.valueThreeUnits[i].province === province) {
+        //             if (units > 0) {
+        //                 i = i - 1;
+        //                 this.valueThreeUnits.splice(i, 1);
+        //                 units -= 3;
+        //             } else {
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
+        // if (units > 0) {
+        //     for (let i = 0; i < this.valueFiveUnits.length; i++) {
+        //         if (this.valueFiveUnits[i].province === province) {
+        //             if (units > 0) {
+        //                 i = i - 1;
+        //                 this.valueFiveUnits.splice(i, 1);
+        //                 units -= 5;
+        //             } else {
+        //                 break;
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
