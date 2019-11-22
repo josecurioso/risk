@@ -1,6 +1,6 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeUnidades, playerOrder) {
+    constructor(gestorDeTerritorios, gestorDeUnidades, playerOrder) {
         this.playerOrder = playerOrder;
         this.listPos = 0;
         this.jugadorActual = this.playerOrder[this.listPos];
@@ -22,11 +22,16 @@ class GestorDeTurnos {
         this.turnosCount++;
     }
 
-    play(attack, otherPlayer, dicesAttacker, dicesDefender) {
+    play(attack, from, to, otherPlayer, dicesAttacker, dicesDefender) {
         // Suma inicial del turno para unidades a colocar en el tablero
         let playerPoints = this.jugadorActual.calculateTotalPoints();
         let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
         let unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerPoints, playerTerritoriesCount);
+
+        /* ⚠⚠️⚠
+           REVISAR ESTA LÓGICA, USAR LOS MÉTODOS DE GESTOR DE TERRITORIOS Y DEMÁS
+           ⚠️⚠️⚠️
+         */
 
         // Si se ataca, se consume el turno
         if (attack) {
@@ -42,7 +47,14 @@ class GestorDeTurnos {
                 this.changePlayer();
             }
         } else {
-            // recolocación de unidades a provincias con comunicación directa
+            // farmeo, consume turno
+            if(to.hasFarm[0] && to.owner === this.jugadorActual.code) {
+                console.log("Farmeando...");
+                this.jugadorActual.totalUnits += to.hasFarm[1];
+                this.changePlayer();
+            } else {
+                // recolocación de unidades a provincias con comunicación directa
+            }
         }
     }
 }

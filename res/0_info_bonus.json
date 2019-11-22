@@ -38,5 +38,10 @@
       0.2,
       "oceanic"
     ]
+  },
+  "farm": {
+    "civilians": 1,
+    "horses": 3,
+    "wood": 5
   }
 }
