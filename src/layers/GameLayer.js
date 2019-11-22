@@ -60,6 +60,7 @@ class GameLayer extends Layer {
 
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
+        this.gameState = gameStates.gameInit;
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
         this.addProvinceInfo("res/" + nivelActual + "_info_provinces.json");
@@ -125,43 +126,48 @@ class GameLayer extends Layer {
     calcularPulsaciones(pulsaciones) {
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
-                let clickedTile = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
-                if (clickedTile !== undefined) {
-                    console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
-                    console.log("   Coords: " + pulsaciones[i].x + ", " + pulsaciones[i].y);
-                    console.log("   Continente: " + clickedTile.continente.code);
-                    console.log("   Provincia: " + clickedTile.province.code);
-                    console.log("   Climate: " + clickedTile.province.climate);
-                    console.log("   hasSea? " + clickedTile.province.hasSea);
+                if(this.gameState !== gameStates.gameInit){
+                    let clickedTile = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
+                    if (clickedTile !== undefined) {
+                        console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
+                        console.log("   Coords: " + pulsaciones[i].x + ", " + pulsaciones[i].y);
+                        console.log("   Continente: " + clickedTile.continente.code);
+                        console.log("   Provincia: " + clickedTile.province.code);
+                        console.log("   Climate: " + clickedTile.province.climate);
+                        console.log("   hasSea? " + clickedTile.province.hasSea);
 
-                    if (this.gameState === gameStates.playerMoving && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un movimiento
-                        this.clickedProvinces.push(clickedTile.province);
-                        if (this.clickedProvinces.length === 2 && this.validateMove(clickedTile[0], clickedTile[1])) {
-                            //Show prompt for number of units to move
-                        } else {
-                            // Show message informing of invalid move
+                        if (this.gameState === gameStates.playerMoving && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un movimiento
+                            this.clickedProvinces.push(clickedTile.province);
+                            if (this.clickedProvinces.length === 2 && this.validateMove(clickedTile[0], clickedTile[1])) {
+                                //Show prompt for number of units to move
+                            } else {
+                                // Show message informing of invalid move
+                            }
+                        } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
+                            this.clickedProvinces.push(clickedTile.province);
+                            if (this.clickedProvinces.length === 2 && this.validateAttack(clickedTile[0], clickedTile[1])) {
+                                //Show prompt for number of units to attack
+                            } else {
+                                // Show message informing of invalid attack
+                            }
                         }
-                    } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
-                        this.clickedProvinces.push(clickedTile.province);
-                        if (this.clickedProvinces.length === 2 && this.validateAttack(clickedTile[0], clickedTile[1])) {
-                            //Show prompt for number of units to attack
-                        } else {
-                            // Show message informing of invalid attack
+                    } else {
+                        //Aqui irán los clicks en elementos del hud
+                        if(this.botonSummary.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                            //summary
+                            console.log("Button summary clicked");
+                        }
+                        else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                            //atacar
+                            console.log("Button attack clicked");
+                        }
+                        else{
+                            console.log("Click en agua");
                         }
                     }
-                } else {
-                    //Aqui irán los clicks en elementos del hud
-                    if(this.botonSummary.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
-                        //summary
-                        console.log("Button summary clicked");
-                    }
-                    else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
-                        //atacar
-                        console.log("Button attack clicked");
-                    }
-                    else{
-                        console.log("Click en agua");
-                    }
+                }
+                else{ // game init controls
+
                 }
             }
         }

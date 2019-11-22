@@ -6,6 +6,7 @@ var climates = ["desert", "tropical", "snowy", "oceanic"];
 var gameStates = {
     playerAttacking : 1,
     playerMoving : 2,
+    gameInit : 3,
 }
 
 // old variables
