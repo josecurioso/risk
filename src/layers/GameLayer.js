@@ -14,6 +14,14 @@ class GameLayer extends Layer {
         this.botonDice = new Boton(imagenes.dice, 600 * 0.175, 320 * 0.9, true);
         this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
 
+        // Troops Dialog
+        let dialogX = 0.5;
+        let dialogY = 0.5;
+        this.tDialogBackground = new Boton(imagenes.tDialogBackground, 600 * dialogX, 320 * dialogY, false);
+        this.tDialogAdd = new Boton(imagenes.tDialogAdd, 600 * (dialogX+0.12), 320 * (dialogY+0.11), true);
+        this.tDialogRemove = new Boton(imagenes.tDialogRemove, 600 * (dialogX+0.18), 320 * (dialogY+0.11), true);
+        this.tDialogOk = new Boton(imagenes.tDialogOk, 600 * dialogX, 320 * (dialogY+0.08), true);
+
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
@@ -50,6 +58,12 @@ class GameLayer extends Layer {
         this.turnoActual.dibujar();
         this.botonDice.dibujar();
         this.drawConnectionsBySea();
+
+        // Dialogo tropas
+        this.tDialogBackground.dibujar();
+        this.tDialogAdd.dibujar();
+        this.tDialogRemove.dibujar();
+        this.tDialogOk.dibujar();
     }
 
     calcularPulsaciones(pulsaciones) {

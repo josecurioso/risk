@@ -9,6 +9,10 @@ var imagenes = {
     summary: "res/summary_small.png",
     turn: "res/turn_small.png",
     dice: "res/dice.png",
+    tDialogAdd: "res/add_troops.png",
+    tDialogRemove: "res/remove_troops.png",
+    tDialogOk: "res/accept.png",
+    tDialogBackground: "res/dialog_troops.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
