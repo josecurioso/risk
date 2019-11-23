@@ -49,6 +49,7 @@ class GameLayer extends Layer {
         this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial");
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
         this.botonSummary = new Boton(imagenes.summary, 600 * 0.055, 320 * 0.9, true);
+        this.botonDice = new Boton(imagenes.dice, 600 * 0.175, 320 * 0.9, true);
         this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
 
         // Configurar jugadores
@@ -85,6 +86,7 @@ class GameLayer extends Layer {
         this.botonSummary.dibujar();
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
+        this.botonDice.dibujar();
         this.drawConnectionsBySea();
     }
 
@@ -204,21 +206,21 @@ class GameLayer extends Layer {
     }
 
     cargarObjetoMapa(simboloC, simboloP, x, y) {
-        if (this.continentes[simboloC] !== undefined && this.provincias[simboloP] !== undefined) {
-            let tile = new Tile(x, y, this.continentes[simboloC], this.provincias[simboloP]);
-            if (!this.continentes[simboloC].provincias.includes(this.provincias[simboloP])) {
-                this.continentes[simboloC].provincias.push(this.provincias[simboloP]);
+        if (continentes[simboloC] !== undefined && provincias[simboloP] !== undefined) {
+            let tile = new Tile(x, y, continentes[simboloC], provincias[simboloP]);
+            if (!continentes[simboloC].provincias.includes(provincias[simboloP])) {
+                continentes[simboloC].provincias.push(provincias[simboloP]);
             }
-            this.provincias[simboloP].tiles.push(tile);
+            provincias[simboloP].tiles.push(tile);
             this.mapa.addTile(tile, x, y);
         }
     }
 
     calculateCentroids() {
-        for (let key in this.provincias)
-            if (this.provincias.hasOwnProperty(key)) {
-                this.provincias[key].calculateCentroid();
-                console.log("Calculated centroid: " + this.provincias[key].centroid.x + " " + this.provincias[key].centroid.y + " (for " + this.provincias[key].code + " province)");
+        for (let key in provincias)
+            if (provincias.hasOwnProperty(key)) {
+                provincias[key].calculateCentroid();
+                // console.log("Calculated centroid: " + provincias[key].centroid.x + " " + provincias[key].centroid.y + " (for " + provincias[key].code + " province)");
             }
     }
 
@@ -229,10 +231,10 @@ class GameLayer extends Layer {
             let text = ficheroI.responseText;
             let json = JSON.parse(text);
             // console.log(json);
-            for (let key in this.continentes) {
-                if (this.continentes.hasOwnProperty(key)) {
-                    if (this.continentes.hasOwnProperty(key)) {
-                        this.continentes[key].bonus = json[key].bonus;
+            for (let key in continentes) {
+                if (continentes.hasOwnProperty(key)) {
+                    if (continentes.hasOwnProperty(key)) {
+                        continentes[key].bonus = json[key].bonus;
                     }
                 }
             }
@@ -247,12 +249,12 @@ class GameLayer extends Layer {
             let text = ficheroI.responseText;
             let json = JSON.parse(text);
             // console.log(json);
-            for (let key in this.provincias) {
-                if (this.provincias.hasOwnProperty(key)) {
-                    if (this.provincias.hasOwnProperty(key)) {
-                        this.provincias[key].climate = climates[json[key].climate];
-                        this.provincias[key].hasSea = json[key].hasSea;
-                        this.provincias[key].connections = json[key].connections;
+            for (let key in provincias) {
+                if (provincias.hasOwnProperty(key)) {
+                    if (provincias.hasOwnProperty(key)) {
+                        provincias[key].climate = climates[json[key].climate];
+                        provincias[key].hasSea = json[key].hasSea;
+                        provincias[key].connections = json[key].connections;
                     }
                 }
             }
@@ -261,18 +263,18 @@ class GameLayer extends Layer {
     }
 
     drawConnectionsBySea() {
-        for (let key in this.provincias) {
-            if (this.provincias.hasOwnProperty(key)) {
-                let adj = this.provincias[key].getAdjacentProvincesBySea();
+        for (let key in provincias) {
+            if (provincias.hasOwnProperty(key)) {
+                let adj = provincias[key].getAdjacentProvincesBySea();
                 if (adj.length !== 0) {
                     adj.forEach(p => {
                         // console.log(p);
                         contexto.beginPath();
                         contexto.strokeStyle = "black";
                         contexto.setLineDash([3, 9]);
-                        // console.log("Centroid1 (" + this.provincias[key].centroid.x + ", " + this.provincias[key].centroid.y + ") - Centroid2 (" + this.provincias[p].centroid.x + ", " + this.provincias[p].centroid.y + ")");
-                        contexto.moveTo(this.provincias[key].centroid.x * tileSize, this.provincias[key].centroid.y * tileSize);
-                        contexto.lineTo(this.provincias[p].centroid.x * tileSize, this.provincias[p].centroid.y * tileSize);
+                        // console.log("Centroid1 (" + provincias[key].centroid.x + ", " + provincias[key].centroid.y + ") - Centroid2 (" + provincias[p].centroid.x + ", " + provincias[p].centroid.y + ")");
+                        contexto.moveTo(provincias[key].centroid.x * tileSize, provincias[key].centroid.y * tileSize);
+                        contexto.lineTo(provincias[p].centroid.x * tileSize, provincias[p].centroid.y * tileSize);
                         contexto.stroke();
                     });
                 }
