@@ -1,10 +1,8 @@
 class Jugador {
 
-    constructor(teamCode) {
+    constructor(teamCode, climate) {
         this.teamCode = teamCode;
-        this.valueOneUnits = [];
-        this.valueThreeUnits = [];
-        this.valueFiveUnits = [];
+        this.climateBonus = climate;
         this.totalUnits = 0;
         this.conqueredTerritories = []; // provincias
         this.conqueredContinets = []; // continents
@@ -37,7 +35,7 @@ class Jugador {
     }
 
     incrementUnits(units, province) {
-        if(province.owner === this.teamCode) {
+        if (province.owner === this.teamCode) {
             this.totalUnits += units;
             province.units += units;
         } else {
@@ -46,50 +44,11 @@ class Jugador {
     }
 
     substractUnits(units, province) {
-        if(province.owner === this.teamCode) {
+        if (province.owner === this.teamCode) {
             this.totalUnits -= units;
             province.units -= units;
         } else {
             console.log("Not the owner, cannot substract");
         }
-
-        // this.totalUnits -= units;
-        // for (let i = 0; i < this.valueOneUnits.length; i++) {
-        //     if (this.valueOneUnits[i].province === province) {
-        //         if (units > 0) {
-        //             i = i - 1;
-        //             this.valueOneUnits.splice(i, 1);
-        //             units--;
-        //         } else {
-        //             break;
-        //         }
-        //     }
-        // }
-        // if (units > 0) {
-        //     for (let i = 0; i < this.valueThreeUnits.length; i++) {
-        //         if (this.valueThreeUnits[i].province === province) {
-        //             if (units > 0) {
-        //                 i = i - 1;
-        //                 this.valueThreeUnits.splice(i, 1);
-        //                 units -= 3;
-        //             } else {
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
-        // if (units > 0) {
-        //     for (let i = 0; i < this.valueFiveUnits.length; i++) {
-        //         if (this.valueFiveUnits[i].province === province) {
-        //             if (units > 0) {
-        //                 i = i - 1;
-        //                 this.valueFiveUnits.splice(i, 1);
-        //                 units -= 5;
-        //             } else {
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
     }
 }

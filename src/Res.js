@@ -1,8 +1,5 @@
 // Lista rerecursos a precargar
 var imagenes = {
-    tile_neutra: "res/tile_neutra.png", // colores de las tiles ya no se necesitan, se pinta directamente desde el canvas
-    tile_roja: "res/tile_roja.png",
-    tile_azul: "res/tile_azul.png",
     menu_fondo: "res/menu.png",
     attack: "res/attack_new_small.png",
     boton_empezar: "res/empezar.png",
@@ -11,6 +8,7 @@ var imagenes = {
     fondo_mar: "res/fondo.jpg",
     summary: "res/summary_small.png",
     turn: "res/turn_small.png",
+    dice: "res/dice.png",
 };
 
 var rutasImagenes = Object.values(imagenes);
