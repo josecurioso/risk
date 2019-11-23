@@ -1,13 +1,13 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeTerritorios, gestorDeUnidades, playerOrder, cartelTurno, summary) {
+    constructor(gestorDeTerritorios, gestorDeUnidades, gestorDeTextos, playerOrder, cartelTurno) {
         this.playerOrder = playerOrder;
         this.listPos = 0;
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount = 0;
         this.gestorDeUnidades = gestorDeUnidades;
         this.gestorDeDados = new GestorDeDados();
-        this.gestorDeTextos = new GestorDeTextos(summary);
+        this.gestorDeTextos = gestorDeTextos;
         this.cartelTurno = cartelTurno;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
         this.cartelTurno.valor = this.jugadorActual.teamCode;

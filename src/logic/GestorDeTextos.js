@@ -1,26 +1,19 @@
 class GestorDeTextos {
 
-    constructor(where) {
-        this.where = where;
+    constructor(whereBase) {
+        this.whereBase = whereBase;
         this.bufferLength = 10;
-        this.written = 0;
+        this.written = [];
     }
 
     writeTurnAction(jugador, action) {
-        if(this.written > this.bufferLength) {
-            this.where.valor = "";
-            this.written = 0;
+        if (this.written.length > this.bufferLength) {
+            this.written = [];
         }
-        this.where.valor += "[" + jugador + "]:" + action + "\n";
-        this.written++;
+        this.written.push(new Texto("[" + jugador + "]:" + action, this.whereBase.x + 5, this.whereBase.y + 5,"5px Arial"));
     }
 
     writeTurnActionCustom(where, jugador, action) {
-        if(this.written > this.bufferLength) {
-            this.where.valor = "";
-            this.written = 0;
-        }
-        where.valor = "[" + jugador + "]:" + action;
-        this.written++;
+        // TODO: genérico
     }
 }

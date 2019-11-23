@@ -12,7 +12,7 @@ class GameLayer extends Layer {
         this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial");
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
         this.summaryOverlay = new Boton(imagenes.messages, 600 * 0.11, 320 * 0.825, true);
-        this.summaryText = new Texto("placeholder", 600 * 0.025, 320 * 0.71, "5px Arial");
+        this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial");
         this.botonDice = new Boton(imagenes.dice, 600 * 0.175, 320 * 0.9, true);
 
         // Troops Dialog
@@ -35,7 +35,8 @@ class GameLayer extends Layer {
 
         //Configurar gestores
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
-        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.jugadores, this.turnoActual, this.summaryText);
+        this.gestorDeTextos = new GestorDeTextos(this.summaryTextBase);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.jugadores, this.turnoActual, this.summaryTextBase);
         this.gestorDeTerritorios = new GestorDeTerritorios();
 
         this.gestorDeTurnos.changePlayer();
@@ -57,7 +58,7 @@ class GameLayer extends Layer {
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
         this.summaryOverlay.dibujar();
-        this.summaryText.dibujar();
+        this.gestorDeTextos.written.forEach(t => t.dibujar());
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.botonDice.dibujar();
