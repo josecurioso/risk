@@ -8,11 +8,12 @@ class GameLayer extends Layer {
     iniciar(playerAmount) {
         this.mapa = new Mapa(60, 80);
 
+        this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
         this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial");
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
-        this.botonSummary = new Boton(imagenes.summary, 600 * 0.055, 320 * 0.9, true);
+        this.summaryOverlay = new Boton(imagenes.messages, 600 * 0.11, 320 * 0.825, true);
+        this.summaryText = new Texto("placeholder", 600 * 0.025, 320 * 0.71, "5px Arial");
         this.botonDice = new Boton(imagenes.dice, 600 * 0.175, 320 * 0.9, true);
-        this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
 
         // Troops Dialog
         let dialogX = 0.5;
@@ -32,7 +33,7 @@ class GameLayer extends Layer {
 
         //Configurar gestores
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
-        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.jugadores, this.turnoActual);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.jugadores, this.turnoActual, this.summaryText);
         this.gestorDeTerritorios = new GestorDeTerritorios();
 
         this.gestorDeTurnos.changePlayer();
@@ -53,7 +54,8 @@ class GameLayer extends Layer {
     dibujar() {
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
-        this.botonSummary.dibujar();
+        this.summaryOverlay.dibujar();
+        this.summaryText.dibujar();
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.botonDice.dibujar();
@@ -68,9 +70,7 @@ class GameLayer extends Layer {
 
     calcularPulsaciones(pulsaciones) {
         this.botonAtacar.pulsado = false;
-        this.botonSummary.pulsado = false;
         let tilePulsada = false;
-
 
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
@@ -78,10 +78,6 @@ class GameLayer extends Layer {
                 if (t !== undefined) {
                     tilePulsada = true;
                     clickedTile = t;
-                }
-                if(this.botonSummary.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
-                        this.botonSummary.pulsado = true;
-                        controles.showSummary = true;
                 }
                 else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
                     this.botonAtacar.pulsado = true;
@@ -93,9 +89,6 @@ class GameLayer extends Layer {
             }
         }
 
-
-        if(!this.botonSummary.pulsado)
-            controles.showSummary = false;
         if(!this.botonAtacar.pulsado)
             controles.attackMode = false;
         if(!tilePulsada) {

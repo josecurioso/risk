@@ -13,6 +13,7 @@ var imagenes = {
     tDialogRemove: "res/remove_troops.png",
     tDialogOk: "res/accept.png",
     tDialogBackground: "res/dialog_troops.png",
+    messages: "res/messages_small.png"
 };
 
 var rutasImagenes = Object.values(imagenes);

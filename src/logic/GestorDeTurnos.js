@@ -1,13 +1,15 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeTerritorios, gestorDeUnidades, playerOrder, cartelTurno) {
+    constructor(gestorDeTerritorios, gestorDeUnidades, playerOrder, cartelTurno, summary) {
         this.playerOrder = playerOrder;
         this.listPos = 0;
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount = 0;
         this.gestorDeUnidades = gestorDeUnidades;
-        this.gestorDaDados = new GestorDeDados();
+        this.gestorDeDados = new GestorDeDados();
+        this.gestorDeTextos = new GestorDeTextos(summary);
         this.cartelTurno = cartelTurno;
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
         this.cartelTurno.valor = this.jugadorActual.teamCode;
     }
 
@@ -23,6 +25,7 @@ class GestorDeTurnos {
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount++;
         this.cartelTurno.valor = this.jugadorActual.teamCode;
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
     }
 
     play(attack, from, to, otherPlayer, dicesAttacker, dicesDefender) {
@@ -45,7 +48,7 @@ class GestorDeTurnos {
 
         // Si se ataca, se consume el turno
         if (attack) {
-            let toSubstract = this.gestorDaDados.play(dicesAttacker, dicesDefender, bonusAttacker, bonusDefender);
+            let toSubstract = this.gestorDeDados.play(dicesAttacker, dicesDefender, bonusAttacker, bonusDefender);
             this.jugadorActual.substractUnits(toSubstract[0]);
             this.otherPlayer.substractUnits(toSubstract[1]);
             if (this.jugadorActual.totalUnits <= 1) {
