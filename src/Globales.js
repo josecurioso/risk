@@ -6,8 +6,14 @@ var climates = ["desert", "tropical", "snowy", "oceanic"];
 var gameStates = {
     playerAttacking : 1,
     playerMoving : 2,
-    gameInit : 3,
-    troopsDialog : 4,
+    playerFarming : 3,
+    gameInit : 4,
+    turnBase : 5,
+};
+
+var UIStates = {
+    map : 1,
+    troopsDialog: 2,
 };
 
 var continentes = {

@@ -6,8 +6,7 @@ class MenuLayer extends Layer {
     }
 
     iniciar() {
-        this.fondo =
-            new Fondo(imagenes.menu_fondo, 600*0.5, 320*0.5);
+        this.fondo = new Fondo(imagenes.menu_fondo, 600*0.5, 320*0.5);
         this.boton_empezar = new Boton(imagenes.boton_empezar, 600 * 0.5, 320 * 0.8);
         this.boton_add = new Boton(imagenes.boton_add, 600 * 0.58, 320 * 0.57, true);
         this.boton_remove = new Boton(imagenes.boton_remove, 600 * 0.7, 320 * 0.57, true);
@@ -61,7 +60,7 @@ class MenuLayer extends Layer {
     procesarControles() {
         // siguiente pantalla
         if (controles.continuar) {
-            gameLayer = new GameLayer();
+            gameLayer = new GameLayer(this.amountPlayers.valor);
             layer = gameLayer;
             controles.continuar = false;
         }
