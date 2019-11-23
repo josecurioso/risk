@@ -8,8 +8,8 @@ class FondoSVG extends Modelo {
 
     dibujar() {
         contexto.drawImage(this.imagen,
-        this.x - this.imagen.width / 2,
-        this.y - this.imagen.height / 2, this.width, this.height);
+            this.x - this.width,
+            this.y - this.height, this.width, this.height);
     }
 
 }

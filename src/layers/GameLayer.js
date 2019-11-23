@@ -9,10 +9,10 @@ class GameLayer extends Layer {
         this.mapa = new Mapa(60, 80);
 
         // Game HUD
-        this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.665, 320 * 0.97, 130, 30);
+        this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
         this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial", "white");
         this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.99, 320 * 0.99, 58, 58, true, 29);
-        this.summaryOverlay = new FondoSVG(imagenes.messages, 600 * 0.18, 320 * 0.925, 116, 93);
+        this.summaryOverlay = new FondoSVG(imagenes.messages, 600 * 0.20, 320 * 0.955, 116, 93);
         this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial", "white");
         this.botonDice = new BotonSVG(imagenes.dice, 600 * 0.25, 320 * 0.95, 58, 58, false);
         this.unitNumbers = [];
@@ -20,10 +20,10 @@ class GameLayer extends Layer {
         // Troops Dialog
         let dialogX = 0.5;
         let dialogY = 0.5;
-        this.tDialogBackground = new Boton(imagenes.tDialogBackground, 600 * dialogX, 320 * dialogY, false);
-        this.tDialogAdd = new Boton(imagenes.tDialogAdd, 600 * (dialogX+0.12), 320 * (dialogY+0.11), true, 14);
-        this.tDialogRemove = new Boton(imagenes.tDialogRemove, 600 * (dialogX+0.18), 320 * (dialogY+0.11), true, 14);
-        this.tDialogOk = new Boton(imagenes.tDialogOk, 600 * dialogX, 320 * (dialogY+0.08), true, 23);
+        this.tDialogBackground = new FondoSVG(imagenes.tDialogBackground, 600 * (dialogX+0.25), 320 * (dialogY+0.17), 290, 111);
+        this.tDialogAdd = new BotonSVG(imagenes.boton_add, 600 * (dialogX+0.141), 320 * (dialogY+0.11), 28, 28, true, 14);
+        this.tDialogRemove = new BotonSVG(imagenes.boton_remove, 600 * (dialogX+0.21), 320 * (dialogY+0.11), 28, 28, true, 14);
+        this.tDialogOk = new BotonSVG(imagenes.tDialogOk, 600 * (dialogX+0.05), 320 * (dialogY+0.125), 46, 46, true, 23);
         this.tDialogTPA = new Texto(10, 600 * (dialogX-0.17), 320 * (dialogY-0.06), "20px Arial", "white");
         this.tDialogTPB = new Texto(10, 600 * (dialogX+0.12), 320 * (dialogY-0.06), "20px Arial", "white");
 
@@ -182,7 +182,7 @@ class GameLayer extends Layer {
                 //this.isPlayerSelecting = true;
 
                 // Testing code
-                //this.UIState = UIStates.troopsDialog;
+                this.UIState = UIStates.troopsDialog;
                 provincias['A'].setUnits(10);
 
                 controles.attackButton = false;

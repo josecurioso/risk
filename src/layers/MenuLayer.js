@@ -6,11 +6,11 @@ class MenuLayer extends Layer {
     }
 
     iniciar() {
-        this.fondo = new Fondo(imagenes.menu_fondo, 600*0.5, 320*0.5);
-        this.boton_empezar = new Boton(imagenes.boton_empezar, 600 * 0.5, 320 * 0.8);
-        this.boton_add = new Boton(imagenes.boton_add, 600 * 0.58, 320 * 0.57, true);
-        this.boton_remove = new Boton(imagenes.boton_remove, 600 * 0.7, 320 * 0.57, true);
-        this.amountPlayers = new Texto(0, 600 * 0.32, 320 * 0.625, "50px Arial", "white");
+        this.fondo = new FondoSVG(imagenes.menu_fondo, 600, 320, 600, 320);
+        this.boton_empezar = new BotonSVG(imagenes.boton_empezar, 600 * 0.75, 320 * 0.90, 294, 47);
+        this.boton_add = new BotonSVG(imagenes.boton_add, 600 * 0.58, 320 * 0.7, 53, 53, true, 26);
+        this.boton_remove = new BotonSVG(imagenes.boton_remove, 600 * 0.7, 320 * 0.7, 53, 53, true, 26);
+        this.amountPlayers = new Texto(0, 600 * 0.27, 320 * 0.650, "50px Arial", "white");
     }
 
     dibujar() {
