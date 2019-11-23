@@ -9,12 +9,12 @@ class GameLayer extends Layer {
         this.mapa = new Mapa(60, 80);
 
         // Game HUD
-        this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
+        this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.665, 320 * 0.97, 130, 30);
         this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial", "white");
-        this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true, 29);
-        this.summaryOverlay = new Boton(imagenes.messages, 600 * 0.11, 320 * 0.825, true);
+        this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.99, 320 * 0.99, 58, 58, true, 29);
+        this.summaryOverlay = new FondoSVG(imagenes.messages, 600 * 0.18, 320 * 0.925, 116, 93);
         this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial", "white");
-        this.botonDice = new Boton(imagenes.dice, 600 * 0.175, 320 * 0.9, true);
+        this.botonDice = new BotonSVG(imagenes.dice, 600 * 0.25, 320 * 0.95, 58, 58, false);
         this.unitNumbers = [];
 
         // Troops Dialog
@@ -31,7 +31,7 @@ class GameLayer extends Layer {
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
         for(let i=0; i<this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador" + i));
+            this.jugadores.push(new Jugador("Jugador " + i));
         this.jugadores.push(new IA().playerIA);
 
         // Configurar gestores
@@ -85,6 +85,7 @@ class GameLayer extends Layer {
 
     calcularPulsaciones(pulsaciones) {
         this.botonAtacar.pulsado = false;
+        this.botonDice.pulsado = false;
         this.tDialogOk.pulsado = false;
         this.tDialogAdd.pulsado = false;
         this.tDialogRemove.pulsado = false;
@@ -92,30 +93,31 @@ class GameLayer extends Layer {
 
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
-                if(this.UIState === UIStates.troopsDialog){
-                    if(this.tDialogOk.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                if (this.UIState === UIStates.troopsDialog) {
+                    if (this.tDialogOk.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.tDialogOk.pulsado = true;
                         controles.tDialogOk = true;
                     }
-                    if(this.tDialogAdd.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                    if (this.tDialogAdd.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.tDialogAdd.pulsado = true;
                         controles.tDialogAdd = true;
                     }
-                    if(this.tDialogRemove.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                    if (this.tDialogRemove.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.tDialogRemove.pulsado = true;
                         controles.tDialogRemove = true;
                     }
-                }
-                else if(this.UIState === UIStates.map){
+                } else if (this.UIState === UIStates.map) {
                     let t = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
                     if (t !== undefined) {
                         tilePulsada = true;
                         controles.tileClick = true;
                         clickedTile = t;
-                    }
-                    else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                    } else if (this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonAtacar.pulsado = true;
                         controles.attackButton = true;
+                    } else if (this.botonDice.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        this.botonDice.pulsado = true;
+                        controles.diceButton = true;
                     }
                     else{
                         console.log("Click en agua");
@@ -129,6 +131,8 @@ class GameLayer extends Layer {
 
         if(!this.botonAtacar.pulsado)
             controles.attackButton = false;
+        if(!this.botonDice.pulsado)
+            controles.diceButton = false;
         if(!this.tDialogOk.pulsado)
             controles.tDialogOk = false;
         if(!this.tDialogAdd.pulsado)
@@ -182,6 +186,14 @@ class GameLayer extends Layer {
                 provincias['A'].setUnits(10);
 
                 controles.attackButton = false;
+            }
+            if(controles.diceButton){
+                console.log("Dice button press");
+
+                // Testing code
+                //this.UIState = UIStates.troopsDialog;
+
+                controles.diceButton = false;
             }
             if(controles.tileClick) {
                 console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
