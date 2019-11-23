@@ -10,7 +10,7 @@ class MenuLayer extends Layer {
         this.boton_empezar = new Boton(imagenes.boton_empezar, 600 * 0.5, 320 * 0.8);
         this.boton_add = new Boton(imagenes.boton_add, 600 * 0.58, 320 * 0.57, true);
         this.boton_remove = new Boton(imagenes.boton_remove, 600 * 0.7, 320 * 0.57, true);
-        this.amountPlayers = new Texto(0, 600 * 0.32, 320 * 0.625, "50px Arial");
+        this.amountPlayers = new Texto(0, 600 * 0.32, 320 * 0.625, "50px Arial", "white");
     }
 
     dibujar() {

@@ -14,6 +14,7 @@ class Mapa extends Modelo {
 
     dibujar() {
         super.dibujar();
+        this.drawConnectionsBySea();
         for (let y = 0; y < this.sy; y++) {
             for (let x = 0; x < this.sx; x++) {
                 let tile = this.tiles[y][x];
@@ -39,5 +40,25 @@ class Mapa extends Modelo {
         let px = Math.ceil(x / tileSize) - 1;
         let py = Math.ceil(y / tileSize) - 1;
         return this.tiles[px][py];
+    }
+
+    drawConnectionsBySea() {
+        for (let key in provincias) {
+            if (provincias.hasOwnProperty(key)) {
+                let adj = provincias[key].getAdjacentProvincesBySea();
+                if (adj.length !== 0) {
+                    adj.forEach(p => {
+                        // console.log(p);
+                        contexto.beginPath();
+                        contexto.strokeStyle = "black";
+                        contexto.setLineDash([3, 9]);
+                        // console.log("Centroid1 (" + provincias[key].centroid.x + ", " + provincias[key].centroid.y + ") - Centroid2 (" + provincias[p].centroid.x + ", " + provincias[p].centroid.y + ")");
+                        contexto.moveTo(provincias[key].centroid.x * tileSize, provincias[key].centroid.y * tileSize);
+                        contexto.lineTo(provincias[p].centroid.x * tileSize, provincias[p].centroid.y * tileSize);
+                        contexto.stroke();
+                    });
+                }
+            }
+        }
     }
 }

@@ -9,6 +9,12 @@ class Provincia {
         this.owner = null;
         this.units = 0;
         this.hasFarm = [false, 0]; // true si hay granja, el valor representa cuánto se va a sumar
+        this.unitsSign = null;
+    }
+
+    setUnits(unidades) {
+        this.units = unidades;
+        this.unitsSign.valor = this.units;
     }
 
     calculateMidPosition() {

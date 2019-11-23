@@ -10,11 +10,12 @@ class GameLayer extends Layer {
 
         // Game HUD
         this.turnOverlay = new Boton(imagenes.turn, 600 * 0.5, 320 * 0.9, false);
-        this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial");
+        this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial", "white");
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true, 29);
         this.summaryOverlay = new Boton(imagenes.messages, 600 * 0.11, 320 * 0.825, true);
-        this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial");
+        this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial", "white");
         this.botonDice = new Boton(imagenes.dice, 600 * 0.175, 320 * 0.9, true);
+        this.unitNumbers = [];
 
         // Troops Dialog
         let dialogX = 0.5;
@@ -23,8 +24,8 @@ class GameLayer extends Layer {
         this.tDialogAdd = new Boton(imagenes.tDialogAdd, 600 * (dialogX+0.12), 320 * (dialogY+0.11), true, 14);
         this.tDialogRemove = new Boton(imagenes.tDialogRemove, 600 * (dialogX+0.18), 320 * (dialogY+0.11), true, 14);
         this.tDialogOk = new Boton(imagenes.tDialogOk, 600 * dialogX, 320 * (dialogY+0.08), true, 23);
-        this.tDialogTPA = new Texto(10, 600 * (dialogX-0.17), 320 * (dialogY-0.06), "20px Arial");
-        this.tDialogTPB = new Texto(10, 600 * (dialogX+0.12), 320 * (dialogY-0.06), "20px Arial");
+        this.tDialogTPA = new Texto(10, 600 * (dialogX-0.17), 320 * (dialogY-0.06), "20px Arial", "white");
+        this.tDialogTPB = new Texto(10, 600 * (dialogX+0.12), 320 * (dialogY-0.06), "20px Arial", "white");
 
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
@@ -55,6 +56,7 @@ class GameLayer extends Layer {
         this.addProvinceInfo("res/" + nivelActual + "_info_provinces.json");
         this.addContinentInfo("res/" + nivelActual + "_info_continents.json");
         this.calculateCentroids();
+        this.attachUnitSigns();
     }
 
     actualizar() {
@@ -68,7 +70,7 @@ class GameLayer extends Layer {
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.botonDice.dibujar();
-        this.drawConnectionsBySea();
+        this.unitNumbers.forEach((x) => x.dibujar());
 
         // Dialogo tropas
         if(this.UIState === UIStates.troopsDialog){
@@ -176,7 +178,8 @@ class GameLayer extends Layer {
                 //this.isPlayerSelecting = true;
 
                 // Testing code
-                this.UIState = UIStates.troopsDialog;
+                //this.UIState = UIStates.troopsDialog;
+                provincias['A'].setUnits(10);
 
                 controles.attackButton = false;
             }
@@ -222,7 +225,7 @@ class GameLayer extends Layer {
         }
     }
 
-    // METODOS DE CARGA Y DIBUJO DE MAPA
+    // METODOS DE CARGA DE MAPA
 
     cargarMapa(rutaContinentes, rutaProvincias) {
         let ficheroC = new XMLHttpRequest();
@@ -272,6 +275,15 @@ class GameLayer extends Layer {
             }
     }
 
+    attachUnitSigns() {
+        for (let key in provincias)
+            if (provincias.hasOwnProperty(key)) {
+                let sign = new Texto(0, (provincias[key].centroid.x*8)+1, (provincias[key].centroid.y*8)+5.5, "bold 5px Arial", "black");
+                this.unitNumbers.push(sign);
+                provincias[key].unitsSign = sign;
+            }
+    }
+
     addContinentInfo(rutaInfo) {
         let ficheroI = new XMLHttpRequest();
         ficheroI.open("GET", rutaInfo, false);
@@ -310,23 +322,5 @@ class GameLayer extends Layer {
         ficheroI.send(null);
     }
 
-    drawConnectionsBySea() {
-        for (let key in provincias) {
-            if (provincias.hasOwnProperty(key)) {
-                let adj = provincias[key].getAdjacentProvincesBySea();
-                if (adj.length !== 0) {
-                    adj.forEach(p => {
-                        // console.log(p);
-                        contexto.beginPath();
-                        contexto.strokeStyle = "black";
-                        contexto.setLineDash([3, 9]);
-                        // console.log("Centroid1 (" + provincias[key].centroid.x + ", " + provincias[key].centroid.y + ") - Centroid2 (" + provincias[p].centroid.x + ", " + provincias[p].centroid.y + ")");
-                        contexto.moveTo(provincias[key].centroid.x * tileSize, provincias[key].centroid.y * tileSize);
-                        contexto.lineTo(provincias[p].centroid.x * tileSize, provincias[p].centroid.y * tileSize);
-                        contexto.stroke();
-                    });
-                }
-            }
-        }
-    }
+
 }
