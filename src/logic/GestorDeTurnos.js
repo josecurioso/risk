@@ -1,12 +1,14 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeTerritorios, gestorDeUnidades, playerOrder) {
+    constructor(gestorDeTerritorios, gestorDeUnidades, playerOrder, cartelTurno) {
         this.playerOrder = playerOrder;
         this.listPos = 0;
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount = 0;
         this.gestorDeUnidades = gestorDeUnidades;
         this.gestorDaDados = new GestorDeDados();
+        this.cartelTurno = cartelTurno;
+        this.cartelTurno.valor = this.jugadorActual.teamCode;
     }
 
     getCurrentPlayer() {
@@ -20,6 +22,7 @@ class GestorDeTurnos {
         }
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount++;
+        this.cartelTurno.valor = this.jugadorActual.teamCode;
     }
 
     play(attack, from, to, otherPlayer, dicesAttacker, dicesDefender) {

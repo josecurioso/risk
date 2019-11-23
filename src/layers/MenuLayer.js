@@ -28,19 +28,21 @@ class MenuLayer extends Layer {
         this.boton_remove.pulsado = false;
 
         for (let i = 0; i < pulsaciones.length; i++) {
-            if (this.boton_empezar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                this.boton_empezar.pulsado = true;
-                if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
-                    controles.continuar = true;
+            if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
+                if (this.boton_empezar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
+                    this.boton_empezar.pulsado = true;
+                    if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
+                        controles.continuar = true;
+                    }
                 }
-            }
-            if (this.boton_add.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                this.boton_add.pulsado = true;
-                controles.addPlayer = true;
-            }
-            if (this.boton_remove.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                this.boton_remove.pulsado = true;
-                controles.removePlayer = true;
+                if (this.boton_add.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
+                    this.boton_add.pulsado = true;
+                    controles.addPlayer = true;
+                }
+                if (this.boton_remove.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
+                    this.boton_remove.pulsado = true;
+                    controles.removePlayer = true;
+                }
             }
         }
 
@@ -65,13 +67,11 @@ class MenuLayer extends Layer {
         }
         if (controles.addPlayer) {
             console.log("Add player");
-            gameLayer = new GameLayer();
             this.amountPlayers.valor++;
             controles.addPlayer = false;
         }
         if (controles.removePlayer) {
             console.log("Remove player");
-            gameLayer = new GameLayer();
             this.amountPlayers.valor--;
             if(this.amountPlayers.valor < 0)
                 this.amountPlayers.valor = 0;

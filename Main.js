@@ -7,6 +7,7 @@ var escaladoMinimo = 1;
 
 // Controles
 var controles = {};
+var clickedTile;
 
 // Capas
 var layer;

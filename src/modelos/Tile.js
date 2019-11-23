@@ -10,6 +10,7 @@ class Tile extends Modelo {
         this.region = 1;
         this.x *= this.tileSize;
         this.y *= this.tileSize;
+        this.isBonus = false;
     }
 
     dibujar(up, down, left, right) {
