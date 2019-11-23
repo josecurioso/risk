@@ -9,6 +9,7 @@ var imagenes = {
     summary: "res/summary_small.png",
     turn: "res/turn_small.png",
     dice: "res/dice.png",
+    messages: "res/messages_small.png"
 };
 
 var rutasImagenes = Object.values(imagenes);
