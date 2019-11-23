@@ -60,7 +60,6 @@ class MenuLayer extends Layer {
         // siguiente pantalla
         if (controles.continuar) {
             gameLayer = new GameLayer();
-            gameLayer.setPlayerAmount(this.amountPlayers.valor);
             layer = gameLayer;
             controles.continuar = false;
         }

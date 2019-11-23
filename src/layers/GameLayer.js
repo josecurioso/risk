@@ -78,8 +78,6 @@ class GameLayer extends Layer {
     actualizar() {
     }
 
-
-
     dibujar() {
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
@@ -87,64 +85,6 @@ class GameLayer extends Layer {
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.drawConnectionsBySea();
-
-
-        /*
-        if(this.gameState === gameStates.gameInit) {
-            this.renderInput();
-        }
-        else {
-            this.mapa.dibujar();
-            this.botonAtacar.dibujar();
-            this.botonSummary.dibujar();
-            this.turnOverlay.dibujar();
-            this.turnoActual.dibujar();
-            this.drawConnectionsBySea();
-        }
-        */
-    }
-
-    procesarControles() {
-    }
-
-    cargarMapa(rutaContinentes, rutaProvincias) {
-        let ficheroC = new XMLHttpRequest();
-        let ficheroP = new XMLHttpRequest();
-        ficheroC.open("GET", rutaContinentes, false);
-        ficheroP.open("GET", rutaProvincias, false);
-
-        ficheroC.onreadystatechange = function () {
-            ficheroP.onreadystatechange = function () {
-                let textoC = ficheroC.responseText;
-                let textoP = ficheroP.responseText;
-                let lineasC = textoC.split('\n');
-                let lineasP = textoP.split('\n');
-                for (let i = 0; i < lineasC.length; i++) {
-                    let lineaC = lineasC[i];
-                    let lineaP = lineasP[i];
-                    for (let j = 0; j < lineaC.length; j++) {
-                        let simboloC = lineaC[j];
-                        let simboloP = lineaP[j];
-                        //console.log("Coor: " + i + " " + j);
-                        this.cargarObjetoMapa(simboloC, simboloP, j, i);
-                    }
-                }
-            }.bind(this);
-        }.bind(this);
-
-        ficheroC.send(null);
-        ficheroP.send(null);
-    }
-
-    cargarObjetoMapa(simboloC, simboloP, x, y) {
-        if (this.continentes[simboloC] !== undefined && this.provincias[simboloP] !== undefined) {
-            let tile = new Tile(x, y, this.continentes[simboloC], this.provincias[simboloP]);
-            if (!this.continentes[simboloC].provincias.includes(this.provincias[simboloP])) {
-                this.continentes[simboloC].provincias.push(this.provincias[simboloP]);
-            }
-            this.provincias[simboloP].tiles.push(tile);
-            this.mapa.addTile(tile, x, y);
-        }
     }
 
     calcularPulsaciones(pulsaciones) {
@@ -198,34 +138,8 @@ class GameLayer extends Layer {
         }
     }
 
-    calculateCentroids() {
-        for (let key in this.provincias)
-            if (this.provincias.hasOwnProperty(key)) {
-                this.provincias[key].calculateCentroid();
-                console.log("Calculated centroid: " + this.provincias[key].centroid.x + " " + this.provincias[key].centroid.y + " (for " + this.provincias[key].code + " province)");
-            }
+    procesarControles() {
     }
-
-    addProvinceInfo(rutaInfo) {
-        let ficheroI = new XMLHttpRequest();
-        ficheroI.open("GET", rutaInfo, false);
-        ficheroI.onreadystatechange = function () {
-            let text = ficheroI.responseText;
-            let json = JSON.parse(text);
-            // console.log(json);
-            for (let key in this.provincias) {
-                if (this.provincias.hasOwnProperty(key)) {
-                    if (this.provincias.hasOwnProperty(key)) {
-                        this.provincias[key].climate = climates[json[key].climate];
-                        this.provincias[key].hasSea = json[key].hasSea;
-                        this.provincias[key].connections = json[key].connections;
-                    }
-                }
-            }
-        }.bind(this);
-        ficheroI.send(null);
-    }
-
 
     clickAttack() {
         this.gameState = gameStates.playerAttacking;
@@ -243,6 +157,56 @@ class GameLayer extends Layer {
 
     validateMove(provinceA, provinceB) {
         return this.gestorDeTerritorios.validateMove(provinceA, provinceB);
+    }
+
+    // METODOS DE CARGA Y DIBUJO DE MAPA
+    
+    cargarMapa(rutaContinentes, rutaProvincias) {
+        let ficheroC = new XMLHttpRequest();
+        let ficheroP = new XMLHttpRequest();
+        ficheroC.open("GET", rutaContinentes, false);
+        ficheroP.open("GET", rutaProvincias, false);
+
+        ficheroC.onreadystatechange = function () {
+            ficheroP.onreadystatechange = function () {
+                let textoC = ficheroC.responseText;
+                let textoP = ficheroP.responseText;
+                let lineasC = textoC.split('\n');
+                let lineasP = textoP.split('\n');
+                for (let i = 0; i < lineasC.length; i++) {
+                    let lineaC = lineasC[i];
+                    let lineaP = lineasP[i];
+                    for (let j = 0; j < lineaC.length; j++) {
+                        let simboloC = lineaC[j];
+                        let simboloP = lineaP[j];
+                        //console.log("Coor: " + i + " " + j);
+                        this.cargarObjetoMapa(simboloC, simboloP, j, i);
+                    }
+                }
+            }.bind(this);
+        }.bind(this);
+
+        ficheroC.send(null);
+        ficheroP.send(null);
+    }
+
+    cargarObjetoMapa(simboloC, simboloP, x, y) {
+        if (this.continentes[simboloC] !== undefined && this.provincias[simboloP] !== undefined) {
+            let tile = new Tile(x, y, this.continentes[simboloC], this.provincias[simboloP]);
+            if (!this.continentes[simboloC].provincias.includes(this.provincias[simboloP])) {
+                this.continentes[simboloC].provincias.push(this.provincias[simboloP]);
+            }
+            this.provincias[simboloP].tiles.push(tile);
+            this.mapa.addTile(tile, x, y);
+        }
+    }
+
+    calculateCentroids() {
+        for (let key in this.provincias)
+            if (this.provincias.hasOwnProperty(key)) {
+                this.provincias[key].calculateCentroid();
+                console.log("Calculated centroid: " + this.provincias[key].centroid.x + " " + this.provincias[key].centroid.y + " (for " + this.provincias[key].code + " province)");
+            }
     }
 
     addContinentInfo(rutaInfo) {
@@ -263,10 +227,24 @@ class GameLayer extends Layer {
         ficheroI.send(null);
     }
 
-    requestPlayerNames() {
-        let names = [];
-        // dialogo para pedir nombres...
-        return names;
+    addProvinceInfo(rutaInfo) {
+        let ficheroI = new XMLHttpRequest();
+        ficheroI.open("GET", rutaInfo, false);
+        ficheroI.onreadystatechange = function () {
+            let text = ficheroI.responseText;
+            let json = JSON.parse(text);
+            // console.log(json);
+            for (let key in this.provincias) {
+                if (this.provincias.hasOwnProperty(key)) {
+                    if (this.provincias.hasOwnProperty(key)) {
+                        this.provincias[key].climate = climates[json[key].climate];
+                        this.provincias[key].hasSea = json[key].hasSea;
+                        this.provincias[key].connections = json[key].connections;
+                    }
+                }
+            }
+        }.bind(this);
+        ficheroI.send(null);
     }
 
     drawConnectionsBySea() {
