@@ -1,11 +1,11 @@
 class GameLayer extends Layer {
 
-    constructor() {
+    constructor(playerAmount) {
         super();
-        this.iniciar();
+        this.iniciar(playerAmount);
     }
 
-    iniciar() {
+    iniciar(playerAmount) {
         this.mapa = new Mapa(60, 80);
 
         this.continentes = {
@@ -46,10 +46,13 @@ class GameLayer extends Layer {
             'Z': new Provincia([], "Z"),
         };
 
-        this.jugadores = ["Miguel", "Nacho", "Jose"];
-        // this.jugadores = this.requestPlayerNames();
-        // acordarse de meter la IA -> this.jugadores.push(new IA().playerIA);
-        this.numeroJugadores = this.jugadores.length;
+        // Configurar jugadores
+        this.numeroJugadores = playerAmount;
+        this.jugadores = [];
+        for(let i=0; i<this.numeroJugadores; i++) {
+            this.jugadores.push("Jugador" + i);
+        }
+        this.jugadores.push(new IA().playerIA);
 
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(this.provincias).length, 3);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.jugadores);
@@ -161,7 +164,7 @@ class GameLayer extends Layer {
                         if (this.gameState === gameStates.playerMoving && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un movimiento
                             this.clickedProvinces.push(clickedTile.province);
                             if (this.clickedProvinces.length === 2 && this.validateMove(clickedTile[0], clickedTile[1])) {
-                                //Show prompt for number of units to move
+                                // Show prompt for number of units to move
                             } else {
                                 // Show message informing of invalid move
                             }
