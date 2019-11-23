@@ -149,7 +149,7 @@ class GameLayer extends Layer {
                     // Proceed with move
                 }
                 this.clickedProvinces = [];
-                this.UIState = gameStates.map;
+                this.UIState = UIStates.map;
                 controles.tDialogOk = false;
             }
             if(controles.tDialogAdd){
