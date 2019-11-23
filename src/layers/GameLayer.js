@@ -22,6 +22,8 @@ class GameLayer extends Layer {
         this.tDialogAdd = new Boton(imagenes.tDialogAdd, 600 * (dialogX+0.12), 320 * (dialogY+0.11), true);
         this.tDialogRemove = new Boton(imagenes.tDialogRemove, 600 * (dialogX+0.18), 320 * (dialogY+0.11), true);
         this.tDialogOk = new Boton(imagenes.tDialogOk, 600 * dialogX, 320 * (dialogY+0.08), true);
+        this.tDialogTPA = new Texto(10, 600 * (dialogX-0.17), 320 * (dialogY-0.06), "20px Arial");
+        this.tDialogTPB = new Texto(10, 600 * (dialogX+0.12), 320 * (dialogY-0.06), "20px Arial");
 
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
@@ -40,7 +42,7 @@ class GameLayer extends Layer {
 
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
-        this.gameState = gameStates.gameInit;
+        this.gameState = gameStates.troopsDialog; //gameStates.gameInit;
 
         this.cargarMapa("res/" + nivelActual + "_continents.txt", "res/" + nivelActual + "_provinces.txt");
         this.addProvinceInfo("res/" + nivelActual + "_info_provinces.json");
@@ -62,85 +64,131 @@ class GameLayer extends Layer {
         this.drawConnectionsBySea();
 
         // Dialogo tropas
-        this.tDialogBackground.dibujar();
-        this.tDialogAdd.dibujar();
-        this.tDialogRemove.dibujar();
-        this.tDialogOk.dibujar();
+        if(this.gameState === gameStates.troopsDialog){
+            this.tDialogBackground.dibujar();
+            this.tDialogAdd.dibujar();
+            this.tDialogRemove.dibujar();
+            this.tDialogOk.dibujar();
+            this.tDialogTPA.dibujar();
+            this.tDialogTPB.dibujar();
+        }
     }
 
     calcularPulsaciones(pulsaciones) {
         this.botonAtacar.pulsado = false;
+        this.tDialogOk.pulsado = false;
+        this.tDialogAdd.pulsado = false;
+        this.tDialogRemove.pulsado = false;
         let tilePulsada = false;
 
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
-                let t = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
-                if (t !== undefined) {
-                    tilePulsada = true;
-                    clickedTile = t;
-                }
-                else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
-                    this.botonAtacar.pulsado = true;
-                    controles.attackMode = true;
+                if(this.gameState === gameStates.troopsDialog){
+                    if(this.tDialogOk.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        this.tDialogOk.pulsado = true;
+                        controles.tDialogOk = true;
+                    }
+                    if(this.tDialogAdd.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        this.tDialogAdd.pulsado = true;
+                        controles.tDialogAdd = true;
+                    }
+                    if(this.tDialogRemove.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        this.tDialogRemove.pulsado = true;
+                        controles.tDialogRemove = true;
+                    }
                 }
                 else{
-                    console.log("Click en agua");
+                    let t = this.mapa.getTileForCoords(pulsaciones[i].x, pulsaciones[i].y);
+                    if (t !== undefined) {
+                        tilePulsada = true;
+                        clickedTile = t;
+                    }
+                    else if(this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                        this.botonAtacar.pulsado = true;
+                        controles.attackMode = true;
+                    }
+                    else{
+                        console.log("Click en agua");
+                    }
                 }
+
             }
         }
 
         if(!this.botonAtacar.pulsado)
             controles.attackMode = false;
+        if(!this.tDialogOk.pulsado)
+            controles.tDialogOk = false;
+        if(!this.tDialogAdd.pulsado)
+            controles.tDialogAdd = false;
+        if(!this.tDialogRemove.pulsado)
+            controles.tDialogRemove = false;
         if(!tilePulsada) {
             controles.tileClick = false;
         }
     }
 
     procesarControles() {
-        if(controles.attackMode){
-            this.gameState = gameStates.playerAttacking;
-            this.isPlayerSelecting = true;
+        if(this.gameState === gameStates.troopsDialog){
+            if(controles.tDialogOk){
+                // Send units and simulate battle
+                controles.tDialogOk = false;
+            }
+            if(controles.tDialogAdd){
+
+                controles.tDialogAdd = false;
+            }
+            if(controles.tDialogRemove){
+
+                controles.tDialogRemove = false;
+            }
         }
-        if(controles.tileClick) {
-            console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
-            console.log("   Continente: " + clickedTile.continente.code);
-            console.log("   Provincia: " + clickedTile.province.code);
-            console.log("   Climate: " + clickedTile.province.climate);
-            console.log("   hasSea? " + clickedTile.province.hasSea);
-
-            if(clickedTile.isBonus && this.gameState !== gameStates.playerAttacking) {
-                // Player is farming
+        else{
+            if(controles.attackMode){
+                this.gameState = gameStates.playerAttacking;
+                this.isPlayerSelecting = true;
+                controles.attackMode = false;
             }
-            else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
-                this.clickedProvinces.push(clickedTile.province);
-                if (this.clickedProvinces.length === 2 && this.gestorDeTerritorios.validateAttack(clickedTile[0], clickedTile[1])) {
-                    //Show prompt for number of units to attack
+            if(controles.tileClick) {
+                console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
+                console.log("   Continente: " + clickedTile.continente.code);
+                console.log("   Provincia: " + clickedTile.province.code);
+                console.log("   Climate: " + clickedTile.province.climate);
+                console.log("   hasSea? " + clickedTile.province.hasSea);
 
-                    // once finished
-                    this.clickedProvinces = [];
-                } else {
-                    // Show message informing of invalid attack
+                if(clickedTile.isBonus && this.gameState !== gameStates.playerAttacking) {
+                    // Player is farming
                 }
-            }
-            else {
-                this.gameState = gameStates.playerMoving;
-                this.isPlayerSelecting = true; //El jugador está seleccionando origen y destino de un movimiento
-                this.clickedProvinces.push(clickedTile.province);
-                if (this.clickedProvinces.length === 2) {
-                    if (this.gestorDeTerritorios.validateMove(clickedTile[0], clickedTile[1])) {
-                        // Show prompt for number of units to move
+                else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
+                    this.clickedProvinces.push(clickedTile.province);
+                    if (this.clickedProvinces.length === 2 && this.gestorDeTerritorios.validateAttack(clickedTile[0], clickedTile[1])) {
+                        //Show prompt for number of units to attack
 
                         // once finished
                         this.clickedProvinces = [];
-                    }
-                    else {
-                    // Show message informing of invalid move
+                    } else {
+                        // Show message informing of invalid attack
                     }
                 }
+                else {
+                    this.gameState = gameStates.playerMoving;
+                    this.isPlayerSelecting = true; //El jugador está seleccionando origen y destino de un movimiento
+                    this.clickedProvinces.push(clickedTile.province);
+                    if (this.clickedProvinces.length === 2) {
+                        if (this.gestorDeTerritorios.validateMove(clickedTile[0], clickedTile[1])) {
+                            // Show prompt for number of units to move
+
+                            // once finished
+                            this.clickedProvinces = [];
+                        }
+                        else {
+                            // Show message informing of invalid move
+                        }
+                    }
+                }
+                controles.tileClick = false;
             }
         }
-
-
     }
 
     // METODOS DE CARGA Y DIBUJO DE MAPA

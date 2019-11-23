@@ -7,6 +7,7 @@ var gameStates = {
     playerAttacking : 1,
     playerMoving : 2,
     gameInit : 3,
+    troopsDialog : 4,
 };
 
 var continentes = {
