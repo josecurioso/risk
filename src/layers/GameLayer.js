@@ -8,44 +8,6 @@ class GameLayer extends Layer {
     iniciar(playerAmount) {
         this.mapa = new Mapa(60, 80);
 
-        this.continentes = {
-            'A': new Continente("#c26100", "#ff8600", [], 0, "A"),
-            'B': new Continente("#064f00", "#109c00", [], 0, "B"),
-            'C': new Continente("#0040ae", "#0052f2", [], 0, "C"),
-            'D': new Continente("#c2ac04", "#f3dc04", [], 0, "D"),
-            'E': new Continente("#c50002", "#fb0002", [], 0, "E"),
-            'F': new Continente("#ae0570", "#da0594", [], 0, "F"),
-        };
-
-        this.provincias = {
-            'A': new Provincia([], "A"),
-            'B': new Provincia([], "B"),
-            'C': new Provincia([], "C"),
-            'D': new Provincia([], "D"),
-            'E': new Provincia([], "E"),
-            'F': new Provincia([], "F"),
-            'G': new Provincia([], "G"),
-            'H': new Provincia([], "H"),
-            'I': new Provincia([], "I"),
-            'J': new Provincia([], "J"),
-            'K': new Provincia([], "K"),
-            'L': new Provincia([], "L"),
-            'M': new Provincia([], "M"),
-            'N': new Provincia([], "N"),
-            'O': new Provincia([], "O"),
-            'P': new Provincia([], "P"),
-            'Q': new Provincia([], "Q"),
-            'R': new Provincia([], "R"),
-            'S': new Provincia([], "S"),
-            'T': new Provincia([], "T"),
-            'U': new Provincia([], "U"),
-            'V': new Provincia([], "V"),
-            'W': new Provincia([], "W"),
-            'X': new Provincia([], "X"),
-            'Y': new Provincia([], "Y"),
-            'Z': new Provincia([], "Z"),
-        };
-
         this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial");
         this.botonAtacar = new Boton(imagenes.attack, 600 * 0.945, 320 * 0.9, true);
         this.botonSummary = new Boton(imagenes.summary, 600 * 0.055, 320 * 0.9, true);
@@ -61,7 +23,7 @@ class GameLayer extends Layer {
         this.jugadores.push(new IA().playerIA);
 
         //Configurar gestores
-        this.gestorDeUnidades = new GestorDeUnidades(Object.keys(this.provincias).length, 3);
+        this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.jugadores, this.turnoActual);
         this.gestorDeTerritorios = new GestorDeTerritorios();
 
