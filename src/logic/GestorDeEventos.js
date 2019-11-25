@@ -73,7 +73,7 @@ class GestorDeEventos {
             player.incrementUnits(province.units + province.units * this.negativeBonuses[event][0], province);
         } else if(this.farming.has(event)) {
             if(!province.hasFarm[0]) {
-                province.hasFarm = [true, this.farming[event]];
+                province.hasFarm = [true, event, this.farming[event]];
                 province.locateFarm();
             } else {
                 console.log("There is already a farm");
