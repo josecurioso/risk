@@ -22,18 +22,18 @@ class GameLayer extends Layer {
         // Troops Dialog
         let dialogX = 0.5;
         let dialogY = 0.5;
-        this.tDialogBackground = new FondoSVG(imagenes.tDialogBackground, 600 * (dialogX+0.25), 320 * (dialogY+0.17), 290, 111);
-        this.tDialogAdd = new BotonSVG(imagenes.boton_add, 600 * (dialogX+0.141), 320 * (dialogY+0.11), 28, 28, true, 14);
-        this.tDialogRemove = new BotonSVG(imagenes.boton_remove, 600 * (dialogX+0.21), 320 * (dialogY+0.11), 28, 28, true, 14);
-        this.tDialogOk = new BotonSVG(imagenes.tDialogOk, 600 * (dialogX+0.05), 320 * (dialogY+0.125), 46, 46, true, 23);
-        this.tDialogTPA = new Texto(10, 600 * (dialogX-0.17), 320 * (dialogY-0.06), "20px Arial", "white");
-        this.tDialogTPB = new Texto(10, 600 * (dialogX+0.12), 320 * (dialogY-0.06), "20px Arial", "white");
+        this.tDialogBackground = new FondoSVG(imagenes.tDialogBackground, 600 * (dialogX + 0.25), 320 * (dialogY + 0.17), 290, 111);
+        this.tDialogAdd = new BotonSVG(imagenes.boton_add, 600 * (dialogX + 0.141), 320 * (dialogY + 0.11), 28, 28, true, 14);
+        this.tDialogRemove = new BotonSVG(imagenes.boton_remove, 600 * (dialogX + 0.21), 320 * (dialogY + 0.11), 28, 28, true, 14);
+        this.tDialogOk = new BotonSVG(imagenes.tDialogOk, 600 * (dialogX + 0.05), 320 * (dialogY + 0.125), 46, 46, true, 23);
+        this.tDialogTPA = new Texto(10, 600 * (dialogX - 0.17), 320 * (dialogY - 0.06), "20px Arial", "white");
+        this.tDialogTPB = new Texto(10, 600 * (dialogX + 0.12), 320 * (dialogY - 0.06), "20px Arial", "white");
 
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
-        for(let i = 0; i < this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador " + i,"J" + i, climates[Math.floor(Math.random() * climates.length)]));
+        for (let i = 0; i < this.numeroJugadores; i++)
+            this.jugadores.push(new Jugador("Jugador " + i, "J" + i, climates[Math.floor(Math.random() * climates.length)]));
         this.jugadores.push(new IA().playerIA);
 
         // Configurar gestores
@@ -62,6 +62,7 @@ class GameLayer extends Layer {
         this.addContinentInfo("res/" + nivelActual + "_info_continents.json");
         this.calculateCentroids();
         this.attachUnitSigns();
+        this.setInitialUnits();
     }
 
     actualizar() {
@@ -79,7 +80,7 @@ class GameLayer extends Layer {
         this.unitNumbers.forEach((x) => x.dibujar());
 
         // Dialogo tropas
-        if(this.UIState === UIStates.troopsDialog){
+        if (this.UIState === UIStates.troopsDialog) {
             this.tDialogBackground.dibujar();
             this.tDialogAdd.dibujar();
             this.tDialogRemove.dibujar();
@@ -123,68 +124,64 @@ class GameLayer extends Layer {
                     } else if (this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonAtacar.pulsado = true;
                         controles.attackButton = true;
-                    } else if (this.botonDice.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
+                    } else if (this.botonDice.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonDice.pulsado = true;
                         controles.diceButton = true;
                         this.gestorDeTurnos.changePlayer(); // for testing xd
-                    }
-                    else{
+                    } else {
                         console.log("Click en agua");
                     }
-                }
-                else{
+                } else {
                     console.log("UI is in non-interactive state")
                 }
             }
         }
 
-        if(!this.botonAtacar.pulsado)
+        if (!this.botonAtacar.pulsado)
             controles.attackButton = false;
-        if(!this.botonDice.pulsado)
+        if (!this.botonDice.pulsado)
             controles.diceButton = false;
-        if(!this.tDialogOk.pulsado)
+        if (!this.tDialogOk.pulsado)
             controles.tDialogOk = false;
-        if(!this.tDialogAdd.pulsado)
+        if (!this.tDialogAdd.pulsado)
             controles.tDialogAdd = false;
-        if(!this.tDialogRemove.pulsado)
+        if (!this.tDialogRemove.pulsado)
             controles.tDialogRemove = false;
-        if(!tilePulsada) {
+        if (!tilePulsada) {
             controles.tileClick = false;
         }
     }
 
     procesarControles() {
-        if(this.UIState === UIStates.troopsDialog){
-            if(controles.tDialogOk){
+        if (this.UIState === UIStates.troopsDialog) {
+            if (controles.tDialogOk) {
                 let troopsToSend = this.tDialogTPB.valor;
-                if(this.gameState === gameStates.playerAttacking){
+                if (this.gameState === gameStates.playerAttacking) {
                     this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
-                }
-                else if(this.gameState === gameStates.playerMoving){
+                } else if (this.gameState === gameStates.playerMoving) {
                     this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                 }
                 this.clickedProvinces = [];
                 this.UIState = UIStates.map;
                 controles.tDialogOk = false;
             }
-            if(controles.tDialogAdd){
-                if(this.tDialogTPA.valor>0) {
+            if (controles.tDialogAdd) {
+                if (this.tDialogTPA.valor > 0) {
                     this.tDialogTPA.valor--;
                     this.tDialogTPB.valor++;
                 }
                 controles.tDialogAdd = false;
             }
-            if(controles.tDialogRemove){
-                if(this.tDialogTPB.valor>0) {
+            if (controles.tDialogRemove) {
+                if (this.tDialogTPB.valor > 0) {
                     this.tDialogTPB.valor--;
                     this.tDialogTPA.valor++;
                 }
 
                 controles.tDialogRemove = false;
             }
-        }
-        else{
-            if(controles.attackButton){
+        } else {
+            if (controles.attackButton) {
                 console.log("Attack button press");
                 // Two liens should be here
                 this.gameState = gameStates.playerAttacking;
@@ -197,7 +194,7 @@ class GameLayer extends Layer {
 
                 controles.attackButton = false;
             }
-            if(controles.diceButton){
+            if (controles.diceButton) {
                 console.log("Dice button press");
 
                 // Testing code
@@ -205,16 +202,15 @@ class GameLayer extends Layer {
 
                 controles.diceButton = false;
             }
-            if(controles.tileClick) {
+            if (controles.tileClick) {
                 console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
                 console.log("\tContinente: " + clickedTile.continente.code);
                 console.log("\tProvincia: " + clickedTile.province.code);
                 console.log("\tOwner: " + clickedTile.province.owner);
 
-                if(clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
+                if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
                     this.gestorDeTurnos.farm(clickedTile);
-                }
-                else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
+                } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
                     this.clickedProvinces.push(clickedTile.province);
                     if (this.clickedProvinces.length === 2 && this.gestorDeTerritorios.validateAttack(clickedTile[0], clickedTile[1])) {
                         //Show prompt for number of units to attack
@@ -224,8 +220,7 @@ class GameLayer extends Layer {
                     } else {
                         // Show message informing of invalid attack
                     }
-                }
-                else {
+                } else {
                     this.gameState = gameStates.playerMoving;
                     this.isPlayerSelecting = true; //El jugador está seleccionando origen y destino de un movimiento
                     this.clickedProvinces.push(clickedTile.province);
@@ -235,8 +230,7 @@ class GameLayer extends Layer {
                             this.tDialogTPA.valor = clickedTile[0].province.units;
                             this.tDialogTPA.valor = clickedTile[1].province.units;
                             this.UIState = UIStates.troopsDialog;
-                        }
-                        else {
+                        } else {
                             // Show message informing of invalid move
                         }
                     }
@@ -299,11 +293,19 @@ class GameLayer extends Layer {
     attachUnitSigns() {
         for (let key in provincias)
             if (provincias.hasOwnProperty(key)) {
-                let sign = new Texto(0, (provincias[key].centroid.x*8)+1, (provincias[key].centroid.y*8)+5.5, "bold 5px Arial", "black");
+                let sign = new Texto(0, (provincias[key].centroid.x * 8) + 1, (provincias[key].centroid.y * 8) + 5.5, "bold 5px Arial", "black");
                 this.unitNumbers.push(sign);
                 provincias[key].unitsSign = sign;
+            }
+    }
+
+
+    setInitialUnits() {
+        for (let key in provincias) {
+            if (provincias.hasOwnProperty(key)) {
                 provincias[key].setUnits(3);
             }
+        }
     }
 
     addContinentInfo(rutaInfo) {
