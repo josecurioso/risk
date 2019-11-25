@@ -4,13 +4,17 @@ class GestorDeTextos {
         this.whereBase = whereBase;
         this.bufferLength = 10;
         this.written = [];
+        this.count = 0;
     }
 
     writeTurnAction(jugador, action) {
         if (this.written.length > this.bufferLength) {
             this.written = [];
+            this.count = 0;
         }
-        this.written.push(new Texto("[" + jugador + "]:" + action, this.whereBase.x + 5, this.whereBase.y + 5,"5px Arial"));
+        this.written.push(new Texto("[" + jugador + "]:" + action, this.whereBase.x, this.whereBase.y + 6 * this.count,"5px Arial"));
+        console.log(this.written[this.count].y);
+        this.count++;
     }
 
     writeTurnActionCustom(where, jugador, action) {
