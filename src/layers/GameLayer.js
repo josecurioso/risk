@@ -118,6 +118,7 @@ class GameLayer extends Layer {
                     } else if (this.botonDice.contienePunto(pulsaciones[i].x, pulsaciones[i].y)){
                         this.botonDice.pulsado = true;
                         controles.diceButton = true;
+                        this.gestorDeTurnos.changePlayer(); // for testing xd
                     }
                     else{
                         console.log("Click en agua");
