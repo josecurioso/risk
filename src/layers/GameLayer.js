@@ -183,6 +183,7 @@ class GameLayer extends Layer {
 
                 // Testing code
                 this.UIState = UIStates.troopsDialog;
+                this.gestorDeTurnos.changePlayer();
                 provincias['A'].setUnits(10);
 
                 controles.attackButton = false;
