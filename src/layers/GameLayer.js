@@ -6,6 +6,8 @@ class GameLayer extends Layer {
     }
 
     iniciar(playerAmount) {
+        // Mapa
+        this.fondoMar = new FondoSVG(imagenes.fondo_mar, 600, 320, 600, 320);
         this.mapa = new Mapa(60, 80);
 
         // Game HUD
@@ -63,6 +65,7 @@ class GameLayer extends Layer {
     }
 
     dibujar() {
+        this.fondoMar.dibujar();
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
         this.summaryOverlay.dibujar();
@@ -150,10 +153,10 @@ class GameLayer extends Layer {
             if(controles.tDialogOk){
                 let troopsToSend = this.tDialogTPB.valor;
                 if(this.gameState === gameStates.playerAttacking){
-                    // Proceed with attack simulation
+                    this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                 }
                 else if(this.gameState === gameStates.playerMoving){
-                    // Proceed with move
+                    this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                 }
                 this.clickedProvinces = [];
                 this.UIState = UIStates.map;
@@ -179,13 +182,13 @@ class GameLayer extends Layer {
             if(controles.attackButton){
                 console.log("Attack button press");
                 // Two liens should be here
-                //this.gameState = gameStates.playerAttacking;
-                //this.isPlayerSelecting = true;
+                this.gameState = gameStates.playerAttacking;
+                this.isPlayerSelecting = true;
 
                 // Testing code
-                this.UIState = UIStates.troopsDialog;
-                this.gestorDeTurnos.changePlayer();
-                provincias['A'].setUnits(10);
+                //this.UIState = UIStates.troopsDialog;
+                //this.gestorDeTurnos.changePlayer();
+                //provincias['A'].setUnits(10);
 
                 controles.attackButton = false;
             }
@@ -204,8 +207,8 @@ class GameLayer extends Layer {
                 console.log("   Climate: " + clickedTile.province.climate);
                 console.log("   hasSea? " + clickedTile.province.hasSea);
 
-                if(clickedTile.isBonus && this.gameState !== gameStates.playerAttacking) {
-                    // Player is farming
+                if(clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
+                    this.gestorDeTurnos.farm(clickedTile);
                 }
                 else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
                     this.clickedProvinces.push(clickedTile.province);

@@ -1,6 +1,6 @@
 // Lista rerecursos a precargar
 var imagenes = {
-    fondo_mar: "res/PNG/fondo.jpg",
+    fondo_mar: "res/SVG/mar.svg",
     menu_fondo: "res/SVG/menu.svg",
     attack: "res/SVG/attack.svg",
     boton_empezar: "res/SVG/empezar.svg",
@@ -11,6 +11,7 @@ var imagenes = {
     tDialogOk: "res/SVG/accept.svg",
     tDialogBackground: "res/SVG/dialog_troops.svg",
     messages: "res/SVG/messages.svg",
+    //fondo_mar: "res/PNG/fondo.jpg",
     //menu_fondo: "res/PNG/menu.png",
     //attack: "res/attack_new_small.png",
     //boton_empezar: "res/PNG/empezar.png",

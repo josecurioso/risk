@@ -8,7 +8,7 @@ class Provincia {
         this.connections = null;
         this.owner = null;
         this.units = 0;
-        this.hasFarm = [false, 0]; // true si hay granja, el valor representa cuánto se va a sumar
+        this.hasFarm = [false, 0, 0]; // true si hay granja, el valor representa cuánto se va a sumar y la tile que se muestra
         this.unitsSign = null;
     }
 
@@ -103,5 +103,14 @@ class Provincia {
             }
         });
         return result;
+    }
+
+    locateFarm(){
+        this.tiles[this.hasFarm[2]].isBonus = false;
+        this.hasFarm[2] = Math.round(Math.random() * this.tiles.length);
+        while(this.tiles[this.hasFarm[2]].px === this.centroid.x && this.tiles[this.hasFarm[2]].py === this.centroid.y){
+            this.hasFarm[2] = Math.round(Math.random() * this.tiles.length);
+        }
+        this.tiles[this.hasFarm[2]].isBonus = true;
     }
 }

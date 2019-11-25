@@ -74,6 +74,7 @@ class GestorDeEventos {
         } else if(this.farming.has(event)) {
             if(!province.hasFarm[0]) {
                 province.hasFarm = [true, this.farming[event]];
+                province.locateFarm();
             } else {
                 console.log("There is already a farm");
             }
