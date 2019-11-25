@@ -49,13 +49,15 @@ class GestorDeTurnos {
            ⚠⚠⚠
          */
 
+        this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Attacking " + provinceB.owner + " from " + provinceA.code + " to " + provinceB.code);
+
         // Cálculo de los dados
         let diceA = 2;
         let diceB = 1;
 
-        if(provinceA.units > 20)
+        if (provinceA.units > 20)
             diceA = 3;
-        if(provinceB.units > 20)
+        if (provinceB.units > 20)
             diceB = 2;
 
         // Bonus por tipo de clima
@@ -71,14 +73,14 @@ class GestorDeTurnos {
 
         // Resultado
         if (this.jugadorActual.totalUnits <= 1) {
-            console.log("Atacante pierde");
+            this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Has lost!");
             this.changePlayer();
         } else if (provinceB.owner.totalUnits <= 0) {
-            console.log("Defensor pierde");
+            this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Has won!");
             this.jugadorActual.conquestProvince(provinceB);
             // Movimiento
-            if(provinceA.units > troopsToSend){
-                provinceA.units = provinceA.units-troopsToSend;
+            if (provinceA.units > troopsToSend) {
+                provinceA.units = provinceA.units - troopsToSend;
                 provinceB.units = troopsToSend;
             }
             this.changePlayer();
@@ -86,6 +88,7 @@ class GestorDeTurnos {
     }
 
     move(provinceA, provinceB, troopsToSend) {
+        this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Moving " + troopsToSend + "u from " + provinceA.code + " to " + provinceB.code);
         provinceA.units -= troopsToSend;
         provinceB.units += troopsToSend;
         this.changePlayer();
@@ -93,7 +96,7 @@ class GestorDeTurnos {
 
     farm(player, tile) {
         // Farm action
-        console.log("Farmeando...");
+        this.gestorDeTextos.writeTurnAction(player.smallTeamCode, "Farming " + tile.province.hasFarm[1] + "... " + tile.province.hasFarm[2] + "u");
         this.jugadorActual.totalUnits += tile.province.hasFarm[1];
         tile.province.units += tile.province.hasFarm[1];
         tile.province.hasFarm[0] = false;
@@ -103,22 +106,33 @@ class GestorDeTurnos {
 
     initialTurnDraw() {
         let p = this.gestorDeTerritorios.provincias;
-        let ppp = Math.round(p / this.playerOrder.length);
+        let pKeys = Object.keys(p);
+        let ppp = Math.round(pKeys.length / this.playerOrder.length);
         let odd = ppp % 2 !== 0;
-        for(let i = 0; i < this.playerOrder.length; i++) {
-            let assigned = 0;
-            if(odd && i + 1 === this.playerOrder.length) {
-                assigned++;
+        for (let i = 0; i < this.playerOrder.length; i++) {
+            let assignedC = 0;
+            let assigned = [];
+            if (odd && i + 1 === this.playerOrder.length) {
+                assignedC++;
             }
-            while(assigned <= ppp) {
-                let pToAssign = p[Math.floor(Math.random() * p.length)];
-                while(pToAssign.owner !== null) {
-                    pToAssign = p[Math.floor(Math.random() * p.length)];
+            while (assignedC < ppp) {
+                let pToAssign = p[pKeys[Math.floor(Math.random() * pKeys.length)]];
+                while (pToAssign.owner !== null) {
+                    pToAssign = p[pKeys[Math.floor(Math.random() * pKeys.length)]];
                 }
-                pToAssign.owner = this.playerOrder[i].code;
-                pToAssign.setUnits(3);
-                assigned++;
+                pToAssign.owner = this.playerOrder[i].teamCode;
+                assigned.push(pToAssign);
+                assignedC++;
             }
+            let aux = "";
+            for(let i = 0; i < assigned.length; i++) {
+                if(i + 1 !== assigned.length) {
+                    aux += assigned[i].code + ",";
+                } else {
+                    aux += assigned[i].code;
+                }
+            }
+            this.gestorDeTextos.writeTurnAction(this.playerOrder[i].smallTeamCode, "[" + aux + "]");
         }
     }
 }

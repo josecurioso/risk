@@ -41,8 +41,11 @@ class GameLayer extends Layer {
         this.gestorDeTextos = new GestorDeTextos(this.summaryTextBase);
         this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json");
         this.gestorDeEventos.loadEventsFile();
+        this.gestorDeTerritorios = new GestorDeTerritorios(provincias);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.summaryTextBase);
-        this.gestorDeTerritorios = new GestorDeTerritorios();
+
+        // Reparto inicial de provincias
+        this.gestorDeTurnos.initialTurnDraw();
         // Manejo de seleccion de provincias (mover/atacar)
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
@@ -94,6 +97,8 @@ class GameLayer extends Layer {
         this.tDialogAdd.pulsado = false;
         this.tDialogRemove.pulsado = false;
         let tilePulsada = false;
+
+        this.gestorDeTerritorios.setCurrentPlayer(this.gestorDeTurnos.getCurrentPlayer());
 
         for (let i = 0; i < pulsaciones.length; i++) {
             if (pulsaciones[i].tipo === tipoPulsacion.inicio) {
@@ -203,10 +208,9 @@ class GameLayer extends Layer {
             }
             if(controles.tileClick) {
                 console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
-                console.log("   Continente: " + clickedTile.continente.code);
-                console.log("   Provincia: " + clickedTile.province.code);
-                console.log("   Climate: " + clickedTile.province.climate);
-                console.log("   hasSea? " + clickedTile.province.hasSea);
+                console.log("\tContinente: " + clickedTile.continente.code);
+                console.log("\tProvincia: " + clickedTile.province.code);
+                console.log("\tOwner: " + clickedTile.province.owner);
 
                 if(clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
                     this.gestorDeTurnos.farm(clickedTile);
@@ -299,6 +303,7 @@ class GameLayer extends Layer {
                 let sign = new Texto(0, (provincias[key].centroid.x*8)+1, (provincias[key].centroid.y*8)+5.5, "bold 5px Arial", "black");
                 this.unitNumbers.push(sign);
                 provincias[key].unitsSign = sign;
+                provincias[key].setUnits(3);
             }
     }
 

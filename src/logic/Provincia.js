@@ -8,7 +8,7 @@ class Provincia {
         this.connections = null;
         this.owner = null;
         this.units = 0;
-        this.hasFarm = [false, 0, 0]; // true si hay granja, el valor representa cuánto se va a sumar y la tile que se muestra
+        this.hasFarm = [false, "", 0, 0]; // true si hay granja, el valor representa el tipo, cuánto se va a sumar y la tile que se muestra
         this.unitsSign = null;
     }
 

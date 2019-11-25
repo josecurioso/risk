@@ -1,8 +1,16 @@
 class GestorDeTerritorios {
 
-    constructor(provincias, gestorDeTurnos) {
+    constructor(provincias) {
         this.provincias = provincias;
-        this.gestorDeTurnos = gestorDeTurnos;
+        this.currentPlayer = null;
+    }
+
+    getCurrentPlayer() {
+        return this.currentPlayer;
+    }
+
+    setCurrentPlayer(player) {
+        this.currentPlayer = player;
     }
 
     /*
@@ -28,7 +36,7 @@ class GestorDeTerritorios {
     currentPlayerHasProvince(province) {
         let result = false;
         if (province !== null) {
-            this.gestorDeTurnos.getCurrentPlayer().conqueredTerritories.forEach(p => {
+            this.getCurrentPlayer().conqueredTerritories.forEach(p => {
                 if (p.code === province.code) {
                     result = true;
                 }
