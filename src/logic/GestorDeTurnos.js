@@ -8,6 +8,7 @@ class GestorDeTurnos {
         this.gestorDeUnidades = gestorDeUnidades;
         this.gestorDeDados = new GestorDeDados();
         this.gestorDeTextos = gestorDeTextos;
+        this.gestorDeTerritorios = gestorDeTerritorios;
         this.cartelTurno = cartelTurno;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
         this.cartelTurno.valor = this.jugadorActual.teamCode;
@@ -94,5 +95,26 @@ class GestorDeTurnos {
         this.jugadorActual.totalUnits += tile.province.hasFarm[1];
         tile.province.units += tile.province.hasFarm[1];
         this.changePlayer();
+    }
+
+    initialTurnDraw() {
+        let p = this.gestorDeTerritorios.provincias;
+        let ppp = Math.round(p / this.playerOrder.length);
+        let odd = ppp % 2 !== 0;
+        for(let i = 0; i < this.playerOrder.length; i++) {
+            let assigned = 0;
+            if(odd && i + 1 === this.playerOrder.length) {
+                assigned++;
+            }
+            while(assigned <= ppp) {
+                let pToAssign = p[Math.floor(Math.random() * p.length)];
+                while(pToAssign.owner !== null) {
+                    pToAssign = p[Math.floor(Math.random() * p.length)];
+                }
+                pToAssign.owner = this.playerOrder[i].code;
+                pToAssign.setUnits(3);
+                assigned++;
+            }
+        }
     }
 }

@@ -1,7 +1,8 @@
 class Jugador {
 
-    constructor(teamCode, climate) {
+    constructor(teamCode, smallTeamCode, climate) {
         this.teamCode = teamCode;
+        this.smallTeamCode = smallTeamCode;
         this.climateBonus = climate;
         this.totalUnits = 0;
         this.conqueredTerritories = []; // provincias
