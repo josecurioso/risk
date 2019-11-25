@@ -1,6 +1,6 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeTerritorios, gestorDeUnidades, gestorDeTextos, playerOrder, cartelTurno) {
+    constructor(gestorDeTerritorios, gestorDeUnidades, gestorDeTextos, gestorDeEventos, playerOrder, cartelTurno) {
         this.playerOrder = playerOrder;
         this.listPos = 0;
         this.jugadorActual = this.playerOrder[this.listPos];
@@ -9,6 +9,7 @@ class GestorDeTurnos {
         this.gestorDeDados = new GestorDeDados();
         this.gestorDeTextos = gestorDeTextos;
         this.gestorDeTerritorios = gestorDeTerritorios;
+        this.gestorDeEventos = gestorDeEventos;
         this.cartelTurno = cartelTurno;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
         this.cartelTurno.valor = this.jugadorActual.teamCode;
@@ -27,6 +28,7 @@ class GestorDeTurnos {
         this.turnosCount++;
         this.cartelTurno.valor = this.jugadorActual.teamCode;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
+        this.gestorDeEventos.randomEvents(this.jugadorActual);
 
         // Turn Base
         // Suma inicial del turno para unidades a colocar en el tablero
@@ -97,6 +99,8 @@ class GestorDeTurnos {
         this.gestorDeTextos.writeTurnAction(player.smallTeamCode, "Farming " + tile.province.hasFarm[1] + "... " + tile.province.hasFarm[2] + "u");
         this.jugadorActual.totalUnits += tile.province.hasFarm[1];
         tile.province.units += tile.province.hasFarm[1];
+        tile.province.hasFarm[0] = false;
+        tile.province.locateFarm();
         this.changePlayer();
     }
 

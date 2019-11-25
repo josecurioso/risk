@@ -59,6 +59,8 @@ class Tile extends Modelo {
     }
 
     getFillColor() {
+        if(this.isBonus)
+            return "#000000";
         return this.continente.fillColor;
     }
 

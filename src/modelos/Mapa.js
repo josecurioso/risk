@@ -14,11 +14,6 @@ class Mapa extends Modelo {
 
     dibujar() {
         //super.dibujar();
-        /*
-            contexto.drawImage(this.imagen,
-                this.x - this.imagen.width / 2,
-                this.y - this.imagen.height / 2, 600, 320);
-            */
 
         this.drawConnectionsBySea();
         for (let y = 0; y < this.sy; y++) {

@@ -38,7 +38,7 @@ class Jugador {
     incrementUnits(units, province) {
         if (province.owner === this.teamCode) {
             this.totalUnits += units;
-            province.units += units;
+            province.setUnits(province.units + units);
         } else {
             console.log("Not the owner, cannot add");
         }
@@ -47,7 +47,7 @@ class Jugador {
     substractUnits(units, province) {
         if (province.owner === this.teamCode) {
             this.totalUnits -= units;
-            province.units -= units;
+            province.setUnits(province.units-units);
         } else {
             console.log("Not the owner, cannot substract");
         }
