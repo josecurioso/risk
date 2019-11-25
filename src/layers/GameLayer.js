@@ -30,8 +30,8 @@ class GameLayer extends Layer {
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
-        for(let i=0; i<this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador " + i));
+        for(let i = 0; i < this.numeroJugadores; i++)
+            this.jugadores.push(new Jugador("Jugador " + i,"J" + i, climates[Math.floor(Math.random() * climates.length)]));
         this.jugadores.push(new IA().playerIA);
 
         // Configurar gestores
@@ -178,13 +178,9 @@ class GameLayer extends Layer {
         else{
             if(controles.attackButton){
                 console.log("Attack button press");
-                // Two liens should be here
-                //this.gameState = gameStates.playerAttacking;
-                //this.isPlayerSelecting = true;
-
-                // Testing code
-                this.UIState = UIStates.troopsDialog;
-                provincias['A'].setUnits(10);
+                // Two lines should be here
+                this.gameState = gameStates.playerAttacking;
+                this.isPlayerSelecting = true;
 
                 controles.attackButton = false;
             }

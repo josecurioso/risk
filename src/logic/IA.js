@@ -1,7 +1,7 @@
 class IA {
 
     constructor() {
-        this.playerIA = new Jugador("IA");
+        this.playerIA = new Jugador("IA", "IA", climates[Math.floor(Math.random() * climates.length)]);
     }
 
     /*

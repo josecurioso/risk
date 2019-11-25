@@ -1,5 +1,10 @@
 class GestorDeTerritorios {
 
+    constructor(provincias, gestorDeTurnos) {
+        this.provincias = provincias;
+        this.gestorDeTurnos = gestorDeTurnos;
+    }
+
     /*
    This method checks:
        * Provinces are connected
