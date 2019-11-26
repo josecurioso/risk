@@ -157,11 +157,12 @@ class GameLayer extends Layer {
     procesarControles() {
         if (this.UIState === UIStates.troopsDialog) {
             if (controles.tDialogOk) {
-                let troopsToSend = this.tDialogTPB.valor;
                 if (this.gameState === gameStates.playerAttacking) {
+                    let troopsToSend = this.tDialogTPB.valor;
                     this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                 } else if (this.gameState === gameStates.playerMoving) {
-                    this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
+                    let troopsToMove = this.tDialogTPB.valor - this.tDialogTPBOriginal;
+                    this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToMove);
                 }
                 this.clickedProvinces = [];
                 this.UIState = UIStates.map;
@@ -212,12 +213,13 @@ class GameLayer extends Layer {
 
                 if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
                     this.gestorDeTurnos.farm(this.gestorDeTurnos.getCurrentPlayer(), clickedTile);
+                    this.clickedProvinces = [];
                 } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
                     this.clickedProvinces.push(clickedTile.province);
-                    if (this.clickedProvinces.length === 2 && this.gestorDeTerritorios.validateAttack(clickedTile[0], clickedTile[1])) {
+                    if (this.clickedProvinces.length === 2 && this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
                         //Show prompt for number of units to attack
-                        this.tDialogTPA.valor = clickedTile[0].province.units;
-                        this.tDialogTPA.valor = 0;
+                        this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                        this.tDialogTPB.valor = 0;
                         this.UIState = UIStates.troopsDialog;
                     } else {
                         // Show message informing of invalid attack
@@ -227,11 +229,12 @@ class GameLayer extends Layer {
                     this.isPlayerSelecting = true; //El jugador está seleccionando origen y destino de un movimiento
                     this.clickedProvinces.push(clickedTile.province);
                     if (this.clickedProvinces.length === 2) {
-                        if (this.gestorDeTerritorios.validateMove(clickedTile[0], clickedTile[1])) {
+                        if (this.gestorDeTerritorios.validateMove(this.clickedProvinces[0], this.clickedProvinces[1])) {
                             // Show prompt for number of units to move
-                            this.tDialogTPA.valor = clickedTile[0].province.units;
-                            this.tDialogTPA.valor = clickedTile[1].province.units;
-                            this.UIState = UIStates.troopsDialog;
+                            this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                            this.tDialogTPB.valor = this.clickedProvinces[1].units;
+                            this.tDialogTPBOriginal = this.clickedProvinces[1].units;
+                                this.UIState = UIStates.troopsDialog;
                         } else {
                             // Show message informing of invalid move
                         }
