@@ -121,12 +121,13 @@ class GestorDeTurnos {
                     pToAssign = p[pKeys[Math.floor(Math.random() * pKeys.length)]];
                 }
                 pToAssign.owner = this.playerOrder[i];
+                this.playerOrder[i].conqueredTerritories.push(pToAssign);
                 assigned.push(pToAssign);
                 assignedC++;
             }
             let aux = "";
-            for(let i = 0; i < assigned.length; i++) {
-                if(i + 1 !== assigned.length) {
+            for (let i = 0; i < assigned.length; i++) {
+                if (i + 1 !== assigned.length) {
                     aux += assigned[i].code + ",";
                 } else {
                     aux += assigned[i].code;

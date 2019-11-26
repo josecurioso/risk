@@ -22,50 +22,51 @@ class GestorDeEventos {
     }
 
     randomEvents(currentPlayer) {
-        // Muestreo estocástico
-        let tsunamis = Math.floor(Math.random() * 101);
-        let otherNegatives = Math.floor(Math.random() * 101);
-        let positives = Math.floor(Math.random() * 101);
-        let farming = Math.floor(Math.random() * 101);
-
+        // Probabilidades
+        let tsunamis = Math.floor(Math.random() * 101); // 5%
+        let otherNegatives = Math.floor(Math.random() * 101); // 10%
+        let positives = Math.floor(Math.random() * 101); // 20%
+        let farming = Math.floor(Math.random() * 101); // 5%
 
         let player = currentPlayer;
-        let randomProvinceCode = player.conqueredTerritories[Math.floor(Math.random() * player.conqueredTerritories.length)];
-        //let province = provincias["A"];
-        let province = provincias[randomProvinceCode];
+        let province = player.conqueredTerritories[Math.floor(Math.random() * player.conqueredTerritories.length)];
         let event = null;
 
-        if(tsunamis >= 95 && province.hasSea) {
-            let event = this.negativeBonuses["tsunami"];
-            this.triggerEvent(player, event, province, "tsunami");
-        }else if (otherNegatives >= 90) {
-            let selectedEventKey = Object.keys(this.negativeBonuses)[1+Math.floor(Math.random() * (Object.keys(this.negativeBonuses).length-1))];
-            event = this.negativeBonuses[selectedEventKey];
-            this.triggerEvent(player, event, province, selectedEventKey);
+        // Negative effects
+        if (tsunamis >= 95 && province.hasSea) {
+            event = this.negativeBonuses["tsunami"];
+            this.triggerEvent(player, event, province);
         }
+        if (otherNegatives >= 90) {
+            let eventKeys = Object.keys(this.negativeBonuses);
+            event = eventKeys[Math.floor(Math.random() * eventKeys.length)];
+            this.triggerEvent(player, event, province);
+        }
+
+        // Positive effects
         if (positives >= 80) {
-            let selectedEventKey = Object.keys(this.positiveBonuses)[Math.floor(Math.random() * (Object.keys(this.positiveBonuses).length-1))];
-                event = this.positiveBonuses[selectedEventKey];
-            this.triggerEvent(player, event, province, selectedEventKey);
+            let eventKeys = Object.keys(this.positiveBonuses);
+            event = eventKeys[Math.floor(Math.random() * eventKeys.length)];
+            this.triggerEvent(player, event, province);
         }
         if (farming >= 0) {
-            let selectedEventKey = Object.keys(this.farming)[Math.floor(Math.random() * (Object.keys(this.farming).length))];
-                event = this.farming[selectedEventKey];
-            this.triggerEvent(player, event, province, selectedEventKey);
+            let eventKeys = Object.keys(this.farming);
+            event = eventKeys[Math.floor(Math.random() * eventKeys.length)];
+            this.triggerEvent(player, event, province);
         }
     }
 
-    triggerEvent(player, event, province, eventKey) {
+    triggerEvent(player, event, province) {
         console.log("Lanzando evento aleatorio (" + event + ") para... " + player.teamCode);
-        if(Object.keys(this.negativeBonuses).includes(eventKey)) {
-            player.substractUnits(province.units * event[0], province);
-        } else if (Object.keys(this.positiveBonuses).includes(eventKey)) {
-            player.incrementUnits(province.units * event[0], province);
-        } else if(Object.keys(this.farming).includes(eventKey)) {
-            if(!province.hasFarm[0]) {
+        if (Object.keys(this.negativeBonuses).includes(event)) {
+            player.substractUnits(province.units * this.negativeBonuses[event][0], province);
+        } else if (Object.keys(this.positiveBonuses).includes(event)) {
+            player.incrementUnits(province.units * this.positiveBonuses[event][0], province);
+        } else if (Object.keys(this.farming).includes(event)) {
+            if (!province.hasFarm[0]) {
                 console.log("Farm set");
                 province.hasFarm[0] = true;
-                province.hasFarm[1] = event;
+                province.hasFarm[1] = this.farming[event];
                 province.locateFarm();
             } else {
                 console.log("There is already a farm");
