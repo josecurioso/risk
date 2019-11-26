@@ -46,6 +46,7 @@ class GameLayer extends Layer {
 
         // Reparto inicial de provincias
         this.gestorDeTurnos.initialTurnDraw();
+
         // Manejo de seleccion de provincias (mover/atacar)
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
@@ -210,7 +211,7 @@ class GameLayer extends Layer {
                 console.log("\tOwner: " + clickedTile.province.owner);
 
                 if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
-                    this.gestorDeTurnos.farm(clickedTile);
+                    this.gestorDeTurnos.farm(this.gestorDeTurnos.getCurrentPlayer(), clickedTile);
                 } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
                     this.clickedProvinces.push(clickedTile.province);
                     if (this.clickedProvinces.length === 2 && this.gestorDeTerritorios.validateAttack(clickedTile[0], clickedTile[1])) {
