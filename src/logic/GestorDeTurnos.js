@@ -11,7 +11,7 @@ class GestorDeTurnos {
         this.gestorDeTerritorios = gestorDeTerritorios;
         this.gestorDeEventos = gestorDeEventos;
         this.cartelTurno = cartelTurno;
-        this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Your turn");
         this.updateCartel();
     }
 
@@ -32,7 +32,7 @@ class GestorDeTurnos {
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount++;
         this.updateCartel();
-        this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Your turn");
         this.gestorDeEventos.randomEvents(this.jugadorActual);
 
         // Turn Base
@@ -54,7 +54,7 @@ class GestorDeTurnos {
            ⚠⚠⚠
          */
 
-        this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Attacking " + provinceB.owner + " from " + provinceA.code + " to " + provinceB.code);
+        this.gestorDeTextos.writeTurnAction(provinceA.owner, "Attacking " + provinceB.owner + " from " + provinceA.code + " to " + provinceB.code);
 
         // Cálculo de los dados
         let diceA = 2;
@@ -78,10 +78,10 @@ class GestorDeTurnos {
 
         // Resultado
         if (this.jugadorActual.totalUnits <= 1) {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Has lost!");
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Has lost!");
             this.changePlayer();
         } else if (provinceB.owner.totalUnits <= 0) {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Has won!");
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Has won!");
             this.jugadorActual.conquestProvince(provinceB);
             // Movimiento
             if (provinceA.units > troopsToSend) {
@@ -93,7 +93,7 @@ class GestorDeTurnos {
     }
 
     move(provinceA, provinceB, troopsToSend) {
-        this.gestorDeTextos.writeTurnAction(provinceA.owner.smallTeamCode, "Moving " + troopsToSend + "u from " + provinceA.code + " to " + provinceB.code);
+        this.gestorDeTextos.writeTurnAction(provinceA.owner, "Moving " + troopsToSend + "u from " + provinceA.code + " to " + provinceB.code);
         provinceA.units -= troopsToSend;
         provinceB.units += troopsToSend;
         this.changePlayer();
@@ -101,9 +101,9 @@ class GestorDeTurnos {
 
     farm(player, tile) {
         // Farm action
-        this.gestorDeTextos.writeTurnAction(player.smallTeamCode, "Farming " + tile.province.hasFarm[1] + "... " + tile.province.hasFarm[2] + "u");
-        this.jugadorActual.totalUnits += tile.province.hasFarm[1];
-        tile.province.units += tile.province.hasFarm[1];
+        this.gestorDeTextos.writeTurnAction(player, "Farming " + tile.province.hasFarm[1] + "... " + tile.province.hasFarm[2] + "u");
+        this.jugadorActual.totalUnits += tile.province.hasFarm[2];
+        tile.province.setUnits(tile.province.units + tile.province.hasFarm[2]);
         tile.province.hasFarm[0] = false;
         tile.province.locateFarm();
         this.changePlayer();
@@ -149,7 +149,7 @@ class GestorDeTurnos {
                     aux += assigned[i].code;
                 }
             }
-            this.gestorDeTextos.writeTurnAction(this.playerOrder[i].smallTeamCode, "[" + aux + "]");
+            this.gestorDeTextos.writeTurnAction(this.playerOrder[i], "[" + aux + "]");
         }
     }
 }

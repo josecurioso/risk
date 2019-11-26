@@ -106,13 +106,13 @@ class Provincia {
     }
 
     locateFarm(){
-        this.tiles[this.hasFarm[2]].isBonus = false;
+        this.tiles[this.hasFarm[3]].isBonus = false;
         if(this.hasFarm[0] === true){
-            this.hasFarm[2] = Math.round(Math.random() * this.tiles.length);
-            while(this.tiles[this.hasFarm[2]].px === this.centroid.x && this.tiles[this.hasFarm[2]].py === this.centroid.y){
-                this.hasFarm[2] = Math.round(Math.random() * this.tiles.length);
+            this.hasFarm[3] = Math.round(Math.random() * this.tiles.length);
+            while(this.tiles[this.hasFarm[3]].px === this.centroid.x && this.tiles[this.hasFarm[3]].py === this.centroid.y){
+                this.hasFarm[3] = Math.round(Math.random() * this.tiles.length);
             }
-            this.tiles[this.hasFarm[2]].isBonus = true;
+            this.tiles[this.hasFarm[3]].isBonus = true;
         }
     }
 }

@@ -39,7 +39,7 @@ class GameLayer extends Layer {
         // Configurar gestores
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
         this.gestorDeTextos = new GestorDeTextos(this.summaryTextBase);
-        this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json");
+        this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json", this.gestorDeTextos);
         this.gestorDeEventos.loadEventsFile();
         this.gestorDeTerritorios = new GestorDeTerritorios(provincias);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.summaryTextBase);

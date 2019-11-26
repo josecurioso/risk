@@ -1,7 +1,8 @@
 class GestorDeEventos {
 
-    constructor(rutaInfo) {
+    constructor(rutaInfo, gestorDeTextos) {
         this.rutaInfo = rutaInfo;
+        this.gestorDeTextos = gestorDeTextos;
         this.negativeBonuses = new Map();
         this.positiveBonuses = new Map();
         this.farming = new Map();
@@ -57,7 +58,8 @@ class GestorDeEventos {
     }
 
     triggerEvent(player, event, province) {
-        console.log("Lanzando evento aleatorio (" + event + ") para... " + player.teamCode);
+        // console.log("Lanzando evento aleatorio (" + event + ") para... " + player.teamCode);
+        this.gestorDeTextos.writeTurnAction(player, event.toUpperCase() + " - IN PROVINCE: " + province.code);
         if (Object.keys(this.negativeBonuses).includes(event)) {
             player.substractUnits(Math.round(province.units * this.negativeBonuses[event][0]), province);
         } else if (Object.keys(this.positiveBonuses).includes(event)) {
