@@ -16,6 +16,21 @@ var UIStates = {
     troopsDialog: 2,
 };
 
+var colores = [
+    {fillColor: "#ff8600",
+        strokeColor: "#c26100"},
+    {fillColor: "#109c00",
+        strokeColor: "#064f00"},
+    {fillColor: "#0052f2",
+        strokeColor: "#0040ae"},
+    {fillColor: "#f3dc04",
+        strokeColor: "#c2ac04"},
+    {fillColor: "#fb0002",
+        strokeColor: "#c50002"},
+    {fillColor: "#da0594",
+        strokeColor: "#ae0570"}
+];
+
 var continentes = {
     'A': new Continente("#c26100", "#ff8600", [], 0, "A"),
     'B': new Continente("#064f00", "#109c00", [], 0, "B"),

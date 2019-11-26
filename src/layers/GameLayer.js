@@ -33,7 +33,7 @@ class GameLayer extends Layer {
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
         for(let i = 0; i < this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador " + i,"J" + i, climates[Math.floor(Math.random() * climates.length)]));
+            this.jugadores.push(new Jugador("Jugador " + i,"J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
         this.jugadores.push(new IA().playerIA);
 
         // Configurar gestores

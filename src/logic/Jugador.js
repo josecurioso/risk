@@ -1,6 +1,6 @@
 class Jugador {
 
-    constructor(teamCode, smallTeamCode, climate) {
+    constructor(teamCode, smallTeamCode, strokeColor, fillColor, climate) {
         this.teamCode = teamCode;
         this.smallTeamCode = smallTeamCode;
         this.climateBonus = climate;
@@ -9,6 +9,8 @@ class Jugador {
         this.conqueredContinets = []; // continents
         this.currentProvince = null; // desde dónde atacas
         this.provinceDefended = null; // si te atacan, desde dónde defiendes
+        this.strokeColor = strokeColor;
+        this.fillColor = fillColor;
     }
 
     calculateTotalPoints() {

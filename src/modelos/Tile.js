@@ -18,6 +18,7 @@ class Tile extends Modelo {
         contexto.beginPath();
         contexto.strokeStyle = this.getStrokeColor();
         contexto.fillStyle = this.getFillColor();
+        contexto.lineWidth = 0.5;
         contexto.rect(
             this.x, this.y,
             this.tileSize,
@@ -29,39 +30,112 @@ class Tile extends Modelo {
         contexto.strokeStyle = "black";
         contexto.lineWidth = 1;
         contexto.setLineDash([]);
-        if (this.shouldDrawBorder(up)) {
+        let dBU = this.shouldDrawBorder(up);
+        let dBD = this.shouldDrawBorder(down);
+        let dBL = this.shouldDrawBorder(left);
+        let dBR = this.shouldDrawBorder(right);
+        if (dBU === 2) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 1;
+            contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
             contexto.lineTo(this.x + this.tileSize, this.y);
+            contexto.stroke();
         }
-        if (this.shouldDrawBorder(down)) {
+        else if(dBU === 1) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 0.5;
+            contexto.setLineDash([]);
+            contexto.moveTo(this.x, this.y);
+            contexto.lineTo(this.x + this.tileSize, this.y);
+            contexto.stroke();
+        }
+        if (dBD === 2) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 1;
+            contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y + this.tileSize);
             contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
+            contexto.stroke();
         }
-        if (this.shouldDrawBorder(left)) {
+        else if(dBD === 1) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 0.5;
+            contexto.setLineDash([]);
+            contexto.moveTo(this.x, this.y + this.tileSize);
+            contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
+            contexto.stroke();
+        }
+        if (dBL === 2) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 1;
+            contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
             contexto.lineTo(this.x, this.y + this.tileSize);
+            contexto.stroke();
         }
-        if (this.shouldDrawBorder(right)) {
+        else if(dBL === 1) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 0.5;
+            contexto.setLineDash([]);
+            contexto.moveTo(this.x, this.y);
+            contexto.lineTo(this.x, this.y + this.tileSize);
+            contexto.stroke();
+        }
+        if (dBR === 2) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 1;
+            contexto.setLineDash([]);
             contexto.moveTo(this.x + this.tileSize, this.y);
             contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
+            contexto.stroke();
+        }
+        else if(dBR === 1) {
+            contexto.beginPath();
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 0.5;
+            contexto.setLineDash([]);
+            contexto.moveTo(this.x + this.tileSize, this.y);
+            contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
+            contexto.stroke();
         }
         contexto.stroke();
     }
 
     shouldDrawBorder(tile) {
         if (tile === null || tile === undefined)
-            return true;
-        return tile.continente.code !== this.continente.code || tile.province.code !== this.province.code;
+            return 2;
+        if(tile.continente.code !== this.continente.code)
+            return 2;
+        if(tile.province.code !== this.province.code)
+            return 1;
+        return 0;
     }
 
     getStrokeColor() {
-        return this.continente.strokeColor;
+        //return this.continente.strokeColor;
+        if (this.province.owner !== undefined)
+            return this.province.owner.strokeColor;
+        else
+            return this.continente.strokeColor;
     }
 
     getFillColor() {
         if(this.isBonus)
             return "#000000";
-        return this.continente.fillColor;
+        //return this.continente.fillColor;
+        if(this.province.owner !== undefined) {
+            return this.province.owner.fillColor;
+        }
+        else
+            return this.continente.fillColor;
     }
 
 }

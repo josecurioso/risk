@@ -120,7 +120,7 @@ class GestorDeTurnos {
                 while (pToAssign.owner !== null) {
                     pToAssign = p[pKeys[Math.floor(Math.random() * pKeys.length)]];
                 }
-                pToAssign.owner = this.playerOrder[i].teamCode;
+                pToAssign.owner = this.playerOrder[i];
                 assigned.push(pToAssign);
                 assignedC++;
             }
