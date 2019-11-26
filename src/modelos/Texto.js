@@ -18,7 +18,6 @@ class Texto {
         contexto.font = this.sizeFont;
         contexto.fillStyle = this.colorFont;
         contexto.textAlign = "left";
-        contexto.text
         contexto.fillText(this.valor, this.x, this.y);
     }
 

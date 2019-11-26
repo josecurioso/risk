@@ -12,11 +12,16 @@ class GestorDeTurnos {
         this.gestorDeEventos = gestorDeEventos;
         this.cartelTurno = cartelTurno;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
-        this.cartelTurno.valor = this.jugadorActual.teamCode;
+        this.updateCartel();
     }
 
     getCurrentPlayer() {
         return this.jugadorActual;
+    }
+
+    updateCartel() {
+        this.cartelTurno.valor = this.jugadorActual.teamCode;
+        this.cartelTurno.colorFont = this.jugadorActual.fillColor;
     }
 
     changePlayer() {
@@ -26,7 +31,7 @@ class GestorDeTurnos {
         }
         this.jugadorActual = this.playerOrder[this.listPos];
         this.turnosCount++;
-        this.cartelTurno.valor = this.jugadorActual.teamCode;
+        this.updateCartel();
         this.gestorDeTextos.writeTurnAction(this.jugadorActual.teamCode, "Your turn");
         this.gestorDeEventos.randomEvents(this.jugadorActual);
 

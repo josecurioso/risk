@@ -18,6 +18,8 @@ class Tile extends Modelo {
         contexto.beginPath();
         contexto.strokeStyle = this.getStrokeColor();
         contexto.fillStyle = this.getFillColor();
+        if(!(this.getStrokeColor() + " " + this.getFillColor()).includes("#"))
+            console.log(this.getStrokeColor() + " " + this.getFillColor());
         contexto.lineWidth = 0.5;
         contexto.rect(
             this.x, this.y,
@@ -121,7 +123,7 @@ class Tile extends Modelo {
 
     getStrokeColor() {
         //return this.continente.strokeColor;
-        if (this.province.owner !== undefined)
+        if (this.province.owner !== undefined && this.province.owner !== null)
             return this.province.owner.strokeColor;
         else
             return this.continente.strokeColor;
@@ -131,7 +133,9 @@ class Tile extends Modelo {
         if(this.isBonus)
             return "#000000";
         //return this.continente.fillColor;
-        if(this.province.owner !== undefined) {
+        if(this.province.owner === null)
+            return "#ffffff";
+        if(this.province.owner !== undefined && this.province.owner !== null) {
             return this.province.owner.fillColor;
         }
         else

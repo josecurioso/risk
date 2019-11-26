@@ -20,6 +20,7 @@ class Mapa extends Modelo {
             for (let x = 0; x < this.sx; x++) {
                 let tile = this.tiles[y][x];
                 if (tile) {
+                    //console.log(tile)
                     tile.dibujar(
                         x - 1 >= 0 ? this.tiles[y][x - 1] : null,
                         x + 1 < this.sx ? this.tiles[y][x + 1] : null,

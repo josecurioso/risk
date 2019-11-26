@@ -11,11 +11,11 @@ class GameLayer extends Layer {
         this.mapa = new Mapa(60, 80);
 
         // Game HUD
-        this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
-        this.turnoActual = new Texto("placeholder", 600 * 0.45, 320 * 0.925, "20px Arial", "white");
-        this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.99, 320 * 0.99, 58, 58, true, 29);
         this.summaryOverlay = new FondoSVG(imagenes.messages, 600 * 0.20, 320 * 0.955, 116, 93);
         this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial", "white");
+        this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
+        this.turnoActual = new Texto("placeholder", 600 * 0.47, 320 * 0.925, "20px Arial", "white");
+        this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.99, 320 * 0.99, 58, 58, true, 29);
         this.botonDice = new BotonSVG(imagenes.dice, 600 * 0.25, 320 * 0.95, 58, 58, false);
         this.unitNumbers = [];
 
