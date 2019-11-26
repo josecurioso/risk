@@ -34,7 +34,7 @@ class GestorDeEventos {
 
         // Negative effects
         if (tsunamis >= 95 && province.hasSea) {
-            event = this.negativeBonuses["tsunami"];
+            event = "tsunami";
             this.triggerEvent(player, event, province);
         }
         if (otherNegatives >= 90) {
@@ -66,7 +66,8 @@ class GestorDeEventos {
             if (!province.hasFarm[0]) {
                 console.log("Farm set");
                 province.hasFarm[0] = true;
-                province.hasFarm[1] = this.farming[event];
+                province.hasFarm[1] = event;
+                province.hasFarm[2] = this.farming[event];
                 province.locateFarm();
             } else {
                 console.log("There is already a farm");

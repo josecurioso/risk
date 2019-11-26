@@ -38,7 +38,7 @@ class Jugador {
     }
 
     incrementUnits(units, province) {
-        if (province.owner === this.teamCode) {
+        if (province.owner.teamCode === this.teamCode) {
             this.totalUnits += units;
             province.setUnits(province.units + units);
         } else {
@@ -47,7 +47,7 @@ class Jugador {
     }
 
     substractUnits(units, province) {
-        if (province.owner === this.teamCode) {
+        if (province.owner.teamCode === this.teamCode) {
             this.totalUnits -= units;
             province.setUnits(province.units-units);
         } else {

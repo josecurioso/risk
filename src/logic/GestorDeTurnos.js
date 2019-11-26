@@ -105,25 +105,36 @@ class GestorDeTurnos {
     }
 
     initialTurnDraw() {
-        let p = this.gestorDeTerritorios.provincias;
-        let pKeys = Object.keys(p);
-        let ppp = Math.round(pKeys.length / this.playerOrder.length);
-        let odd = ppp % 2 !== 0;
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+        let pKeys = Object.keys(provincias);
+        let ppp = Math.floor(pKeys.length / this.playerOrder.length);
+        let reparto = [];
         for (let i = 0; i < this.playerOrder.length; i++) {
-            let assignedC = 0;
-            let assigned = [];
-            if (odd && i + 1 === this.playerOrder.length) {
-                assignedC++;
+            reparto[i] = ppp;
+        }
+        console.log(reparto);
+
+        let currentI = 0;
+        while (reparto.reduce(reducer) !== 26) {
+            reparto[currentI]++;
+            currentI++;
+            if (currentI >= this.playerOrder.length) {
+                currentI = 0;
             }
-            while (assignedC < ppp) {
-                let pToAssign = p[pKeys[Math.floor(Math.random() * pKeys.length)]];
+        }
+
+        for (let i = 0; i < reparto.length; i++) {
+            let assigned = [];
+            while (reparto[i] > 0) {
+                let pToAssign = provincias[pKeys[Math.floor(Math.random() * pKeys.length)]];
                 while (pToAssign.owner !== null) {
-                    pToAssign = p[pKeys[Math.floor(Math.random() * pKeys.length)]];
+                    pToAssign = provincias[pKeys[Math.floor(Math.random() * pKeys.length)]];
                 }
                 pToAssign.owner = this.playerOrder[i];
                 this.playerOrder[i].conqueredTerritories.push(pToAssign);
                 assigned.push(pToAssign);
-                assignedC++;
+                reparto[i]--;
             }
             let aux = "";
             for (let i = 0; i < assigned.length; i++) {

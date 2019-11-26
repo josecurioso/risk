@@ -12,7 +12,7 @@ class GestorDeTextos {
             this.written = [];
             this.count = 0;
         }
-        this.written.push(new Texto("[" + jugador + "]:" + action, this.whereBase.x, this.whereBase.y + 6 * this.count,"5px Arial"));
+        this.written.push(new Texto("[" + jugador + "]: " + action, this.whereBase.x, this.whereBase.y + 6 * this.count,"5px Arial"));
         this.count++;
     }
 
