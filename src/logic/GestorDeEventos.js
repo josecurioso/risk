@@ -49,7 +49,7 @@ class GestorDeEventos {
             event = eventKeys[Math.floor(Math.random() * eventKeys.length)];
             this.triggerEvent(player, event, province);
         }
-        if (farming >= 0) {
+        if (farming >= 95) {
             let eventKeys = Object.keys(this.farming);
             event = eventKeys[Math.floor(Math.random() * eventKeys.length)];
             this.triggerEvent(player, event, province);
@@ -59,9 +59,9 @@ class GestorDeEventos {
     triggerEvent(player, event, province) {
         console.log("Lanzando evento aleatorio (" + event + ") para... " + player.teamCode);
         if (Object.keys(this.negativeBonuses).includes(event)) {
-            player.substractUnits(province.units * this.negativeBonuses[event][0], province);
+            player.substractUnits(Math.round(province.units * this.negativeBonuses[event][0]), province);
         } else if (Object.keys(this.positiveBonuses).includes(event)) {
-            player.incrementUnits(province.units * this.positiveBonuses[event][0], province);
+            player.incrementUnits(Math.round(province.units * this.positiveBonuses[event][0]), province);
         } else if (Object.keys(this.farming).includes(event)) {
             if (!province.hasFarm[0]) {
                 console.log("Farm set");
