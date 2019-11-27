@@ -16,7 +16,7 @@ class GameLayer extends Layer {
         this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
         this.turnoActual = new Texto("placeholder", 600 * 0.47, 320 * 0.925, "20px Arial", "white");
         this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.725, 320 * 0.965, 36, 36, true, 29);
-        this.botonPassTurn = new BotonSVG(imagenes.dice, 600 * 0.42, 320 * 0.96, 36, 36, false);
+        this.botonPassTurn = new BotonSVG(imagenes.passTurn, 600 * 0.42, 320 * 0.96, 36, 36, false);
         this.unitNumbers = [];
 
         // Troops Dialog
