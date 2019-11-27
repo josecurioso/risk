@@ -25,7 +25,8 @@ class Mapa extends Modelo {
                         x - 1 >= 0 ? this.tiles[y][x - 1] : null,
                         x + 1 < this.sx ? this.tiles[y][x + 1] : null,
                         y - 1 >= 0 ? this.tiles[y - 1][x] : null,
-                        y + 1 < this.sy ? this.tiles[y + 1][x] : null
+                        y + 1 < this.sy ? this.tiles[y + 1][x] : null,
+                        tile.province.highlight
                     );
                 }
             }
