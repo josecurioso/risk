@@ -129,7 +129,6 @@ class GameLayer extends Layer {
                     } else if (this.botonDice.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonDice.pulsado = true;
                         controles.diceButton = true;
-                        this.gestorDeTurnos.changePlayer(); // for testing xd
                     } else {
                         console.log("Click en agua");
                     }
@@ -160,16 +159,20 @@ class GameLayer extends Layer {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
                     this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
+                    this.gameState = gameStates.turnBase
+                    this.clickedProvinces = [];
                 } else if (this.gameState === gameStates.playerMoving) {
                     let troopsToMove = this.tDialogTPB.valor - this.tDialogTPBOriginal;
                     this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToMove);
+                    this.gameState = gameStates.turnBase
+                    this.clickedProvinces = [];
                 }
                 this.clickedProvinces = [];
                 this.UIState = UIStates.map;
                 controles.tDialogOk = false;
             }
             if (controles.tDialogAdd) {
-                if (this.tDialogTPA.valor > 0) {
+                if (this.tDialogTPA.valor > 1) {
                     this.tDialogTPA.valor--;
                     this.tDialogTPB.valor++;
                 }
@@ -187,8 +190,10 @@ class GameLayer extends Layer {
             if (controles.attackButton) {
                 console.log("Attack button press");
                 // Two liens should be here
-                this.gameState = gameStates.playerAttacking;
-                this.isPlayerSelecting = true;
+                if(this.gameState !== gameStates.playerMoving && !this.isPlayerSelecting){
+                    this.gameState = gameStates.playerAttacking;
+                    this.isPlayerSelecting = true;
+                }
 
                 // Testing code
                 //this.UIState = UIStates.troopsDialog;
@@ -200,8 +205,12 @@ class GameLayer extends Layer {
             if (controles.diceButton) {
                 console.log("Dice button press");
 
+                // TODO Actual code
+                // lol wtf goes here
+
                 // Testing code
                 //this.UIState = UIStates.troopsDialog;
+                this.gestorDeTurnos.changePlayer();
 
                 controles.diceButton = false;
             }
@@ -222,7 +231,8 @@ class GameLayer extends Layer {
                         this.tDialogTPB.valor = 0;
                         this.UIState = UIStates.troopsDialog;
                     } else {
-                        // Show message informing of invalid attack
+                        this.clickedProvinces = [];
+                        // TODO Show message informing of invalid attack and try again
                     }
                 } else {
                     this.gameState = gameStates.playerMoving;
@@ -236,7 +246,9 @@ class GameLayer extends Layer {
                             this.tDialogTPBOriginal = this.clickedProvinces[1].units;
                                 this.UIState = UIStates.troopsDialog;
                         } else {
-                            // Show message informing of invalid move
+                            this.clickedProvinces = [];
+                            this.gameState = gameStates.turnBase;
+                            // TODO Show message informing of invalid move
                         }
                     }
                 }

@@ -84,22 +84,21 @@ class GestorDeTurnos {
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "Has won!");
             this.jugadorActual.conquestProvince(provinceB);
             // Movimiento
-            if (provinceA.units > troopsToSend) {
-                provinceA.setUnits(provinceA.units - troopsToSend);
-                provinceA.setUnits(troopsToSend);
-            }
+            this.move(provinceA, provinceB, troopsToSend);
             this.changePlayer();
         }
     }
 
     move(provinceA, provinceB, troopsToSend) {
         this.gestorDeTextos.writeTurnAction(provinceA.owner, "Moving " + troopsToSend + "u from " + provinceA.code + " to " + provinceB.code);
-        if(provinceA.units - troopsToSend === 0) {
+        if(provinceA.units - troopsToSend <= 0) {
+            provinceB.setUnits(provinceB.units + ((troopsToSend-provinceA.units)-1));
             provinceA.setUnits(1);
-            provinceB.setUnits((provinceB.units + troopsToSend)-1);
-        }else
+        }else {
+            provinceA.setUnits(provinceA.units - troopsToSend);
             provinceB.setUnits(provinceB.units + troopsToSend);
-        this.changePlayer();
+        }
+        //this.changePlayer();  No se cambia de turno al mover tropas pero se bloquea el ataque
     }
 
     farm(player, tile) {
