@@ -72,7 +72,7 @@ class MenuLayer extends Layer {
         if (controles.removePlayer) {
             console.log("Remove player");
             this.amountPlayers.valor--;
-            if(this.amountPlayers.valor < 0)
+            if (this.amountPlayers.valor < 0)
                 this.amountPlayers.valor = 0;
             controles.removePlayer = false;
         }

@@ -13,7 +13,7 @@ class Tile extends Modelo {
         this.isBonus = false;
     }
 
-    dibujar(up, down, left, right) {
+    dibujar(up, down, left, right, highlight) {
         // Box
         contexto.beginPath();
         contexto.strokeStyle = this.getStrokeColor();
@@ -29,7 +29,7 @@ class Tile extends Modelo {
         contexto.stroke();
         // Edges
         contexto.beginPath();
-        contexto.strokeStyle = "black";
+        contexto.strokeStyle = highlight ? "yellow": "black";
         contexto.lineWidth = 1;
         contexto.setLineDash([]);
         let dBU = this.shouldDrawBorder(up);
@@ -38,7 +38,7 @@ class Tile extends Modelo {
         let dBR = this.shouldDrawBorder(right);
         if (dBU === 2) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (up === null || up === undefined) ? false : up.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 1;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
@@ -47,7 +47,7 @@ class Tile extends Modelo {
         }
         else if(dBU === 1) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (up === null || up === undefined) ? false : up.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 0.5;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
@@ -56,7 +56,7 @@ class Tile extends Modelo {
         }
         if (dBD === 2) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (down === null || down === undefined) ? false : down.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 1;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y + this.tileSize);
@@ -65,7 +65,7 @@ class Tile extends Modelo {
         }
         else if(dBD === 1) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (down === null || down === undefined) ? false : down.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 0.5;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y + this.tileSize);
@@ -74,7 +74,7 @@ class Tile extends Modelo {
         }
         if (dBL === 2) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (left === null || left === undefined) ? false : left.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 1;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
@@ -83,7 +83,7 @@ class Tile extends Modelo {
         }
         else if(dBL === 1) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (left === null || left === undefined) ? false : left.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 0.5;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
@@ -92,7 +92,7 @@ class Tile extends Modelo {
         }
         if (dBR === 2) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (right === null || right === undefined) ? false : right.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 1;
             contexto.setLineDash([]);
             contexto.moveTo(this.x + this.tileSize, this.y);
@@ -101,7 +101,7 @@ class Tile extends Modelo {
         }
         else if(dBR === 1) {
             contexto.beginPath();
-            contexto.strokeStyle = "black";
+            contexto.strokeStyle = highlight || (right === null || right === undefined) ? false : right.province.highlight ? "yellow" : "black";
             contexto.lineWidth = 0.5;
             contexto.setLineDash([]);
             contexto.moveTo(this.x + this.tileSize, this.y);

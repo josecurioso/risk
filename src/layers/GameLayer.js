@@ -16,7 +16,7 @@ class GameLayer extends Layer {
         this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
         this.turnoActual = new Texto("placeholder", 600 * 0.47, 320 * 0.925, "20px Arial", "white");
         this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.725, 320 * 0.965, 36, 36, true, 29);
-        this.botonDice = new BotonSVG(imagenes.dice, 600 * 0.42, 320 * 0.96, 36, 36, false);
+        this.botonPassTurn = new BotonSVG(imagenes.dice, 600 * 0.42, 320 * 0.96, 36, 36, false);
         this.unitNumbers = [];
 
         // Troops Dialog
@@ -32,8 +32,8 @@ class GameLayer extends Layer {
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
-        for(let i = 0; i < this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador " + i,"J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
+        for (let i = 0; i < this.numeroJugadores; i++)
+            this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
         this.jugadores.push(new IA().playerIA);
 
         // Configurar gestores
@@ -50,6 +50,7 @@ class GameLayer extends Layer {
         // Manejo de seleccion de provincias (mover/atacar)
         this.clickedProvinces = [];
         this.isPlayerSelecting = false;
+        this.lastProvinceClicked = null;
 
         // Estado del juego
         this.gameState = gameStates.turnBase;
@@ -78,7 +79,7 @@ class GameLayer extends Layer {
         this.gestorDeTextos.written.forEach(t => t.dibujar());
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
-        this.botonDice.dibujar();
+        this.botonPassTurn.dibujar();
         this.unitNumbers.forEach((x) => x.dibujar());
 
         // Dialogo tropas
@@ -94,7 +95,7 @@ class GameLayer extends Layer {
 
     calcularPulsaciones(pulsaciones) {
         this.botonAtacar.pulsado = false;
-        this.botonDice.pulsado = false;
+        this.botonPassTurn.pulsado = false;
         this.tDialogOk.pulsado = false;
         this.tDialogAdd.pulsado = false;
         this.tDialogRemove.pulsado = false;
@@ -126,9 +127,9 @@ class GameLayer extends Layer {
                     } else if (this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonAtacar.pulsado = true;
                         controles.attackButton = true;
-                    } else if (this.botonDice.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
-                        this.botonDice.pulsado = true;
-                        controles.diceButton = true;
+                    } else if (this.botonPassTurn.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
+                        this.botonPassTurn.pulsado = true;
+                        controles.passTurnButton = true;
                     } else {
                         console.log("Click en agua");
                     }
@@ -140,8 +141,8 @@ class GameLayer extends Layer {
 
         if (!this.botonAtacar.pulsado)
             controles.attackButton = false;
-        if (!this.botonDice.pulsado)
-            controles.diceButton = false;
+        if (!this.botonPassTurn.pulsado)
+            controles.passTurnButton = false;
         if (!this.tDialogOk.pulsado)
             controles.tDialogOk = false;
         if (!this.tDialogAdd.pulsado)
@@ -190,7 +191,7 @@ class GameLayer extends Layer {
             if (controles.attackButton) {
                 console.log("Attack button press");
                 // Two liens should be here
-                if(this.gameState !== gameStates.playerMoving && !this.isPlayerSelecting){
+                if (this.gameState !== gameStates.playerMoving && !this.isPlayerSelecting) {
                     this.gameState = gameStates.playerAttacking;
                     this.isPlayerSelecting = true;
                 }
@@ -202,23 +203,22 @@ class GameLayer extends Layer {
 
                 controles.attackButton = false;
             }
-            if (controles.diceButton) {
-                console.log("Dice button press");
-
-                // TODO Actual code
-                // lol wtf goes here
-
-                // Testing code
-                //this.UIState = UIStates.troopsDialog;
+            if (controles.passTurnButton) {
+                console.log("Pass turn button press");
                 this.gestorDeTurnos.changePlayer();
-
-                controles.diceButton = false;
+                controles.passTurnButton = false;
             }
             if (controles.tileClick) {
                 console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
                 console.log("\tContinente: " + clickedTile.continente.code);
                 console.log("\tProvincia: " + clickedTile.province.code);
                 console.log("\tOwner: " + clickedTile.province.owner);
+
+                if(this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null) {
+                    this.lastProvinceClicked.highlight = false;
+                }
+                clickedTile.province.highlight = true;
+                this.lastProvinceClicked = clickedTile.province;
 
                 if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
                     this.gestorDeTurnos.farm(this.gestorDeTurnos.getCurrentPlayer(), clickedTile);
@@ -244,7 +244,7 @@ class GameLayer extends Layer {
                             this.tDialogTPA.valor = this.clickedProvinces[0].units;
                             this.tDialogTPB.valor = this.clickedProvinces[1].units;
                             this.tDialogTPBOriginal = this.clickedProvinces[1].units;
-                                this.UIState = UIStates.troopsDialog;
+                            this.UIState = UIStates.troopsDialog;
                         } else {
                             this.clickedProvinces = [];
                             this.gameState = gameStates.turnBase;
