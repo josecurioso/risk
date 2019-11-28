@@ -12,6 +12,8 @@ class GestorDeDados {
         let throwsDefender = [0, 0];
         let result = [0, 0]; // (units lost) pos 0: attacker, pos 1: defender
 
+        console.log("Num dices (ATTK, DEF): " + "(" + dicesAttacker + ", " + ")");
+
         for (let i = 0; i < dicesAttacker; i++) {
             throwsAttacker[i] = this.throwDice();
             if (bonusAttacker !== 0) {
@@ -35,6 +37,7 @@ class GestorDeDados {
                 result[1] += 1;
             }
         }
+        console.log("To substract (ATTK, DEF): " + result);
         return result;
     }
 }

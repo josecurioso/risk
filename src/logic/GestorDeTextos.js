@@ -12,7 +12,6 @@ class GestorDeTextos {
             this.written = [];
             this.count = 0;
         }
-        console.log(jugador.fillColor);
         this.written.push(new Texto("[" + jugador.smallTeamCode + "]: " + action, this.whereBase.x, this.whereBase.y + 6 * this.count,"5px Arial", jugador.fillColor));
         this.count++;
     }

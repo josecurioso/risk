@@ -38,7 +38,7 @@ class Jugador {
     }
 
     conquestProvince(province) {
-        province.owner = this.teamCode;
+        province.owner = this;
         this.conqueredTerritories.push(province);
     }
 
