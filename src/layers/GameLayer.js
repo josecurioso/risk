@@ -183,11 +183,7 @@ class GameLayer extends Layer {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
                     let attackStatus = this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
-<<<<<<< Updated upstream
-                    if(attackStatus === 1){
-=======
                     if (attackStatus === 1) {
->>>>>>> Stashed changes
                         // Un jugador destruido, pasar turno
                         this.gameState = gameStates.turnBase;
                         this.isPlayerSelecting = false;
