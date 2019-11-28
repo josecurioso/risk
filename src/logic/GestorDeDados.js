@@ -15,7 +15,7 @@ class GestorDeDados {
         console.log("Num dices (ATTK, DEF): " + "(" + dicesAttacker + ", " + dicesDefender + ")");
 
         function comp(a, b) {
-            return a - b;
+            return b - a;
         }
 
         for (let i = 0; i < dicesAttacker; i++) {
