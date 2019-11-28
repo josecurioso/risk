@@ -31,10 +31,8 @@ class GestorDeEventos {
 
         console.log("Probabilities: (T, " + tsunamis + ") - (N, " + otherNegatives + ") - (P, " + positives + ") - (F, " + farming + ")");
 
-        tsunamis = 100;
-
         let player = currentPlayer;
-        let province = player.conqueredTerritories[0]; //player.conqueredTerritories[Math.floor(Math.random() * player.conqueredTerritories.length)];
+        let province = player.conqueredTerritories[Math.floor(Math.random() * player.conqueredTerritories.length)];
         let event = null;
 
         // Negative effects
