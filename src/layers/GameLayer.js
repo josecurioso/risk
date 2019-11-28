@@ -58,7 +58,7 @@ class GameLayer extends Layer {
 
         // Estado del juego
         this.gameState = gameStates.turnBase;
-        //this.gameState = gameStates.gameInit;
+        this.isPassActivated = true;
 
         // Estado de la UI
         this.UIState = UIStates.map;
@@ -86,7 +86,7 @@ class GameLayer extends Layer {
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.botonPassTurn.dibujar();
-        if(this.gameState === gameStates.playerAttacking)
+        if(!this.isPassActivated)
             this.crossPassTurn.dibujar();
         this.botonMover.dibujar();
         if(this.gameState === gameStates.playerAttacking)
@@ -176,11 +176,18 @@ class GameLayer extends Layer {
             if (controles.tDialogOk) {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
-                    this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
+                    let attackStatus = this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                     // TODO ckeck if no more attacks are allowed and do this 3 lines
-                    this.gameState = gameStates.turnBase;
-                    this.isPlayerSelecting = false;
-                    this.clickedProvinces = [];
+                    if(attackStatus === 1){
+                        // Un jugador destruido, pasar turno
+                        this.gameState = gameStates.turnBase;
+                        this.isPlayerSelecting = false;
+                        this.clickedProvinces = [];
+                    }
+                    else if (attackStatus === 2){
+                        // Ningún jugador destruid
+                    }
+                    this.isPassActivated = true;
                 } else if (this.gameState === gameStates.playerMoving) {
                     let troopsToMove = this.tDialogTPB.valor - this.tDialogTPBOriginal;
                     this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToMove);
@@ -211,6 +218,7 @@ class GameLayer extends Layer {
                 console.log("Attack button press");
                 if (this.gameState !== gameStates.playerMoving && !this.isPlayerSelecting) {
                     this.gameState = gameStates.playerAttacking;
+                    this.isPassActivated = false;
                     this.clickedProvinces = [];
                     this.isPlayerSelecting = true;
                 }
@@ -222,6 +230,7 @@ class GameLayer extends Layer {
             if (controles.moveButton) {
                 console.log("Move button press");
                 if (this.gameState !== gameStates.playerAttacking && !this.isPlayerSelecting) {
+                    this.isPassActivated = true;
                     this.gameState = gameStates.playerMoving;
                     this.clickedProvinces = [];
                     this.isPlayerSelecting = true;
@@ -233,7 +242,7 @@ class GameLayer extends Layer {
             }
             if (controles.passTurnButton) {
                 console.log("Pass turn button press");
-                if (this.gameState === gameStates.playerMoving) {
+                if (this.isPassActivated) {
                     this.gestorDeTurnos.changePlayer();
                     controles.passTurnButton = false;
                     this.gameState = gameStates.turnBase;
