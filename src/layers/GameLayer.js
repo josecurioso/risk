@@ -177,6 +177,7 @@ class GameLayer extends Layer {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
                     this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
+                    // TODO ckeck if no more attacks are allowed and do this 3 lines
                     this.gameState = gameStates.turnBase;
                     this.isPlayerSelecting = false;
                     this.clickedProvinces = [];
@@ -232,7 +233,7 @@ class GameLayer extends Layer {
             }
             if (controles.passTurnButton) {
                 console.log("Pass turn button press");
-                if (this.gameState !== gameStates.playerAttacking && !this.isPlayerSelecting) {
+                if (this.gameState === gameStates.playerMoving) {
                     this.gestorDeTurnos.changePlayer();
                     controles.passTurnButton = false;
                     this.gameState = gameStates.turnBase;
