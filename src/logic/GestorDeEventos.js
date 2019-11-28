@@ -29,8 +29,12 @@ class GestorDeEventos {
         let positives = Math.floor(Math.random() * 101); // 20%
         let farming = Math.floor(Math.random() * 101); // 5%
 
+        console.log("Probabilities: (T, " + tsunamis + ") - (N, " + otherNegatives + ") - (P, " + positives + ") - (F, " + farming + ")");
+
+        tsunamis = 100;
+
         let player = currentPlayer;
-        let province = player.conqueredTerritories[Math.floor(Math.random() * player.conqueredTerritories.length)];
+        let province = player.conqueredTerritories[0]; //player.conqueredTerritories[Math.floor(Math.random() * player.conqueredTerritories.length)];
         let event = null;
 
         // Negative effects
@@ -58,11 +62,24 @@ class GestorDeEventos {
     }
 
     triggerEvent(player, event, province) {
-        // console.log("Lanzando evento aleatorio (" + event + ") para... " + player.teamCode);
-        this.gestorDeTextos.writeTurnAction(player, event.toUpperCase() + " - IN PROVINCE: " + province.code);
+        // to substract/add
+        let percentage = null;
         if (Object.keys(this.negativeBonuses).includes(event)) {
+            percentage = Math.round(province.units * this.negativeBonuses[event][0]);
+
+            // At least substract 1 if it has at least 2 remaining
+            let msg = percentage < 1 ? (province.units > 1 ? (player.substractUnits(1, province), percentage = 1) : true) : false;
+            this.gestorDeTextos.writeTurnAction(player, event.toUpperCase() + " - IN PROVINCE: " + province.code + " (-" + percentage + "u)");
+
+            // Minimum one unit warning
+            msg ? this.gestorDeTextos.writeTurnAction(player, "Only one unit survives!") : null;
             player.substractUnits(Math.round(province.units * this.negativeBonuses[event][0]), province);
         } else if (Object.keys(this.positiveBonuses).includes(event)) {
+            percentage = Math.round(province.units * this.positiveBonuses[event][0]);
+
+            // At least add 1
+            percentage < 1 ? (player.incrementUnits(1, province), percentage = 1) : null;
+            this.gestorDeTextos.writeTurnAction(player, event.toUpperCase() + " - IN PROVINCE: " + province.code + " (+" + percentage + "u)");
             player.incrementUnits(Math.round(province.units * this.positiveBonuses[event][0]), province);
         } else if (Object.keys(this.farming).includes(event)) {
             if (!province.hasFarm[0]) {

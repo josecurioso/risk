@@ -54,46 +54,43 @@ class GestorDeTurnos {
            ⚠⚠⚠
          */
 
-        this.gestorDeTextos.writeTurnAction(provinceA.owner, "Attacking " + provinceB.owner + " from " + provinceA.code + " to " + provinceB.code);
+        this.gestorDeTextos.writeTurnAction(provinceA.owner, "Attacking " + provinceB.owner.teamCode + " from " + provinceA.code + " to " + provinceB.code);
 
         // Cálculo de los dados
-        let diceA = 2;
-        let diceB = 1;
-
-        if (provinceA.units > 20)
-            diceA = 3;
-        if (provinceB.units > 20)
-            diceB = 2;
+        let dicesAttk = this.calculateDicesForAttacker(provinceA.units);
+        let dicesDef = this.calculateDicesForDefender(provinceB.units);
 
         // Bonus por tipo de clima
         let bonusAttacker = this.jugadorActual.climateBonus === provinceA.climate ? 1 : 0;
         let bonusDefender = provinceB.owner.climateBonus === provinceB.climate ? 1 : 0;
 
         // Simular tirada de dados
-        let toSubstract = this.gestorDeDados.play(diceA, diceB, bonusAttacker, bonusDefender);
+        let toSubstract = this.gestorDeDados.play(dicesAttk, dicesDef, bonusAttacker, bonusDefender);
 
         // Movimientos tropas
         this.jugadorActual.substractUnits(toSubstract[0], provinceA);
         provinceB.owner.substractUnits(toSubstract[1], provinceB);
 
         // Resultado
-        if (this.jugadorActual.totalUnits <= 1) {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Has lost!");
+        if (provinceA.units <= 1) {
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "You've lost province " + provinceA.code);
             this.changePlayer();
-        } else if (provinceB.owner.totalUnits <= 0) {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Has won!");
+        } else if (provinceB.units <= 0) {
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "You've conquered province " + provinceB.code);
             provinceB.owner.lossProvince(provinceB);
             this.jugadorActual.conquestProvince(provinceB);
             // Movimiento
-            this.move(provinceA, provinceB, troopsToSend);
+            this.move(provinceA, provinceB, troopsToSend - toSubstract[0]);
             this.changePlayer();
+        } else {
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Left: Attk(" + provinceA.code + ", " + provinceA.units + "u) - Def(" + provinceB.code + ", " + provinceB.units + "u)");
         }
     }
 
     move(provinceA, provinceB, troopsToSend) {
         this.gestorDeTextos.writeTurnAction(provinceA.owner, "Moving " + troopsToSend + "u from " + provinceA.code + " to " + provinceB.code);
-        if(provinceA.units - troopsToSend <= 0) {
-            provinceB.setUnits(provinceB.units + ((troopsToSend-provinceA.units)-1));
+        if (provinceA.units - troopsToSend <= 0) {
+            provinceB.setUnits(provinceB.units + ((troopsToSend - provinceA.units) - 1));
             provinceA.setUnits(1);
         } else {
             provinceA.setUnits(provinceA.units - troopsToSend);
@@ -105,7 +102,7 @@ class GestorDeTurnos {
     farm(player, tile) {
         // Farm action
         this.gestorDeTextos.writeTurnAction(player, "Farming " + tile.province.hasFarm[1] + "... " + tile.province.hasFarm[2] + "u");
-        this.jugadorActual.totalUnits += tile.province.hasFarm[2];
+        this.jugadorActual.incrementUnits(tile.province.hasFarm[2], tile.province);
         tile.province.setUnits(tile.province.units + tile.province.hasFarm[2]);
         tile.province.hasFarm[0] = false;
         tile.province.locateFarm();
@@ -154,5 +151,20 @@ class GestorDeTurnos {
             }
             this.gestorDeTextos.writeTurnAction(this.playerOrder[i], "[" + aux + "]");
         }
+    }
+
+    calculateDicesForAttacker(units) {
+        console.log("att-units-dice: " + units);
+        if(units > 3) {
+            return 3;
+        } else if (units > 2) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
+    calculateDicesForDefender(units) {
+        return units >= 2 ? 2 : 1;
     }
 }
