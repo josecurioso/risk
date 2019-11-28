@@ -84,7 +84,7 @@ class Tile extends Modelo {
         }
         if (tile.province.code !== this.province.code) {
             if (this.province.highlight || tile.province.highlight) {
-                return {'val': true, 'lineWidth': 0.5, 'lineColor': "yellow"};
+                return {'val': true, 'lineWidth': 1, 'lineColor': "yellow"};
             }
             return {'val': true, 'lineWidth': 0.5, 'lineColor': "black"};
         }
