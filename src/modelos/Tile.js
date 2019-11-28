@@ -67,6 +67,13 @@ class Tile extends Modelo {
             contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
             contexto.stroke();
         }
+
+        if(this.isBonus) {
+            this.farmIcon.x = this.x + tileSize-1;
+            this.farmIcon.y = this.y + tileSize-1;
+            this.farmIcon.dibujar();
+        }
+
     }
 
     shouldDrawBorder(tile) {
@@ -92,7 +99,6 @@ class Tile extends Modelo {
     }
 
     getStrokeColor() {
-        //return this.continente.strokeColor;
         if (this.province.owner !== undefined && this.province.owner !== null) {
             return this.province.owner.strokeColor;
         } else {
@@ -101,9 +107,6 @@ class Tile extends Modelo {
     }
 
     getFillColor() {
-        if (this.isBonus)
-            return "#000000";
-        //return this.continente.fillColor;
         if (this.province.owner === null) {
             return "#ffffff";
         }

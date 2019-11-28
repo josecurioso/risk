@@ -13,21 +13,9 @@ var imagenes = {
     messages: "res/SVG/messages.svg",
     cross: "res/SVG/cross.svg",
     move: "res/SVG/move.svg",
-    //dice: "res/SVG/dices.svg",
-    //fondo_mar: "res/PNG/fondo.jpg",
-    //menu_fondo: "res/PNG/menu.png",
-    //attack: "res/attack_new_small.png",
-    //boton_empezar: "res/PNG/empezar.png",
-    //boton_add: "res/PNG/add_players.png",
-    //boton_remove: "res/PNG/remove_players.png",
-    //summary: "res/PNG/summary_small.png",
-    //turn: "res/turn_small.png",
-    //dice: "res/dice.png",
-    //tDialogAdd: "res/PNG/add_troops.png",
-    //tDialogRemove: "res/PNG/remove_troops.png",
-    //tDialogOk: "res/PNG/accept.png",
-    //tDialogBackground: "res/PNG/dialog_troops.png",
-    //messages: "res/messages_small.png"
+    farm_civilians: "res/SVG/farm_civilians.svg",
+    farm_horses: "res/SVG/farm_horses.svg",
+    farm_wood: "res/SVG/farm_wood.svg",
 };
 
 var rutasImagenes = Object.values(imagenes);

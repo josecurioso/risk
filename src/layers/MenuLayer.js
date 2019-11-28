@@ -45,7 +45,6 @@ class MenuLayer extends Layer {
             }
         }
 
-        // No pulsado - Botón Disparo
         if (!this.boton_empezar.pulsado) {
             controles.continuar = false;
         }
@@ -58,7 +57,6 @@ class MenuLayer extends Layer {
     }
 
     procesarControles() {
-        // siguiente pantalla
         if (controles.continuar) {
             gameLayer = new GameLayer(this.amountPlayers.valor);
             layer = gameLayer;
@@ -67,6 +65,8 @@ class MenuLayer extends Layer {
         if (controles.addPlayer) {
             console.log("Add player");
             this.amountPlayers.valor++;
+            if(this.amountPlayers.valor > 5)
+                this.amountPlayers.valor = 5;
             controles.addPlayer = false;
         }
         if (controles.removePlayer) {

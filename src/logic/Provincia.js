@@ -23,31 +23,6 @@ class Provincia {
         this.unitsSign.valor = this.units;
     }
 
-    calculateMidPosition() {
-        let maxX, maxY = Number.MIN_VALUE;
-        let minX, minY = Number.MAX_VALUE;
-        let midX, midY = 0;
-
-        this.tiles.forEach(t => {
-            if (t.x > maxX) {
-                maxX = t.x;
-            } else if (t.x < minX) {
-                minX = t.x;
-            }
-
-            if (t.y > maxY) {
-                maxY = t.y;
-            } else if (t.y < minY) {
-                minY = t.y;
-            }
-        });
-
-        midX = (minX + maxX) / 2;
-        midY = (minY + maxY) / 2;
-
-        return [midX, midY];
-    }
-
     calculateCentroid() {
         let points = [];
         for (let i = 0; i < this.tiles.length; i++) {
@@ -114,11 +89,22 @@ class Provincia {
     locateFarm() {
         this.tiles[this.hasFarm[3]].isBonus = false;
         if (this.hasFarm[0] === true) {
-            this.hasFarm[3] = Math.round(Math.random() * this.tiles.length);
+            this.hasFarm[3] = Math.round(Math.random() * (this.tiles.length-1));
             while (this.tiles[this.hasFarm[3]].px === this.centroid.x && this.tiles[this.hasFarm[3]].py === this.centroid.y) {
-                this.hasFarm[3] = Math.round(Math.random() * this.tiles.length);
+                this.hasFarm[3] = Math.round(Math.random() * (this.tiles.length-1));
             }
             this.tiles[this.hasFarm[3]].isBonus = true;
+            switch(this.hasFarm[1]) {
+                case "civilians":
+                    this.tiles[this.hasFarm[3]].farmIcon = new FondoSVG(imagenes.farm_civilians, 600 * 0.22, 320 * 0.955, 3, 6);
+                    break;
+                case "horses":
+                    this.tiles[this.hasFarm[3]].farmIcon = new FondoSVG(imagenes.farm_horses, 600 * 0.22, 320 * 0.955, 7, 6);
+                    break;
+                case "wood":
+                    this.tiles[this.hasFarm[3]].farmIcon = new FondoSVG(imagenes.farm_wood, 600 * 0.22, 320 * 0.955, 6, 4);
+                    break;
+            }
         }
     }
 }

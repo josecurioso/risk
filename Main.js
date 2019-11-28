@@ -45,17 +45,13 @@ window.addEventListener('load', resize, false);
 
 function resize() {
     console.log("Resize");
-    var escaladoAncho = parseFloat(window.innerWidth / canvas.width);
-    var escaladoAlto = parseFloat(window.innerHeight / canvas.height);
+    let escaladoAncho = parseFloat(window.innerWidth / canvas.width);
+    let escaladoAlto = parseFloat(window.innerHeight / canvas.height);
 
     escaladoMinimo = Math.min(escaladoAncho, escaladoAlto);
 
     canvas.width = canvas.width * escaladoMinimo;
     canvas.height = canvas.height * escaladoMinimo;
 
-    //canvasText.width = canvasText.width * escaladoMinimo;
-    //canvasText.height = canvasText.height * escaladoMinimo;
-
     contexto.scale(escaladoMinimo, escaladoMinimo);
-    //contextoText.scale(escaladoMinimo, escaladoMinimo);
 }

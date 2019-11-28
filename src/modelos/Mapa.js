@@ -5,7 +5,6 @@ class Mapa extends Modelo {
         this.sx = sx;
         this.sy = sy;
 
-        // Aquí sx y sy se usan de forma confusa (al revés)
         this.tiles = new Array(sy);
         for (let i = 0; i < sy; i++) {
             this.tiles[i] = new Array(sx);
@@ -13,14 +12,11 @@ class Mapa extends Modelo {
     }
 
     dibujar() {
-        //super.dibujar();
-
         this.drawConnectionsBySea();
         for (let y = 0; y < this.sy; y++) {
             for (let x = 0; x < this.sx; x++) {
                 let tile = this.tiles[y][x];
                 if (tile) {
-                    //console.log(tile)
                     tile.dibujar(
                         x - 1 >= 0 ? this.tiles[y][x - 1] : null,
                         x + 1 < this.sx ? this.tiles[y][x + 1] : null,
@@ -50,11 +46,9 @@ class Mapa extends Modelo {
                 let adj = provincias[key].getAdjacentProvincesBySea();
                 if (adj.length !== 0) {
                     adj.forEach(p => {
-                        // console.log(p);
                         contexto.beginPath();
                         contexto.strokeStyle = "black";
                         contexto.setLineDash([3, 9]);
-                        // console.log("Centroid1 (" + provincias[key].centroid.x + ", " + provincias[key].centroid.y + ") - Centroid2 (" + provincias[p].centroid.x + ", " + provincias[p].centroid.y + ")");
                         contexto.moveTo(provincias[key].centroid.x * tileSize, provincias[key].centroid.y * tileSize);
                         contexto.lineTo(provincias[p].centroid.x * tileSize, provincias[p].centroid.y * tileSize);
                         contexto.stroke();

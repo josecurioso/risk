@@ -274,7 +274,7 @@ class GameLayer extends Layer {
                 console.log("\tProvincia: " + clickedTile.province.code);
                 console.log("\tOwner: " + clickedTile.province.owner);
 
-                this.gestorDeTextos(this.gestorDeTurnos.jugadorActual, "You're in province: " + clickedTile.province.code);
+                this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "You're in province: " + clickedTile.province.code);
 
                 // Manage highlight
                 if (this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null) {
