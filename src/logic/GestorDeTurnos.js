@@ -82,6 +82,7 @@ class GestorDeTurnos {
             this.changePlayer();
         } else if (provinceB.owner.totalUnits <= 0) {
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "Has won!");
+            provinceB.owner.lossProvince(provinceB);
             this.jugadorActual.conquestProvince(provinceB);
             // Movimiento
             this.move(provinceA, provinceB, troopsToSend);
@@ -94,7 +95,7 @@ class GestorDeTurnos {
         if(provinceA.units - troopsToSend <= 0) {
             provinceB.setUnits(provinceB.units + ((troopsToSend-provinceA.units)-1));
             provinceA.setUnits(1);
-        }else {
+        } else {
             provinceA.setUnits(provinceA.units - troopsToSend);
             provinceB.setUnits(provinceB.units + troopsToSend);
         }

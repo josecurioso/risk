@@ -28,6 +28,15 @@ class Jugador {
         this.currentProvince = province;
     }
 
+    lossProvince(province) {
+        province.owner = null;
+        for(let i = 0; i < this.conqueredTerritories.length; i++) {
+            if(province.code === this.conqueredTerritories[i].code) {
+                this.conqueredTerritories.splice(i,1);
+            }
+        }
+    }
+
     conquestProvince(province) {
         province.owner = this.teamCode;
         this.conqueredTerritories.push(province);
@@ -49,7 +58,7 @@ class Jugador {
     substractUnits(units, province) {
         if (province.owner.teamCode === this.teamCode) {
             this.totalUnits -= units;
-            province.setUnits(province.units-units);
+            province.setUnits(province.units - units);
         } else {
             console.log("Not the owner, cannot substract");
         }
