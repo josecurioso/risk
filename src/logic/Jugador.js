@@ -24,10 +24,6 @@ class Jugador {
         return this.conqueredTerritories.length;
     }
 
-    setCurrentProvince(province) {
-        this.currentProvince = province;
-    }
-
     lossProvince(province) {
         province.owner = null;
         for(let i = 0; i < this.conqueredTerritories.length; i++) {
@@ -40,10 +36,6 @@ class Jugador {
     conquestProvince(province) {
         province.owner = this;
         this.conqueredTerritories.push(province);
-    }
-
-    setProvinceDefended(province) {
-        this.provinceDefended = province;
     }
 
     incrementUnits(units, province) {

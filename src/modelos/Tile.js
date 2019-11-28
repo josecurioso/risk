@@ -7,13 +7,12 @@ class Tile extends Modelo {
         this.continente = continente;
         this.province = provincia; //Represent
         this.tileSize = tileSize;
-        this.region = 1;
         this.x *= this.tileSize;
         this.y *= this.tileSize;
         this.isBonus = false;
     }
 
-    dibujar(up, down, left, right, highlight) {
+    dibujar(up, down, left, right) {
         // Box
         contexto.beginPath();
         contexto.strokeStyle = this.getStrokeColor();
@@ -28,97 +27,65 @@ class Tile extends Modelo {
         contexto.fill();
         contexto.stroke();
         // Edges
-        contexto.beginPath();
-        contexto.strokeStyle = highlight ? "yellow": "black";
-        contexto.lineWidth = 1;
-        contexto.setLineDash([]);
         let dBU = this.shouldDrawBorder(up);
         let dBD = this.shouldDrawBorder(down);
         let dBL = this.shouldDrawBorder(left);
         let dBR = this.shouldDrawBorder(right);
-        if (dBU === 2) {
+        if (dBU.val) {
             contexto.beginPath();
-            contexto.strokeStyle = highlight || (up === null || up === undefined) ? false : up.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 1;
+            contexto.strokeStyle = dBU.lineColor;
+            contexto.lineWidth = dBU.lineWidth;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
             contexto.lineTo(this.x + this.tileSize, this.y);
             contexto.stroke();
         }
-        else if(dBU === 1) {
+        if (dBD.val) {
             contexto.beginPath();
-            contexto.strokeStyle = highlight || (up === null || up === undefined) ? false : up.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 0.5;
-            contexto.setLineDash([]);
-            contexto.moveTo(this.x, this.y);
-            contexto.lineTo(this.x + this.tileSize, this.y);
-            contexto.stroke();
-        }
-        if (dBD === 2) {
-            contexto.beginPath();
-            contexto.strokeStyle = highlight || (down === null || down === undefined) ? false : down.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 1;
+            contexto.strokeStyle = dBD.lineColor;
+            contexto.lineWidth = dBD.lineWidth;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y + this.tileSize);
             contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
             contexto.stroke();
         }
-        else if(dBD === 1) {
+        if (dBL.val) {
             contexto.beginPath();
-            contexto.strokeStyle = highlight || (down === null || down === undefined) ? false : down.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 0.5;
-            contexto.setLineDash([]);
-            contexto.moveTo(this.x, this.y + this.tileSize);
-            contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
-            contexto.stroke();
-        }
-        if (dBL === 2) {
-            contexto.beginPath();
-            contexto.strokeStyle = highlight || (left === null || left === undefined) ? false : left.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 1;
+            contexto.strokeStyle = dBL.lineColor;
+            contexto.lineWidth = dBL.lineWidth;
             contexto.setLineDash([]);
             contexto.moveTo(this.x, this.y);
             contexto.lineTo(this.x, this.y + this.tileSize);
             contexto.stroke();
         }
-        else if(dBL === 1) {
+        if (dBR.val) {
             contexto.beginPath();
-            contexto.strokeStyle = highlight || (left === null || left === undefined) ? false : left.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 0.5;
-            contexto.setLineDash([]);
-            contexto.moveTo(this.x, this.y);
-            contexto.lineTo(this.x, this.y + this.tileSize);
-            contexto.stroke();
-        }
-        if (dBR === 2) {
-            contexto.beginPath();
-            contexto.strokeStyle = highlight || (right === null || right === undefined) ? false : right.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 1;
+            contexto.strokeStyle = dBR.lineColor;
+            contexto.lineWidth = dBR.lineWidth;
             contexto.setLineDash([]);
             contexto.moveTo(this.x + this.tileSize, this.y);
             contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
             contexto.stroke();
         }
-        else if(dBR === 1) {
-            contexto.beginPath();
-            contexto.strokeStyle = highlight || (right === null || right === undefined) ? false : right.province.highlight ? "yellow" : "black";
-            contexto.lineWidth = 0.5;
-            contexto.setLineDash([]);
-            contexto.moveTo(this.x + this.tileSize, this.y);
-            contexto.lineTo(this.x + this.tileSize, this.y + this.tileSize);
-            contexto.stroke();
-        }
-        contexto.stroke();
     }
 
     shouldDrawBorder(tile) {
-        if (tile === null || tile === undefined)
-            return 2;
-        if(tile.continente.code !== this.continente.code)
-            return 2;
-        if(tile.province.code !== this.province.code)
-            return 1;
-        return 0;
+        if (tile === null || tile === undefined) {
+            if (this.province.highlight)
+                return {'val' : true, 'lineWidth': 1, 'lineColor': "yellow"};
+            return {'val' : true, 'lineWidth': 1, 'lineColor': "black"};
+        }
+        if (tile.continente.code !== this.continente.code) {
+            if (this.province.highlight || tile.province.highlight)
+                return {'val' : true, 'lineWidth': 1, 'lineColor': "yellow"};
+            return {'val' : true, 'lineWidth': 1, 'lineColor': "black"};
+        }
+        if (tile.province.code !== this.province.code) {
+            if (this.province.highlight || tile.province.highlight)
+                return {'val' : true, 'lineWidth': 0.5, 'lineColor': "yellow"};
+            return {'val' : true, 'lineWidth': 0.5, 'lineColor': "black"};
+        }
+        return {'val' : false};
     }
 
     getStrokeColor() {

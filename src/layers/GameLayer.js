@@ -177,7 +177,6 @@ class GameLayer extends Layer {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
                     let attackStatus = this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
-                    // TODO ckeck if no more attacks are allowed and do this 3 lines
                     if(attackStatus === 1){
                         // Un jugador destruido, pasar turno
                         this.gameState = gameStates.turnBase;
