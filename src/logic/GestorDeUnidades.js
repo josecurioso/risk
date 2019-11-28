@@ -25,9 +25,7 @@ class GestorDeUnidades {
         return unitsRatioMap;
     }
 
-    calculateUnitsToBeAdded(playerPoints, playerTerritories) {
-        let units = playerPoints;
-        units += this.unitsRatioMap.get(playerTerritories);
-        return units;
+    calculateUnitsToBeAdded(playerTerritories) {
+        return this.unitsRatioMap.get(playerTerritories);
     }
 }

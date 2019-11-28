@@ -37,22 +37,18 @@ class GestorDeTurnos {
 
         // Turn Base
         // Suma inicial del turno para unidades a colocar en el tablero
-        let playerPoints = this.jugadorActual.calculateTotalPoints();
         let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
-        let unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerPoints, playerTerritoriesCount);
+        let unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
+
+        console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + unitsToAdd);
 
         // Colocar las unidades en provincia aleatoria
-        let index = Math.floor(Math.random()*this.jugadorActual.getConqueredTerritoriesCount());
-        this.jugadorActual.conqueredTerritories[index].addUnits(unitsToAdd);
-
+        let rdP = this.jugadorActual.conqueredTerritories[Math.floor(Math.random() * this.jugadorActual.getConqueredTerritoriesCount())];
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Adding " + unitsToAdd + "u in province " + rdP.code);
+        this.jugadorActual.incrementUnits(unitsToAdd, rdP);
     }
 
     attack(provinceA, provinceB, troopsToSend) {
-        /* ⚠⚠⚠ TODO
-            Se pueden usar callbacks de la UI para mostrar el progreso
-           ⚠⚠⚠
-         */
-
         this.gestorDeTextos.writeTurnAction(provinceA.owner, "Attacking " + provinceB.owner.teamCode + " from " + provinceA.code + " to " + provinceB.code);
 
         // Cálculo de los dados
@@ -67,12 +63,17 @@ class GestorDeTurnos {
         let toSubstract = this.gestorDeDados.play(dicesAttk, dicesDef, bonusAttacker, bonusDefender);
 
         // Movimientos tropas
-        this.jugadorActual.substractUnits(toSubstract[0], provinceA);
+        let hasLost = false;
+        if (provinceA.units - toSubstract[0] >= 1) {
+            this.jugadorActual.substractUnits(toSubstract[0], provinceA);
+        } else {
+            hasLost = true;
+        }
         provinceB.owner.substractUnits(toSubstract[1], provinceB);
 
         // Resultado
-        if (provinceA.units <= 1) {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner, "You've lost province " + provinceA.code);
+        if (hasLost) {
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "No more units to attack from " + provinceA.code);
             this.changePlayer();
             return 1;
         } else if (provinceB.units <= 0) {
@@ -84,7 +85,7 @@ class GestorDeTurnos {
             this.changePlayer();
             return 1;
         } else {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Left: Attk(" + provinceA.code + ", " + provinceA.units + "u) - Def(" + provinceB.code + ", " + provinceB.units + "u)");
+            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
             return 2;
         }
     }
@@ -98,7 +99,7 @@ class GestorDeTurnos {
             provinceA.setUnits(provinceA.units - troopsToSend);
             provinceB.setUnits(provinceB.units + troopsToSend);
         }
-        //this.changePlayer();  No se cambia de turno al mover tropas pero se bloquea el ataque
+        // this.changePlayer();  No se cambia de turno al mover tropas pero se bloquea el ataque
     }
 
     farm(player, tile) {
@@ -157,7 +158,7 @@ class GestorDeTurnos {
 
     calculateDicesForAttacker(units) {
         console.log("att-units-dice: " + units);
-        if(units > 3) {
+        if (units > 3) {
             return 3;
         } else if (units > 2) {
             return 2;

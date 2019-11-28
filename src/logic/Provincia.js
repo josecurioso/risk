@@ -17,6 +17,7 @@ class Provincia {
         this.units = unidades;
         this.unitsSign.valor = this.units;
     }
+
     addUnits(unidades) {
         this.units = this.units + unidades;
         this.unitsSign.valor = this.units;
@@ -110,11 +111,11 @@ class Provincia {
         return result;
     }
 
-    locateFarm(){
+    locateFarm() {
         this.tiles[this.hasFarm[3]].isBonus = false;
-        if(this.hasFarm[0] === true){
+        if (this.hasFarm[0] === true) {
             this.hasFarm[3] = Math.round(Math.random() * this.tiles.length);
-            while(this.tiles[this.hasFarm[3]].px === this.centroid.x && this.tiles[this.hasFarm[3]].py === this.centroid.y){
+            while (this.tiles[this.hasFarm[3]].px === this.centroid.x && this.tiles[this.hasFarm[3]].py === this.centroid.y) {
                 this.hasFarm[3] = Math.round(Math.random() * this.tiles.length);
             }
             this.tiles[this.hasFarm[3]].isBonus = true;

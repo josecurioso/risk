@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246 185.02"><defs><style>.cls-1{fill:#39b54a;}.cls-2{stroke:#000;stroke-miterlimit:10;}</style></defs><title>messages</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><rect class="cls-1" width="246" height="185.02" rx="10.91" ry="10.91"/><rect class="cls-2" x="4.05" y="5.18" width="237.9" height="174.66" rx="8.39" ry="8.39"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 246 185.02">
+    <defs>
+        <style>.cls-1{fill:#39b54a;}.cls-2{stroke:#000;stroke-miterlimit:10;}</style>
+    </defs>
+    <title>messages</title>
+    <g id="Layer_2" data-name="Layer 2">
+        <g id="Layer_1-2" data-name="Layer 1">
+            <rect class="cls-1" width="246" height="185.02" rx="10.91" ry="10.91"/>
+            <rect class="cls-2" x="4.05" y="5.18" width="237.9" height="174.66" rx="8.39" ry="8.39"/>
+        </g>
+    </g>
+</svg>

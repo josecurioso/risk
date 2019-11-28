@@ -26,9 +26,9 @@ class Jugador {
 
     lossProvince(province) {
         province.owner = null;
-        for(let i = 0; i < this.conqueredTerritories.length; i++) {
-            if(province.code === this.conqueredTerritories[i].code) {
-                this.conqueredTerritories.splice(i,1);
+        for (let i = 0; i < this.conqueredTerritories.length; i++) {
+            if (province.code === this.conqueredTerritories[i].code) {
+                this.conqueredTerritories.splice(i, 1);
             }
         }
     }

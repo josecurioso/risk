@@ -4,10 +4,10 @@ class Texto {
         this.valor = valor;
         this.x = x;
         this.y = y;
-        if(sizeFont === undefined || sizeFont === null){
+        if (sizeFont === undefined || sizeFont === null) {
             this.sizeFont = "20px Arial";
         }
-        if(colorFont === undefined || colorFont === null){
+        if (colorFont === undefined || colorFont === null) {
             this.colorFont = "white";
         }
         this.sizeFont = sizeFont;

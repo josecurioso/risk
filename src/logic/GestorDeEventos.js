@@ -62,7 +62,7 @@ class GestorDeEventos {
     triggerEvent(player, event, province) {
         // to substract/add
         let percentage = null;
-        if (Object.keys(this.negativeBonuses).includes(event)) {
+        if (Object.keys(this.negativeBonuses).includes(event) && province.climate === this.negativeBonuses[event][1]) {
             percentage = Math.round(province.units * this.negativeBonuses[event][0]);
 
             // At least substract 1 if it has at least 2 remaining
@@ -72,7 +72,7 @@ class GestorDeEventos {
             // Minimum one unit warning
             msg ? this.gestorDeTextos.writeTurnAction(player, "Only one unit survives!") : null;
             player.substractUnits(Math.round(province.units * this.negativeBonuses[event][0]), province);
-        } else if (Object.keys(this.positiveBonuses).includes(event)) {
+        } else if (Object.keys(this.positiveBonuses).includes(event) && province.climate === this.positiveBonuses[event][1]) {
             percentage = Math.round(province.units * this.positiveBonuses[event][0]);
 
             // At least add 1

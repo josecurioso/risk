@@ -30,8 +30,11 @@ class GameLayer extends Layer {
         this.tDialogAdd = new BotonSVG(imagenes.boton_add, 600 * (dialogX + 0.141), 320 * (dialogY + 0.11), 28, 28, true, 14);
         this.tDialogRemove = new BotonSVG(imagenes.boton_remove, 600 * (dialogX + 0.21), 320 * (dialogY + 0.11), 28, 28, true, 14);
         this.tDialogOk = new BotonSVG(imagenes.tDialogOk, 600 * (dialogX + 0.05), 320 * (dialogY + 0.125), 46, 46, true, 23);
+        this.tDialogTitle = new Texto(10, 600 * (dialogX - 0.024), 320 * (dialogY - 0.14), "13px Arial", "white");
         this.tDialogTPA = new Texto(10, 600 * (dialogX - 0.17), 320 * (dialogY - 0.06), "20px Arial", "white");
+        this.tDialogTPAName = new Texto(10, 600 * (dialogX - 0.2), 320 * (dialogY - 0.14), "13px Arial", "white");
         this.tDialogTPB = new Texto(10, 600 * (dialogX + 0.12), 320 * (dialogY - 0.06), "20px Arial", "white");
+        this.tDialogTPBName = new Texto(10, 600 * (dialogX + 0.1), 320 * (dialogY - 0.14), "13px Arial", "white");
 
         // Configurar jugadores
         this.numeroJugadores = playerAmount;
@@ -79,17 +82,17 @@ class GameLayer extends Layer {
         this.fondoMar.dibujar();
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
-        if(this.gameState === gameStates.playerMoving)
+        if (this.gameState === gameStates.playerMoving)
             this.crossAtacar.dibujar();
         this.summaryOverlay.dibujar();
         this.gestorDeTextos.written.forEach(t => t.dibujar());
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.botonPassTurn.dibujar();
-        if(!this.isPassActivated)
+        if (!this.isPassActivated)
             this.crossPassTurn.dibujar();
         this.botonMover.dibujar();
-        if(this.gameState === gameStates.playerAttacking)
+        if (this.gameState === gameStates.playerAttacking)
             this.crossMover.dibujar();
         this.unitNumbers.forEach((x) => x.dibujar());
 
@@ -101,6 +104,9 @@ class GameLayer extends Layer {
             this.tDialogOk.dibujar();
             this.tDialogTPA.dibujar();
             this.tDialogTPB.dibujar();
+            this.tDialogTPAName.dibujar();
+            this.tDialogTPBName.dibujar();
+            this.tDialogTitle.dibujar();
         }
     }
 
@@ -177,14 +183,17 @@ class GameLayer extends Layer {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
                     let attackStatus = this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
+<<<<<<< Updated upstream
                     if(attackStatus === 1){
+=======
+                    if (attackStatus === 1) {
+>>>>>>> Stashed changes
                         // Un jugador destruido, pasar turno
                         this.gameState = gameStates.turnBase;
                         this.isPlayerSelecting = false;
                         this.clickedProvinces = [];
-                    }
-                    else if (attackStatus === 2){
-                        // Ningún jugador destruid
+                    } else if (attackStatus === 2) {
+                        // Ningún jugador destruido
                     }
                     this.isPassActivated = true;
                 } else if (this.gameState === gameStates.playerMoving) {
@@ -220,8 +229,7 @@ class GameLayer extends Layer {
                     this.isPassActivated = false;
                     this.clickedProvinces = [];
                     this.isPlayerSelecting = true;
-                }
-                else{
+                } else {
                     console.log("Attack button deactivated")
                 }
                 controles.attackButton = false;
@@ -233,8 +241,7 @@ class GameLayer extends Layer {
                     this.gameState = gameStates.playerMoving;
                     this.clickedProvinces = [];
                     this.isPlayerSelecting = true;
-                }
-                else{
+                } else {
                     console.log("Move button deactivated")
                 }
                 controles.moveButton = false;
@@ -246,8 +253,7 @@ class GameLayer extends Layer {
                     controles.passTurnButton = false;
                     this.gameState = gameStates.turnBase;
                     this.isPlayerSelecting = false;
-                }
-                else{
+                } else {
                     console.log("Pass turn button deactivated")
                 }
             }
@@ -258,7 +264,7 @@ class GameLayer extends Layer {
                 console.log("\tOwner: " + clickedTile.province.owner);
 
                 // Manage highlight
-                if(this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null)
+                if (this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null)
                     this.lastProvinceClicked.highlight = false;
                 clickedTile.province.highlight = true;
                 this.lastProvinceClicked = clickedTile.province;
@@ -273,16 +279,18 @@ class GameLayer extends Layer {
                 } else {
                     this.clickedProvinces.push(clickedTile.province);
                     if (this.clickedProvinces.length === 2) {
-                        switch(this.gameState) {
+                        switch (this.gameState) {
                             case gameStates.playerAttacking:
                                 // El jugador está seleccionando origen y destino de un ataque
-                                if(this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
+                                if (this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
                                     //Show prompt for number of units to send later
+                                    this.tDialogTitle.valor = "ATTK";
                                     this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                                    this.tDialogTPAName.valor = "Province: " + this.clickedProvinces[0].code;
                                     this.tDialogTPB.valor = 0;
+                                    this.tDialogTPBName.valor = "Province: " + this.clickedProvinces[1].code;
                                     this.UIState = UIStates.troopsDialog;
-                                }
-                                else {
+                                } else {
                                     // Show message informing of invalid attack and reset clicks
                                     this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Invalid attack from " + this.clickedProvinces[0].code + " to " + this.clickedProvinces[1].code);
                                     this.clickedProvinces = [];
@@ -292,8 +300,11 @@ class GameLayer extends Layer {
                                 // El jugador está seleccionando origen y destino de un movimiento
                                 if (this.gestorDeTerritorios.validateMove(this.clickedProvinces[0], this.clickedProvinces[1])) {
                                     // Show prompt for number of units to move
+                                    this.tDialogTitle.valor = "MOVE";
                                     this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                                    this.tDialogTPAName.valor = "Province: " + this.clickedProvinces[0].code;
                                     this.tDialogTPB.valor = this.clickedProvinces[1].units;
+                                    this.tDialogTPBName.valor = "Province: " + this.clickedProvinces[1].code;
                                     this.tDialogTPBOriginal = this.clickedProvinces[1].units;
                                     this.UIState = UIStates.troopsDialog;
                                 } else {

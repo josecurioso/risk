@@ -44,7 +44,7 @@ function actualizarPulsaciones() {
 window.addEventListener('load', resize, false);
 
 function resize() {
-    console.log("Resize")
+    console.log("Resize");
     var escaladoAncho = parseFloat(window.innerWidth / canvas.width);
     var escaladoAlto = parseFloat(window.innerHeight / canvas.height);
 
