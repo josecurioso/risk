@@ -73,8 +73,8 @@ class GestorDeTurnos {
         let toSubstract = this.gestorDeDados.play(diceA, diceB, bonusAttacker, bonusDefender);
 
         // Movimientos tropas
-        this.jugadorActual.substractUnits(toSubstract[0]);
-        provinceB.owner.substractUnits(toSubstract[1]);
+        this.jugadorActual.substractUnits(toSubstract[0], provinceA);
+        provinceB.owner.substractUnits(toSubstract[1], provinceB);
 
         // Resultado
         if (this.jugadorActual.totalUnits <= 1) {

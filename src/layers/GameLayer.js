@@ -201,6 +201,8 @@ class GameLayer extends Layer {
                 console.log("Pass turn button press");
                 this.gestorDeTurnos.changePlayer();
                 controles.passTurnButton = false;
+                this.gameState = gameStates.turnBase;
+                this.isPlayerSelecting = false;
             }
             if (controles.tileClick) {
                 console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
