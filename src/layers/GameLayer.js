@@ -42,10 +42,17 @@ class GameLayer extends Layer {
         for (let i = 0; i < this.numeroJugadores; i++)
             this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
         this.jugadores.push(new IA().playerIA);
+        this.jugadores = this.rdShuffle(this.jugadores);
 
         // Configurar gestores
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
+
         this.gestorDeTextos = new GestorDeTextos(this.summaryTextBase);
+        let aux = "";
+        this.jugadores.forEach(j => aux += j.smallTeamCode + ", ");
+        aux = aux.slice(0, -2);
+        this.gestorDeTextos.writeTurnActionCustom(this.summaryTextBase, "GAME", "Player order: [" + aux + "]", "white");
+
         this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json", this.gestorDeTextos);
         this.gestorDeEventos.loadEventsFile();
         this.gestorDeTerritorios = new GestorDeTerritorios(provincias);
@@ -73,6 +80,14 @@ class GameLayer extends Layer {
         this.calculateCentroids();
         this.attachUnitSigns();
         this.setInitialUnits();
+    }
+
+    rdShuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     actualizar() {
@@ -259,9 +274,12 @@ class GameLayer extends Layer {
                 console.log("\tProvincia: " + clickedTile.province.code);
                 console.log("\tOwner: " + clickedTile.province.owner);
 
+                this.gestorDeTextos(this.gestorDeTurnos.jugadorActual, "You're in province: " + clickedTile.province.code);
+
                 // Manage highlight
-                if (this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null)
+                if (this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null) {
                     this.lastProvinceClicked.highlight = false;
+                }
                 clickedTile.province.highlight = true;
                 this.lastProvinceClicked = clickedTile.province;
 

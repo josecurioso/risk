@@ -123,6 +123,8 @@ class GestorDeTurnos {
         }
         console.log(reparto);
 
+        this.gestorDeTextos.writeTurnActionCustom(this.gestorDeTextos.whereBase, "GAME", "Province draw", "white");
+
         let currentI = 0;
         while (reparto.reduce(reducer) !== 26) {
             reparto[currentI]++;

@@ -16,7 +16,12 @@ class GestorDeTextos {
         this.count++;
     }
 
-    writeTurnActionCustom(where, jugador, action) {
-        // TODO: genérico
+    writeTurnActionCustom(where, code, action, color) {
+        if (this.written.length > this.bufferLength) {
+            this.written = [];
+            this.count = 0;
+        }
+        this.written.push(new Texto("[" + code + "]: " + action, where.x, where.y + 6 * this.count, "5px Arial", color));
+        this.count++;
     }
 }
