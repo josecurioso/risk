@@ -11,6 +11,8 @@ var imagenes = {
     tDialogOk: "res/SVG/accept.svg",
     tDialogBackground: "res/SVG/dialog_troops.svg",
     messages: "res/SVG/messages.svg",
+    cross: "res/SVG/cross.svg",
+    move: "res/SVG/move.svg",
     //dice: "res/SVG/dices.svg",
     //fondo_mar: "res/PNG/fondo.jpg",
     //menu_fondo: "res/PNG/menu.png",

@@ -15,8 +15,12 @@ class GameLayer extends Layer {
         this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial", "white");
         this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
         this.turnoActual = new Texto("placeholder", 600 * 0.47, 320 * 0.925, "20px Arial", "white");
-        this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.725, 320 * 0.965, 36, 36, true, 29);
-        this.botonPassTurn = new BotonSVG(imagenes.passTurn, 600 * 0.42, 320 * 0.96, 36, 36, false);
+        this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.725, 320 * 0.965, 36, 36, true, 18);
+        this.crossAtacar = new FondoSVG(imagenes.cross, 600 * 0.725, 320 * 0.965, 36, 36,);
+        this.botonMover = new BotonSVG(imagenes.move, 600 * 0.8, 320 * 0.965, 36, 36, true, 18);
+        this.crossMover = new FondoSVG(imagenes.cross, 600 * 0.8, 320 * 0.965, 36, 36,);
+        this.botonPassTurn = new BotonSVG(imagenes.passTurn, 600 * 0.42, 320 * 0.96, 36, 36, true, 18);
+        this.crossPassTurn = new FondoSVG(imagenes.cross, 600 * 0.42, 320 * 0.96, 36, 36);
         this.unitNumbers = [];
 
         // Troops Dialog
@@ -75,11 +79,18 @@ class GameLayer extends Layer {
         this.fondoMar.dibujar();
         this.mapa.dibujar();
         this.botonAtacar.dibujar();
+        if(this.gameState === gameStates.playerMoving)
+            this.crossAtacar.dibujar();
         this.summaryOverlay.dibujar();
         this.gestorDeTextos.written.forEach(t => t.dibujar());
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
         this.botonPassTurn.dibujar();
+        if(this.gameState === gameStates.playerAttacking)
+            this.crossPassTurn.dibujar();
+        this.botonMover.dibujar();
+        if(this.gameState === gameStates.playerAttacking)
+            this.crossMover.dibujar();
         this.unitNumbers.forEach((x) => x.dibujar());
 
         // Dialogo tropas
@@ -95,6 +106,7 @@ class GameLayer extends Layer {
 
     calcularPulsaciones(pulsaciones) {
         this.botonAtacar.pulsado = false;
+        this.botonMover.pulsado = false;
         this.botonPassTurn.pulsado = false;
         this.tDialogOk.pulsado = false;
         this.tDialogAdd.pulsado = false;
@@ -127,6 +139,9 @@ class GameLayer extends Layer {
                     } else if (this.botonAtacar.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonAtacar.pulsado = true;
                         controles.attackButton = true;
+                    } else if (this.botonMover.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
+                        this.botonMover.pulsado = true;
+                        controles.moveButton = true;
                     } else if (this.botonPassTurn.contienePunto(pulsaciones[i].x, pulsaciones[i].y)) {
                         this.botonPassTurn.pulsado = true;
                         controles.passTurnButton = true;
@@ -141,6 +156,8 @@ class GameLayer extends Layer {
 
         if (!this.botonAtacar.pulsado)
             controles.attackButton = false;
+        if (!this.botonMover.pulsado)
+            controles.moveButton = false;
         if (!this.botonPassTurn.pulsado)
             controles.passTurnButton = false;
         if (!this.tDialogOk.pulsado)
@@ -166,7 +183,7 @@ class GameLayer extends Layer {
                 } else if (this.gameState === gameStates.playerMoving) {
                     let troopsToMove = this.tDialogTPB.valor - this.tDialogTPBOriginal;
                     this.gestorDeTurnos.move(this.clickedProvinces[0], this.clickedProvinces[1], troopsToMove);
-                    this.gameState = gameStates.turnBase;
+                    this.gameState = gameStates.playerMoving;
                     this.isPlayerSelecting = false;
                     this.clickedProvinces = [];
                 }
@@ -193,16 +210,37 @@ class GameLayer extends Layer {
                 console.log("Attack button press");
                 if (this.gameState !== gameStates.playerMoving && !this.isPlayerSelecting) {
                     this.gameState = gameStates.playerAttacking;
+                    this.clickedProvinces = [];
                     this.isPlayerSelecting = true;
+                }
+                else{
+                    console.log("Attack button deactivated")
                 }
                 controles.attackButton = false;
             }
+            if (controles.moveButton) {
+                console.log("Move button press");
+                if (this.gameState !== gameStates.playerAttacking && !this.isPlayerSelecting) {
+                    this.gameState = gameStates.playerMoving;
+                    this.clickedProvinces = [];
+                    this.isPlayerSelecting = true;
+                }
+                else{
+                    console.log("Move button deactivated")
+                }
+                controles.moveButton = false;
+            }
             if (controles.passTurnButton) {
                 console.log("Pass turn button press");
-                this.gestorDeTurnos.changePlayer();
-                controles.passTurnButton = false;
-                this.gameState = gameStates.turnBase;
-                this.isPlayerSelecting = false;
+                if (this.gameState !== gameStates.playerAttacking && !this.isPlayerSelecting) {
+                    this.gestorDeTurnos.changePlayer();
+                    controles.passTurnButton = false;
+                    this.gameState = gameStates.turnBase;
+                    this.isPlayerSelecting = false;
+                }
+                else{
+                    console.log("Pass turn button deactivated")
+                }
             }
             if (controles.tileClick) {
                 console.log("Click en tile: " + clickedTile.px + ", " + clickedTile.py);
@@ -210,44 +248,51 @@ class GameLayer extends Layer {
                 console.log("\tProvincia: " + clickedTile.province.code);
                 console.log("\tOwner: " + clickedTile.province.owner);
 
-                if(this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null) {
+                // Manage highlight
+                if(this.lastProvinceClicked !== undefined && this.lastProvinceClicked !== null)
                     this.lastProvinceClicked.highlight = false;
-                }
                 clickedTile.province.highlight = true;
                 this.lastProvinceClicked = clickedTile.province;
 
                 if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
+                    // Farm case
                     this.gestorDeTurnos.farm(this.gestorDeTurnos.getCurrentPlayer(), clickedTile);
+                    // Turn change logic
                     this.clickedProvinces = [];
-                } else if (this.gameState === gameStates.playerAttacking && this.isPlayerSelecting) { //El jugador está seleccionando origen y destino de un ataque
-                    this.clickedProvinces.push(clickedTile.province);
-                    if (this.clickedProvinces.length === 2){
-                        if(this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
-                            //Show prompt for number of units to send later
-                            this.tDialogTPA.valor = this.clickedProvinces[0].units;
-                            this.tDialogTPB.valor = 0;
-                            this.UIState = UIStates.troopsDialog;
-                        }
-                        else {
-                            this.clickedProvinces = [];
-                            // TODO Show message informing of invalid attack and try again
-                        }
-                    }
+                    this.gameState = gameStates.turnBase;
+                    this.isPlayerSelecting = false;
                 } else {
-                    this.gameState = gameStates.playerMoving;
-                    this.isPlayerSelecting = true; //El jugador está seleccionando origen y destino de un movimiento
                     this.clickedProvinces.push(clickedTile.province);
                     if (this.clickedProvinces.length === 2) {
-                        if (this.gestorDeTerritorios.validateMove(this.clickedProvinces[0], this.clickedProvinces[1])) {
-                            // Show prompt for number of units to move
-                            this.tDialogTPA.valor = this.clickedProvinces[0].units;
-                            this.tDialogTPB.valor = this.clickedProvinces[1].units;
-                            this.tDialogTPBOriginal = this.clickedProvinces[1].units;
-                            this.UIState = UIStates.troopsDialog;
-                        } else {
-                            this.clickedProvinces = [];
-                            this.gameState = gameStates.turnBase;
-                            // TODO Show message informing of invalid move
+                        switch(this.gameState) {
+                            case gameStates.playerAttacking:
+                                // El jugador está seleccionando origen y destino de un ataque
+                                if(this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
+                                    //Show prompt for number of units to send later
+                                    this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                                    this.tDialogTPB.valor = 0;
+                                    this.UIState = UIStates.troopsDialog;
+                                }
+                                else {
+                                    // Show message informing of invalid attack and reset clicks
+                                    this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Invalid attack from " + this.clickedProvinces[0].code + " to " + this.clickedProvinces[1].code);
+                                    this.clickedProvinces = [];
+                                }
+                                break;
+                            case gameStates.playerMoving:
+                                // El jugador está seleccionando origen y destino de un movimiento
+                                if (this.gestorDeTerritorios.validateMove(this.clickedProvinces[0], this.clickedProvinces[1])) {
+                                    // Show prompt for number of units to move
+                                    this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                                    this.tDialogTPB.valor = this.clickedProvinces[1].units;
+                                    this.tDialogTPBOriginal = this.clickedProvinces[1].units;
+                                    this.UIState = UIStates.troopsDialog;
+                                } else {
+                                    // Show message informing of invalid move and reset clicks
+                                    this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Invalid move from " + this.clickedProvinces[0].code + " to " + this.clickedProvinces[1].code);
+                                    this.clickedProvinces = [];
+                                }
+                                break;
                         }
                     }
                 }

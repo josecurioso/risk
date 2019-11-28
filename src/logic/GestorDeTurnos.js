@@ -41,10 +41,9 @@ class GestorDeTurnos {
         let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
         let unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerPoints, playerTerritoriesCount);
 
-        /* ⚠⚠⚠ TODO
-            Falta colocar las unidades
-           ⚠⚠⚠
-         */
+        // Colocar las unidades en provincia aleatoria
+        let index = Math.floor(Math.random()*this.jugadorActual.getConqueredTerritoriesCount());
+        this.jugadorActual.conqueredTerritories[index].addUnits(unitsToAdd);
 
     }
 

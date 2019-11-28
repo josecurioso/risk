@@ -17,6 +17,10 @@ class Provincia {
         this.units = unidades;
         this.unitsSign.valor = this.units;
     }
+    addUnits(unidades) {
+        this.units = this.units + unidades;
+        this.unitsSign.valor = this.units;
+    }
 
     calculateMidPosition() {
         let maxX, maxY = Number.MIN_VALUE;
