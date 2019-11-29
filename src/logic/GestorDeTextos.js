@@ -16,6 +16,15 @@ class GestorDeTextos {
         this.count++;
     }
 
+    writeGameAction(action) {
+        if (this.written.length > this.bufferLength) {
+            this.written = [];
+            this.count = 0;
+        }
+        this.written.push(new Texto("[GAME]: " + action, this.whereBase.x, this.whereBase.y + 6 * this.count, "5px Arial", "white"));
+        this.count++
+    }
+
     writeTurnActionCustom(where, code, action, color) {
         if (this.written.length > this.bufferLength) {
             this.written = [];

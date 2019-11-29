@@ -51,7 +51,7 @@ class GameLayer extends Layer {
         let aux = "";
         this.jugadores.forEach(j => aux += j.smallTeamCode + ", ");
         aux = aux.slice(0, -2);
-        this.gestorDeTextos.writeTurnActionCustom(this.summaryTextBase, "GAME", "Player order: [" + aux + "]", "white");
+        this.gestorDeTextos.writeGameAction("Player order: [" + aux + "]", "white");
 
         this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json", this.gestorDeTextos);
         this.gestorDeEventos.loadEventsFile();
@@ -242,6 +242,7 @@ class GameLayer extends Layer {
             if (controles.attackButton) {
                 console.log("Attack button press");
                 if (this.gameState !== gameStates.playerMoving && !this.isPlayerSelecting) {
+                    this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.getCurrentPlayer(), "Attack mode activated");
                     this.gameState = gameStates.playerAttacking;
                     this.isPassActivated = false;
                     this.clickedProvinces = [];
@@ -254,6 +255,7 @@ class GameLayer extends Layer {
             if (controles.moveButton) {
                 console.log("Move button press");
                 if (this.gameState !== gameStates.playerAttacking && !this.isPlayerSelecting) {
+                    this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.getCurrentPlayer(), "Move mode activated");
                     this.isPassActivated = true;
                     this.gameState = gameStates.playerMoving;
                     this.clickedProvinces = [];
@@ -266,6 +268,7 @@ class GameLayer extends Layer {
             if (controles.passTurnButton) {
                 console.log("Pass turn button press");
                 if (this.isPassActivated) {
+                    this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.getCurrentPlayer(), "Turn passed");
                     this.gestorDeTurnos.changePlayer();
                     controles.passTurnButton = false;
                     this.gameState = gameStates.turnBase;
