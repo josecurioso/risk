@@ -11,6 +11,7 @@ class GestorDeTurnos {
         this.gestorDeTerritorios = gestorDeTerritorios;
         this.gestorDeEventos = gestorDeEventos;
         this.cartelTurno = cartelTurno;
+        this.unitsToAdd = 0;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Your turn");
         this.updateCartel();
     }
@@ -38,14 +39,24 @@ class GestorDeTurnos {
         // Turn Base
         // Suma inicial del turno para unidades a colocar en el tablero
         let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
-        let unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
+        this.unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Select the province to place " + this.unitsToAdd + " units");
 
-        console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + unitsToAdd);
+        console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + this.unitsToAdd);
 
         // Colocar las unidades en provincia aleatoria
-        let rdP = this.jugadorActual.conqueredTerritories[Math.floor(Math.random() * this.jugadorActual.getConqueredTerritoriesCount())];
-        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Adding " + unitsToAdd + "u in province " + rdP.code);
-        this.jugadorActual.incrementUnits(unitsToAdd, rdP);
+        //let rdP = this.jugadorActual.conqueredTerritories[Math.floor(Math.random() * this.jugadorActual.getConqueredTerritoriesCount())];
+        //this.jugadorActual.incrementUnits(unitsToAdd, rdP);
+    }
+
+    placeBonusUnits(province){
+        if(province.owner.teamCode === this.jugadorActual.teamCode){
+            this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Adding " + this.unitsToAdd + "u in province " + province.code);
+            this.jugadorActual.incrementUnits(this.unitsToAdd, province);
+            return true;
+        }
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Choose one of your provinces!");
+        return false;
     }
 
     attack(provinceA, provinceB, troopsToSend) {

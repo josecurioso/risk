@@ -9,6 +9,7 @@ var gameStates = {
     playerFarming: 3,
     gameInit: 4,
     turnBase: 5,
+    unitsAdded: 6,
 };
 
 var UIStates = {
