@@ -203,10 +203,10 @@ class GameLayer extends Layer {
                         this.isPlayerSelecting = false;
                         this.clickedProvinces = [];
                         this.gameState = gameStates.playerMoving;
-                        this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Battle finished, move or pass");
+                        this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.getCurrentPlayer(), "Battle finished, move or pass");
                     } else if (attackStatus === 2) {
                         // Ningún jugador destruido
-                        this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Battle finished, attack again or pass");
+                        this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.getCurrentPlayer(), "Battle finished, attack again or pass");
                     }
                     this.isPassActivated = true;
                 } else if (this.gameState === gameStates.playerMoving) {
@@ -286,8 +286,8 @@ class GameLayer extends Layer {
                 this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "You're in province: " + clickedTile.province.code);
 
                 if(this.gameState === gameStates.turnBase){
-                    this.gestorDeTurnos.placeBonusUnits(clickedTile.province);
-                    this.gameState = gameStates.unitsAdded;
+                    if(this.gestorDeTurnos.placeBonusUnits(clickedTile.province))
+                        this.gameState = gameStates.unitsAdded;
                 }
                 else{
                     if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {

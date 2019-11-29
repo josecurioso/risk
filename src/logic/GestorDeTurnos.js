@@ -40,6 +40,7 @@ class GestorDeTurnos {
         // Suma inicial del turno para unidades a colocar en el tablero
         let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
         this.unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Select the province to place " + this.unitsToAdd + " units");
 
         console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + this.unitsToAdd);
 
@@ -49,8 +50,13 @@ class GestorDeTurnos {
     }
 
     placeBonusUnits(province){
-        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Adding " + this.unitsToAdd + "u in province " + province.code);
-        this.jugadorActual.incrementUnits(this.unitsToAdd, province);
+        if(province.owner.teamCode === this.jugadorActual.teamCode){
+            this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Adding " + this.unitsToAdd + "u in province " + province.code);
+            this.jugadorActual.incrementUnits(this.unitsToAdd, province);
+            return true;
+        }
+        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Choose one of your provinces!");
+        return false;
     }
 
     attack(provinceA, provinceB, troopsToSend) {
