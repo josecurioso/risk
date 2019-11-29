@@ -1,6 +1,7 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeTerritorios, gestorDeUnidades, gestorDeTextos, gestorDeEventos, playerOrder, cartelTurno) {
+    constructor(gestorDeTerritorios, gestorDeUnidades, gestorDeTextos, gestorDeEventos, playerOrder, cartelTurno, ia) {
+        this.ia = ia;
         this.playerOrder = playerOrder;
         this.listPos = 0;
         this.jugadorActual = this.playerOrder[this.listPos];
@@ -14,6 +15,9 @@ class GestorDeTurnos {
         this.unitsToAdd = 0;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Your turn");
         this.updateCartel();
+        if(this.jugadorActual.teamCode === "IA"){
+            this.ia.attackOrMoveTroops();
+        }
     }
 
     getCurrentPlayer() {
@@ -47,6 +51,9 @@ class GestorDeTurnos {
         // Colocar las unidades en provincia aleatoria
         //let rdP = this.jugadorActual.conqueredTerritories[Math.floor(Math.random() * this.jugadorActual.getConqueredTerritoriesCount())];
         //this.jugadorActual.incrementUnits(unitsToAdd, rdP);
+        if(this.jugadorActual.teamCode === "IA"){
+            this.ia.attackOrMoveTroops();
+        }
     }
 
     placeBonusUnits(province){

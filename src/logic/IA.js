@@ -8,12 +8,19 @@ class IA {
 
     // Decide wheter the IA attacks other player or recolocates troops
     attackOrMoveTroops() {
+        this.placeBonus();
         let attackP = Math.floor(Math.random() * 100);
         if (attackP >= 75) {
             this.attack();
         } else {
             this.moveTroops();
         }
+    }
+
+    placeBonus() {
+        let provinces = this.playerIA.conqueredTerritories;
+        let rdP = provinces[Math.floor(Math.random() * provinces.length)];
+        this.gestorDeTurnos.placeBonus(rdP);
     }
 
     attack() {

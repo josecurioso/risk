@@ -41,8 +41,8 @@ class GameLayer extends Layer {
         this.jugadores = [];
         for (let i = 0; i < this.numeroJugadores; i++)
             this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
-        let IA = new IA();
-        this.jugadores.push(IA.playerIA);
+        this.ia = new IA();
+        this.jugadores.push(this.ia.playerIA);
         this.jugadores = rdShuffle(this.jugadores);
 
         // Configurar gestores
@@ -57,11 +57,11 @@ class GameLayer extends Layer {
         this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json", this.gestorDeTextos);
         this.gestorDeEventos.loadEventsFile();
         this.gestorDeTerritorios = new GestorDeTerritorios(provincias);
-        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.summaryTextBase);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.summaryTextBase, this.ia);
 
         // Inicializar la IA
-        IA.gestorDeTerritorios = this.gestorDeTerritorios;
-        IA.gestorDeTurnos = this.gestorDeTurnos;
+        this.ia.gestorDeTerritorios = this.gestorDeTerritorios;
+        this.ia.gestorDeTurnos = this.gestorDeTurnos;
 
         // Reparto inicial de provincias
         this.gestorDeTurnos.initialTurnDraw();
