@@ -231,7 +231,7 @@ class GameLayer extends Layer {
                 if (this.tDialogTPB.valor > 0) {
                     this.tDialogTPB.valor--;
                     this.tDialogTPA.valor++;
-                    if(this.gameState === gameStates.playerMoving && this.tDialogTPB.valor === 0){
+                    if(this.tDialogTPB.valor === 0){
                         this.tDialogTPB.valor++;
                         this.tDialogTPA.valor--;
                     }
@@ -306,9 +306,9 @@ class GameLayer extends Layer {
                                     if (this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
                                         //Show prompt for number of units to send later
                                         this.tDialogTitle.valor = "ATTK";
-                                        this.tDialogTPA.valor = this.clickedProvinces[0].units;
+                                        this.tDialogTPA.valor = this.clickedProvinces[0].units-1;
                                         this.tDialogTPAName.valor = "Province: " + this.clickedProvinces[0].code;
-                                        this.tDialogTPB.valor = 0;
+                                        this.tDialogTPB.valor = 1;
                                         this.tDialogTPBName.valor = "Province: " + this.clickedProvinces[1].code;
                                         this.UIState = UIStates.troopsDialog;
                                     } else {
