@@ -13,7 +13,12 @@ class IA {
         if (attackP >= 75) {
             this.attack();
         } else {
-            this.moveTroops();
+            let num = Math.floor(Math.random() * 10) + 1;
+            while(num>0) {
+                this.moveTroops();
+                num--;
+            }
+            this.gestorDeTurnos.changePlayer();
         }
     }
 
