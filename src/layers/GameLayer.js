@@ -229,6 +229,10 @@ class GameLayer extends Layer {
                 if (this.tDialogTPB.valor > 0) {
                     this.tDialogTPB.valor--;
                     this.tDialogTPA.valor++;
+                    if(this.gameState === gameStates.playerMoving && this.tDialogTPB.valor === 0){
+                        this.tDialogTPB.valor++;
+                        this.tDialogTPA.valor--;
+                    }
                 }
                 controles.tDialogRemove = false;
             }
