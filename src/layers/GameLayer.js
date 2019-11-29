@@ -44,6 +44,10 @@ class GameLayer extends Layer {
         this.ia = new IA();
         this.jugadores.push(this.ia.playerIA);
         this.jugadores = rdShuffle(this.jugadores);
+        if (this.jugadores[0].teamCode === "IA") {
+            this.jugadores.splice(0, 1);
+            this.jugadores.push(this.ia.playerIA);
+        }
 
         // Configurar gestores
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);

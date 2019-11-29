@@ -32,10 +32,9 @@ class IA {
             let rdP = provinces[Math.floor(Math.random() * provinces.length)];
             let totalAdjacentProvinces = rdP.getAdjacentProvincesByGround().concat(rdP.getAdjacentProvincesBySea());
             totalAdjacentProvinces = this.gestorDeTerritorios.getProvincesForCodes(totalAdjacentProvinces);
-            console.log(totalAdjacentProvinces);
             for (let i = 0; i < totalAdjacentProvinces.length; i++) {
                 if (totalAdjacentProvinces[i].owner.teamCode !== this.playerIA.teamCode) {
-                    possibleAttack = [true, rdP, totalAdjacentProvinces[i].code];
+                    possibleAttack = [true, rdP, totalAdjacentProvinces[i]];
                     break;
                 }
             }
@@ -44,7 +43,7 @@ class IA {
         if (possibleAttack[0]) {
             let result = 2;
             while (result === 2) {
-                result = this.gestorDeTurnos.attack(possibleAttack[1], possibleAttack[2], possibleAttack[1].totalUnits - 1);
+                result = this.gestorDeTurnos.attack(possibleAttack[1], possibleAttack[2], possibleAttack[1].units - 1);
             }
             this.gestorDeTurnos.changePlayer();
         }
@@ -59,17 +58,16 @@ class IA {
             let rdP = provinces[Math.floor(Math.random() * provinces.length)];
             let totalAdjacentProvinces = rdP.getAdjacentProvincesByGround().concat(rdP.getAdjacentProvincesBySea());
             totalAdjacentProvinces = this.gestorDeTerritorios.getProvincesForCodes(totalAdjacentProvinces);
-            console.log(totalAdjacentProvinces);
             for (let i = 0; i < totalAdjacentProvinces.length; i++) {
                 if (totalAdjacentProvinces[i].owner.teamCode === this.playerIA.teamCode) {
-                    possibleMove = [true, rdP, totalAdjacentProvinces[i].code];
+                    possibleMove = [true, rdP, totalAdjacentProvinces[i]];
                     break;
                 }
             }
             tries--;
         }
         if (possibleMove[0]) {
-            this.gestorDeTurnos.move(possibleMove[1], possibleMove[2], Math.floor(possibleMove[1].totalUnits / 2));
+            this.gestorDeTurnos.move(possibleMove[1], possibleMove[2], Math.floor(possibleMove[1].units / 2));
         }
     }
 }

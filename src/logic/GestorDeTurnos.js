@@ -14,7 +14,7 @@ class GestorDeTurnos {
         this.unitsToAdd = 0;
         this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Your turn");
         this.updateCartel();
-        if(this.jugadorActual.teamCode === "IA"){
+        if (this.jugadorActual.teamCode === "IA") {
             this.ia.attackOrMoveTroops();
         }
     }
@@ -50,13 +50,13 @@ class GestorDeTurnos {
         // Colocar las unidades en provincia aleatoria
         //let rdP = this.jugadorActual.conqueredTerritories[Math.floor(Math.random() * this.jugadorActual.getConqueredTerritoriesCount())];
         //this.jugadorActual.incrementUnits(unitsToAdd, rdP);
-        if(this.jugadorActual.teamCode === "IA"){
+        if (this.jugadorActual.teamCode === "IA") {
             this.ia.attackOrMoveTroops();
         }
     }
 
-    placeBonusUnits(province){
-        if(province.owner.teamCode === this.jugadorActual.teamCode){
+    placeBonusUnits(province) {
+        if (province.owner.teamCode === this.jugadorActual.teamCode) {
             this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Adding " + this.unitsToAdd + "u in province " + province.code);
             this.jugadorActual.incrementUnits(this.unitsToAdd, province);
             return true;
@@ -91,6 +91,8 @@ class GestorDeTurnos {
         }
         provinceB.owner.substractUnits(toSubstract[1], provinceB);
 
+        this.gestorDeTextos.writeGameAction("Throw: Attk(" + throwA[0] + ", " + throwA[1] + ", " + throwA[2] + ") - Def(" + throwD[0] + ", " + throwD[1] + ")");
+        this.gestorDeTextos.writeGameAction("Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
         // Resultado
         if (hasLost) {
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "No more units to attack from " + provinceA.code);
@@ -103,8 +105,6 @@ class GestorDeTurnos {
             this.move(provinceA, provinceB, troopsToSend - toSubstract[0]);
             return 1;
         } else {
-            this.gestorDeTextos.writeGameAction("Throw: Attk(" + throwA[0] + ", " + throwA[1] + ", " + throwA[2] + ") - Def(" + throwD[0] + ", " + throwD[1] + ")");
-            this.gestorDeTextos.writeGameAction("Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
             return 2;
         }
     }
