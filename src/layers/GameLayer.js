@@ -41,7 +41,8 @@ class GameLayer extends Layer {
         this.jugadores = [];
         for (let i = 0; i < this.numeroJugadores; i++)
             this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
-        this.jugadores.push(new IA().playerIA);
+        let IA = new IA();
+        this.jugadores.push(IA.playerIA);
         this.jugadores = this.rdShuffle(this.jugadores);
 
         // Configurar gestores
@@ -57,6 +58,10 @@ class GameLayer extends Layer {
         this.gestorDeEventos.loadEventsFile();
         this.gestorDeTerritorios = new GestorDeTerritorios(provincias);
         this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.summaryTextBase);
+
+        // Inicializar la IA
+        IA.gestorDeTerritorios = this.gestorDeTerritorios;
+        IA.gestorDeTurnos = this.gestorDeTurnos;
 
         // Reparto inicial de provincias
         this.gestorDeTurnos.initialTurnDraw();
