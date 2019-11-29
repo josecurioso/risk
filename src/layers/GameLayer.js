@@ -43,7 +43,7 @@ class GameLayer extends Layer {
             this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
         let IA = new IA();
         this.jugadores.push(IA.playerIA);
-        this.jugadores = this.rdShuffle(this.jugadores);
+        this.jugadores = rdShuffle(this.jugadores);
 
         // Configurar gestores
         this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
@@ -85,14 +85,6 @@ class GameLayer extends Layer {
         this.calculateCentroids();
         this.attachUnitSigns();
         this.setInitialUnits();
-    }
-
-    rdShuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
     }
 
     actualizar() {
