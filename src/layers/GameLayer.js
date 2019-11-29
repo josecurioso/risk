@@ -199,12 +199,14 @@ class GameLayer extends Layer {
                     let troopsToSend = this.tDialogTPB.valor;
                     let attackStatus = this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                     if (attackStatus === 1) {
-                        // Un jugador destruido, pasar turno
-                        this.gameState = gameStates.turnBase;
+                        // Batalla dada por finalizada
                         this.isPlayerSelecting = false;
                         this.clickedProvinces = [];
+                        this.gameState = gameStates.playerMoving;
+                        this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Battle finished, move or pass");
                     } else if (attackStatus === 2) {
                         // Ningún jugador destruido
+                        this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "Battle finished, attack again or pass");
                     }
                     this.isPassActivated = true;
                 } else if (this.gameState === gameStates.playerMoving) {
