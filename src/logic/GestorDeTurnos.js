@@ -77,7 +77,6 @@ class GestorDeTurnos {
         // Resultado
         if (hasLost) {
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "No more units to attack from " + provinceA.code);
-            this.changePlayer();
             return 1;
         } else if (provinceB.units <= 0) {
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "You've conquered province " + provinceB.code);
@@ -85,7 +84,6 @@ class GestorDeTurnos {
             this.jugadorActual.conquestProvince(provinceB);
             // Movimiento
             this.move(provinceA, provinceB, troopsToSend - toSubstract[0]);
-            this.changePlayer();
             return 1;
         } else {
             this.gestorDeTextos.writeGameAction("Throw: Attk(" + throwA[0] + ", " + throwA[1] + ", " + throwA[2] + ") - Def(" + throwD[0] + ", " + throwD[1] + ")");
