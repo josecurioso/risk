@@ -1,6 +1,6 @@
 class GestorDeTurnos {
 
-    constructor(gestorDeTerritorios, gestorDeUnidades, gestorDeTextos, gestorDeEventos, playerOrder, cartelTurno, ia) {
+    constructor(gestorDeUnidades, gestorDeTextos, gestorDeEventos, playerOrder, cartelTurno, ia) {
         this.ia = ia;
         this.playerOrder = playerOrder;
         this.listPos = 0;
@@ -9,7 +9,6 @@ class GestorDeTurnos {
         this.gestorDeUnidades = gestorDeUnidades;
         this.gestorDeDados = new GestorDeDados();
         this.gestorDeTextos = gestorDeTextos;
-        this.gestorDeTerritorios = gestorDeTerritorios;
         this.gestorDeEventos = gestorDeEventos;
         this.cartelTurno = cartelTurno;
         this.unitsToAdd = 0;

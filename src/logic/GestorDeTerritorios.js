@@ -76,4 +76,18 @@ class GestorDeTerritorios {
         });
         return result1 && result2;
     }
+
+    getProvincesForCodes(codes) {
+        let result = [];
+        for (let key in provincias) {
+            if (provincias.hasOwnProperty(key)) {
+                codes.forEach(code => {
+                    if (key === code) {
+                        result.push(provincias[key]);
+                    }
+                });
+            }
+        }
+        return result;
+    }
 }

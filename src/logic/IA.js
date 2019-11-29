@@ -20,7 +20,7 @@ class IA {
     placeBonus() {
         let provinces = this.playerIA.conqueredTerritories;
         let rdP = provinces[Math.floor(Math.random() * provinces.length)];
-        this.gestorDeTurnos.placeBonus(rdP);
+        this.gestorDeTurnos.placeBonusUnits(rdP);
     }
 
     attack() {
@@ -31,7 +31,8 @@ class IA {
         while (tries >= 0) {
             let rdP = provinces[Math.floor(Math.random() * provinces.length)];
             let totalAdjacentProvinces = rdP.getAdjacentProvincesByGround().concat(rdP.getAdjacentProvincesBySea());
-            totalAdjacentProvinces = rdShuffle(totalAdjacentProvinces);
+            totalAdjacentProvinces = this.gestorDeTerritorios.getProvincesForCodes(totalAdjacentProvinces);
+            console.log(totalAdjacentProvinces);
             for (let i = 0; i < totalAdjacentProvinces.length; i++) {
                 if (totalAdjacentProvinces[i].owner.teamCode !== this.playerIA.teamCode) {
                     possibleAttack = [true, rdP, totalAdjacentProvinces[i].code];
@@ -57,7 +58,8 @@ class IA {
         while (tries >= 0) {
             let rdP = provinces[Math.floor(Math.random() * provinces.length)];
             let totalAdjacentProvinces = rdP.getAdjacentProvincesByGround().concat(rdP.getAdjacentProvincesBySea());
-            totalAdjacentProvinces = rdShuffle(totalAdjacentProvinces);
+            totalAdjacentProvinces = this.gestorDeTerritorios.getProvincesForCodes(totalAdjacentProvinces);
+            console.log(totalAdjacentProvinces);
             for (let i = 0; i < totalAdjacentProvinces.length; i++) {
                 if (totalAdjacentProvinces[i].owner.teamCode === this.playerIA.teamCode) {
                     possibleMove = [true, rdP, totalAdjacentProvinces[i].code];

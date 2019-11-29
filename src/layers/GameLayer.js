@@ -57,7 +57,7 @@ class GameLayer extends Layer {
         this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json", this.gestorDeTextos);
         this.gestorDeEventos.loadEventsFile();
         this.gestorDeTerritorios = new GestorDeTerritorios(provincias);
-        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeTerritorios, this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.summaryTextBase, this.ia);
+        this.gestorDeTurnos = new GestorDeTurnos(this.gestorDeUnidades, this.gestorDeTextos, this.gestorDeEventos, this.jugadores, this.turnoActual, this.ia);
 
         // Inicializar la IA
         this.ia.gestorDeTerritorios = this.gestorDeTerritorios;
@@ -228,7 +228,7 @@ class GameLayer extends Layer {
                 if (this.tDialogTPB.valor > 0) {
                     this.tDialogTPB.valor--;
                     this.tDialogTPA.valor++;
-                    if(this.tDialogTPB.valor === 0){
+                    if (this.tDialogTPB.valor === 0) {
                         this.tDialogTPB.valor++;
                         this.tDialogTPA.valor--;
                     }
@@ -282,11 +282,10 @@ class GameLayer extends Layer {
 
                 this.gestorDeTextos.writeTurnAction(this.gestorDeTurnos.jugadorActual, "You're in province: " + clickedTile.province.code);
 
-                if(this.gameState === gameStates.turnBase){
-                    if(this.gestorDeTurnos.placeBonusUnits(clickedTile.province))
+                if (this.gameState === gameStates.turnBase) {
+                    if (this.gestorDeTurnos.placeBonusUnits(clickedTile.province))
                         this.gameState = gameStates.unitsAdded;
-                }
-                else{
+                } else {
                     if (clickedTile.isBonus && this.gameState !== gameStates.playerAttacking && this.gameState !== gameStates.playerMoving) {
                         // Farm case
                         this.gestorDeTurnos.farm(this.gestorDeTurnos.getCurrentPlayer(), clickedTile);
@@ -303,7 +302,7 @@ class GameLayer extends Layer {
                                     if (this.gestorDeTerritorios.validateAttack(this.clickedProvinces[0], this.clickedProvinces[1])) {
                                         //Show prompt for number of units to send later
                                         this.tDialogTitle.valor = "ATTK";
-                                        this.tDialogTPA.valor = this.clickedProvinces[0].units-1;
+                                        this.tDialogTPA.valor = this.clickedProvinces[0].units - 1;
                                         this.tDialogTPAName.valor = "Province: " + this.clickedProvinces[0].code;
                                         this.tDialogTPB.valor = 1;
                                         this.tDialogTPBName.valor = "Province: " + this.clickedProvinces[1].code;
@@ -342,7 +341,6 @@ class GameLayer extends Layer {
                 }
                 clickedTile.province.highlight = true;
                 this.lastProvinceClicked = clickedTile.province;
-
 
                 controles.tileClick = false;
             }
@@ -392,20 +390,22 @@ class GameLayer extends Layer {
     }
 
     calculateCentroids() {
-        for (let key in provincias)
+        for (let key in provincias) {
             if (provincias.hasOwnProperty(key)) {
                 provincias[key].calculateCentroid();
                 // console.log("Calculated centroid: " + provincias[key].centroid.x + " " + provincias[key].centroid.y + " (for " + provincias[key].code + " province)");
             }
+        }
     }
 
     attachUnitSigns() {
-        for (let key in provincias)
+        for (let key in provincias) {
             if (provincias.hasOwnProperty(key)) {
                 let sign = new Texto(0, (provincias[key].centroid.x * 8) + 1, (provincias[key].centroid.y * 8) + 5.5, "bold 5px Arial", "black");
                 this.unitNumbers.push(sign);
                 provincias[key].unitsSign = sign;
             }
+        }
     }
 
 
