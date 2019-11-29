@@ -10,7 +10,8 @@ class GestorDeDados {
     play(dicesAttacker, dicesDefender, bonusAttacker, bonusDefender) {
         let throwsAttacker = [0, 0, 0];
         let throwsDefender = [0, 0];
-        let result = [0, 0]; // (units lost) pos 0: attacker, pos 1: defender
+        let result = new Map();
+        let lostUnits = [0, 0]; // (units lost) pos 0: attacker, pos 1: defender
 
         console.log("Num dices (ATTK, DEF): " + "(" + dicesAttacker + ", " + dicesDefender + ")");
 
@@ -38,12 +39,16 @@ class GestorDeDados {
 
         for (let j = 0; j < dicesDefender; j++) {
             if (throwsDefender[j] >= throwsAttacker[j]) {
-                result[0] += 1;
+                lostUnits[0] += 1;
             } else {
-                result[1] += 1;
+                lostUnits[1] += 1;
             }
         }
-        console.log("To substract (ATTK, DEF): " + result);
+        console.log("To substract (ATTK, DEF): " + lostUnits);
+
+        result.set("lostUnits", lostUnits);
+        result.set("throwsAttacker", throwsAttacker);
+        result.set("throwsDefender", throwsDefender);
         return result;
     }
 }

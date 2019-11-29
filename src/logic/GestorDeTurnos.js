@@ -60,7 +60,10 @@ class GestorDeTurnos {
         let bonusDefender = provinceB.owner.climateBonus === provinceB.climate ? 1 : 0;
 
         // Simular tirada de dados
-        let toSubstract = this.gestorDeDados.play(dicesAttk, dicesDef, bonusAttacker, bonusDefender);
+        let round = this.gestorDeDados.play(dicesAttk, dicesDef, bonusAttacker, bonusDefender);
+        let toSubstract = round.get("lostUnits");
+        let throwA = round.get("throwsAttacker");
+        let throwD = round.get("throwsDefender");
 
         // Movimientos tropas
         let hasLost = false;
@@ -85,7 +88,8 @@ class GestorDeTurnos {
             this.changePlayer();
             return 1;
         } else {
-            this.gestorDeTextos.writeTurnAction(provinceA.owner, "Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
+            this.gestorDeTextos.writeGameAction("Throw: Attk(" + throwA[0] + ", " + throwA[1] + ", " + throwA[2] + ") - Def(" + throwD[0] + ", " + throwD[1] + ")");
+            this.gestorDeTextos.writeGameAction("Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
             return 2;
         }
     }
@@ -123,7 +127,7 @@ class GestorDeTurnos {
         }
         console.log(reparto);
 
-        this.gestorDeTextos.writeTurnActionCustom(this.gestorDeTextos.whereBase, "GAME", "Province draw", "white");
+        this.gestorDeTextos.writeGameAction("Province draw");
 
         let currentI = 0;
         while (reparto.reduce(reducer) !== 26) {

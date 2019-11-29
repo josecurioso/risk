@@ -51,7 +51,7 @@ class GameLayer extends Layer {
         let aux = "";
         this.jugadores.forEach(j => aux += j.smallTeamCode + ", ");
         aux = aux.slice(0, -2);
-        this.gestorDeTextos.writeTurnActionCustom(this.summaryTextBase, "GAME", "Player order: [" + aux + "]", "white");
+        this.gestorDeTextos.writeGameAction("Player order: [" + aux + "]", "white");
 
         this.gestorDeEventos = new GestorDeEventos("res/0_info_bonus.json", this.gestorDeTextos);
         this.gestorDeEventos.loadEventsFile();
