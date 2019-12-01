@@ -8,10 +8,10 @@ class BattleLayer extends Layer {
 
     iniciar() {
         // Fondos
-        this.fondo = new Fondo(imagenes.fondo_mar, 0, 0);
+        this.fondo = new FondoSVG(imagenes.fondo_mar, 600, 320, 600, 320 );
 
         // Timeout
-        this.timeout = 4 * 30; // 4 segundos
+        this.timeout = 5 * 30; // 4 segundos
     }
 
     startKilling() {
@@ -71,14 +71,16 @@ class BattleLayer extends Layer {
     }
 
     actualizar() {
-        this.timeout--;
         this.attackerTroops.forEach(t => {
             t.actualizar();
         });
         this.defenderTroops.forEach(t => {
             t.actualizar();
         });
-        if (this.timeout === 10) {
+
+
+        this.timeout--;
+        if (this.timeout === 33) {
             this.startKilling();
         }
         if (this.timeout === 0) {
