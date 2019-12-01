@@ -27,7 +27,7 @@ var imagenes = {
     derrotaDerecha: "res/PNG/animacion_derrota_derecha.png",
     derrotaIzquierda: "res/PNG/animacion_derrota_izquierda.png",
     balaDerecha: "res/PNG/bala_derecha.png",
-    balaIzquierda: "res/PNG/bala_izquierda"
+    balaIzquierda: "res/PNG/bala_izquierda.png"
 };
 
 var rutasImagenes = Object.values(imagenes);
