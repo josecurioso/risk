@@ -22,6 +22,12 @@ var imagenes = {
     btnBackAmarillo: "res/SVG/btns/btnBack_amarillo.svg",
     btnBackRojo: "res/SVG/btns/btnBack_rojo.svg",
     btnBackRosa: "res/SVG/btns/btnBack_rosa.svg",
+    dispararDerecha: "res/PNG/animacion_disparo_derecha.png",
+    dispararIzquierda: "res/PNG/animacion_disparo_izquierda.png",
+    derrotaDerecha: "res/PNG/animacion_derrota_derecha.png",
+    derrotaIzquierda: "res/PNG/animacion_derrota_izquierda.png",
+    balaDerecha: "res/PNG/bala_derecha.png",
+    balaIzquierda: "res/PNG/bala_izquierda"
 };
 
 var rutasImagenes = Object.values(imagenes);
