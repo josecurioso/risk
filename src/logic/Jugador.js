@@ -1,6 +1,6 @@
 class Jugador {
 
-    constructor(teamCode, smallTeamCode, strokeColor, fillColor, climate) {
+    constructor(teamCode, smallTeamCode, strokeColor, fillColor, climate, fondoBoton) {
         this.teamCode = teamCode;
         this.smallTeamCode = smallTeamCode;
         this.climateBonus = climate;
@@ -11,6 +11,7 @@ class Jugador {
         this.provinceDefended = null; // si te atacan, desde dónde defiendes
         this.strokeColor = strokeColor;
         this.fillColor = fillColor;
+        this.fondoBoton = new FondoSVG(fondoBoton, 600 * 0.725, 320 * 0.965, 36, 36);
     }
 
     calculateTotalPoints() {
@@ -18,6 +19,12 @@ class Jugador {
         this.conqueredTerritories.forEach(t => points++);
         this.conqueredContinets.forEach(c => points += c.bonus);
         return points;
+    }
+
+    dibujarFondoBoton(boton) {
+        this.fondoBoton.x = boton.x;
+        this.fondoBoton.y = boton.y;
+        this.fondoBoton.dibujar();
     }
 
     getConqueredTerritoriesCount() {

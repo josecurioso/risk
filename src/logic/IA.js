@@ -1,7 +1,7 @@
 class IA {
 
     constructor() {
-        this.playerIA = new Jugador("IA", "IA", colores[5].strokeColor, colores[5].fillColor, climates[Math.floor(Math.random() * climates.length)]);
+        this.playerIA = new Jugador("IA", "IA", colores[5].strokeColor, colores[5].fillColor, climates[Math.floor(Math.random() * climates.length)], colores[5].buttonBackground);
         this.gestorDeTerritorios = null;
         this.gestorDeTurnos = null;
     }

@@ -15,11 +15,11 @@ class GameLayer extends Layer {
         this.summaryTextBase = new Texto("", 600 * 0.025, 320 * 0.71, "5px Arial", "white");
         this.turnOverlay = new FondoSVG(imagenes.turn, 600 * 0.65, 320 * 0.955, 130, 30);
         this.turnoActual = new Texto("placeholder", 600 * 0.47, 320 * 0.925, "20px Arial", "white");
-        this.botonAtacar = new BotonSVG(imagenes.attack, 600 * 0.725, 320 * 0.965, 36, 36, true, 18);
+        this.botonAtacar = new BotonSVG(imagenes.attack_icon, 600 * 0.725, 320 * 0.965, 36, 36, true, 18);
         this.crossAtacar = new FondoSVG(imagenes.cross, 600 * 0.725, 320 * 0.965, 36, 36,);
-        this.botonMover = new BotonSVG(imagenes.move, 600 * 0.8, 320 * 0.965, 36, 36, true, 18);
+        this.botonMover = new BotonSVG(imagenes.move_icon, 600 * 0.8, 320 * 0.965, 36, 36, true, 18);
         this.crossMover = new FondoSVG(imagenes.cross, 600 * 0.8, 320 * 0.965, 36, 36,);
-        this.botonPassTurn = new BotonSVG(imagenes.passTurn, 600 * 0.42, 320 * 0.96, 36, 36, true, 18);
+        this.botonPassTurn = new BotonSVG(imagenes.pass_turn_icon, 600 * 0.42, 320 * 0.96, 36, 36, true, 18);
         this.crossPassTurn = new FondoSVG(imagenes.cross, 600 * 0.42, 320 * 0.96, 36, 36);
         this.unitNumbers = [];
 
@@ -40,7 +40,7 @@ class GameLayer extends Layer {
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
         for (let i = 0; i < this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)]));
+            this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)], colores[i].buttonBackground));
         this.ia = new IA();
         this.jugadores.push(this.ia.playerIA);
         this.jugadores = rdShuffle(this.jugadores);
@@ -97,6 +97,7 @@ class GameLayer extends Layer {
     dibujar() {
         this.fondoMar.dibujar();
         this.mapa.dibujar();
+        this.gestorDeTurnos.jugadorActual.dibujarFondoBoton(this.botonAtacar);
         this.botonAtacar.dibujar();
         if (this.gameState === gameStates.playerMoving)
             this.crossAtacar.dibujar();
@@ -104,9 +105,11 @@ class GameLayer extends Layer {
         this.gestorDeTextos.written.forEach(t => t.dibujar());
         this.turnOverlay.dibujar();
         this.turnoActual.dibujar();
+        this.gestorDeTurnos.jugadorActual.dibujarFondoBoton(this.botonPassTurn);
         this.botonPassTurn.dibujar();
         if (!this.isPassActivated)
             this.crossPassTurn.dibujar();
+        this.gestorDeTurnos.jugadorActual.dibujarFondoBoton(this.botonMover);
         this.botonMover.dibujar();
         if (this.gameState === gameStates.playerAttacking)
             this.crossMover.dibujar();

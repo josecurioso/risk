@@ -30,27 +30,33 @@ var UIStates = {
 var colores = [
     {
         fillColor: "#ff8600",
-        strokeColor: "#c26100"
+        strokeColor: "#c26100",
+        buttonBackground: imagenes.btnBackNaranja,
     },
     {
         fillColor: "#109c00",
-        strokeColor: "#064f00"
+        strokeColor: "#064f00",
+        buttonBackground: imagenes.btnBackVerde,
     },
     {
         fillColor: "#0052f2",
-        strokeColor: "#0040ae"
+        strokeColor: "#0040ae",
+        buttonBackground: imagenes.btnBackAzul,
     },
     {
         fillColor: "#f3dc04",
-        strokeColor: "#c2ac04"
+        strokeColor: "#c2ac04",
+        buttonBackground: imagenes.btnBackAmarillo,
     },
     {
         fillColor: "#fb0002",
-        strokeColor: "#c50002"
+        strokeColor: "#c50002",
+        buttonBackground: imagenes.btnBackRojo,
     },
     {
         fillColor: "#da0594",
-        strokeColor: "#ae0570"
+        strokeColor: "#ae0570",
+        buttonBackground: imagenes.btnBackRosa,
     }
 ];
 
