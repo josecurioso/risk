@@ -201,6 +201,7 @@ class GameLayer extends Layer {
             if (controles.tDialogOk) {
                 if (this.gameState === gameStates.playerAttacking) {
                     let troopsToSend = this.tDialogTPB.valor;
+                    console.log(this.clickedProvinces[1]);
                     let attackStatus = this.gestorDeTurnos.attack(this.clickedProvinces[0], this.clickedProvinces[1], troopsToSend);
                     if (attackStatus === 1) {
                         // Batalla dada por finalizada

@@ -29,7 +29,11 @@ var imagenes = {
     balaDerecha: "res/PNG/bala_derecha.png",
     balaIzquierda: "res/PNG/bala_izquierda.png",
     soldado_derecha: "res/PNG/disparo_derecha.png",
-    soldado_izquierda: "res/PNG/disparo_izquierda.png"
+    soldado_izquierda: "res/PNG/disparo_izquierda.png",
+    forest: "res/PNG/RESIZED/forest.jpg",
+    desert: "res/PNG/RESIZED/desert.jpg",
+    snowy: "res/PNG/RESIZED/snowy.jpg",
+    tropical: "res/PNG/RESIZED/tropical.jpg",
 };
 
 var rutasImagenes = Object.values(imagenes);

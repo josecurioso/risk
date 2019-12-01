@@ -1,20 +1,37 @@
 class BattleLayer extends Layer {
 
-    constructor(resultCode) {
+    constructor(resultCode, climate, colorA, colorD) {
         super();
-        this.iniciar();
         this.resultCode = resultCode; // 1 attacker wins, 2 defender wins, 3 draw
+        this.climate = climate;
+        this.colorA = colorA;
+        this.colorD = colorD;
+        this.iniciar();
     }
 
     iniciar() {
         // Fondos
-        this.fondo = new FondoSVG(imagenes.fondo_mar, 600, 320, 600, 320 );
+        switch (this.climate) {
+            case "desert":
+                this.fondo = new FondoSVG(imagenes.desert, 600, 320, 600, 320);
+                break;
+            case "tropical":
+                this.fondo = new FondoSVG(imagenes.tropical, 600, 320, 600, 320);
+                break;
+            case "snowy":
+                this.fondo = new FondoSVG(imagenes.snowy, 600, 320, 600, 320);
+                break;
+            case "oceanic":
+                this.fondo = new FondoSVG(imagenes.forest, 600, 320, 600, 320);
+                break;
+        }
 
         // Timeout
-        this.timeout = 5 * 30; // 4 segundos
+        this.timeout = 5 * 30; // 5 segundos
     }
 
     startKilling() {
+        console.log(this.resultCode);
         switch (this.resultCode) {
             case 1:
                 this.kill(this.defenderTroops);
@@ -60,12 +77,12 @@ class BattleLayer extends Layer {
         }
     }
 
-    loadUnits(units, isLeft) {
+    loadUnits(units, isLeft, isAtt) {
         let result = [];
         for (let i = 0; i < units; i++) {
             let x = !isLeft ? Math.floor(Math.random() * 260) + 20 : Math.floor(Math.random() * 260) + 320;
             let y = Math.floor(Math.random() * 280) + 20;
-            result.push(new Soldado(x, y, isLeft));
+            isAtt ? result.push(new Soldado(x, y, isLeft, this.colorA)) : result.push(new Soldado(x, y, isLeft, this.colorD));
         }
         return result;
     }
@@ -77,7 +94,6 @@ class BattleLayer extends Layer {
         this.defenderTroops.forEach(t => {
             t.actualizar();
         });
-
 
         this.timeout--;
         if (this.timeout === 33) {
