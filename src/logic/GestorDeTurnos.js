@@ -95,9 +95,15 @@ class GestorDeTurnos {
         this.gestorDeTextos.writeGameAction("Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
         // Resultado
         if (hasLost) {
+            battleLayer = new BattleLayer(2);
+            battleLayer.setBattleTroops(provinceA.units, provinceB.units);
+            layer = battleLayer;
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "No more units to attack from " + provinceA.code);
             return 1;
         } else if (provinceB.units <= 0) {
+            battleLayer = new BattleLayer(1);
+            battleLayer.setBattleTroops(provinceA.units, provinceB.units);
+            layer = battleLayer;
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "You've conquered province " + provinceB.code);
             provinceB.owner.lossProvince(provinceB);
             this.jugadorActual.conquestProvince(provinceB);
@@ -105,6 +111,9 @@ class GestorDeTurnos {
             this.move(provinceA, provinceB, troopsToSend - toSubstract[0]);
             return 1;
         } else {
+            battleLayer = new BattleLayer(3);
+            battleLayer.setBattleTroops(provinceA.units, provinceB.units);
+            layer = battleLayer;
             return 2;
         }
     }

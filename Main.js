@@ -13,6 +13,7 @@ var clickedTile;
 var layer;
 var gameLayer;
 var menuLayer;
+var battleLayer;
 
 // Inicio capas y bucle del juego
 function iniciarJuego() {

@@ -4,4 +4,8 @@ class Bala extends Modelo {
         super(imagen, x, y);
         this.vx = vx;
     }
+
+    actualizar() {
+        this.x += this.vx;
+    }
 }
