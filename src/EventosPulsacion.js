@@ -1,30 +1,3 @@
-window.addEventListener('touchstart', touchstart, false);
-window.addEventListener('touchmove', touchmove, false);
-window.addEventListener('touchend', eliminarTouch, false);
-window.addEventListener('touchcancel', eliminarTouch, false);
-window.addEventListener('touchleave', eliminarTouch, false);
-
-function touchstart(event) {
-    var touches = event.changedTouches;
-    for (var i = 0; i < touches.length; i++) {
-        //agregarPulsacion( touches[i].identifier, tipoPulsacion.inicio, touches[i]);
-    }
-}
-
-function touchmove(event) {
-    var touches = event.changedTouches;
-    for (var i = 0; i < touches.length; i++) {
-        //agregarPulsacion( touches[i].identifier, tipoPulsacion.mantener, touches[i]);
-    }
-}
-
-function eliminarTouch(event) {
-    var touches = event.changedTouches;
-    for (var i = 0; i < touches.length; i++) {
-        //eliminarPulsacion( touches[i].identifier);
-    }
-}
-
 window.addEventListener('mousedown', mousedown);
 window.addEventListener('mousemove', mousemove);
 window.addEventListener('mouseup', mouseup);
