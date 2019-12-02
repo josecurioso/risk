@@ -136,6 +136,8 @@ var provincias = {
 
 // old variables
 
+var escaladoMinimo = 1;
+var nivelActual = 0;
 var pulsaciones = []; // actuales registradas
 
 var tipoPulsacion = {}; // tipos
@@ -146,12 +148,10 @@ var entradas = {}; // tipos
 entradas.pulsaciones = 1;
 entradas.teclado = 2;
 entradas.gamepad = 3;
+
 var entrada = entradas.pulsaciones;
-var escaladoMinimo = 1;
 
-var nivelActual = 0;
 
-var estados = {};
 
-var orientaciones = {};
+
 

@@ -1,6 +1,6 @@
 // Lista rerecursos a precargar
 var imagenes = {
-    fondo_mar: "res/SVG/mar.svg",
+    fondo_mar: "res/PNG/FONDOS/water.jpg",
     menu_fondo: "res/SVG/menu.svg",
     boton_empezar: "res/SVG/empezar.svg",
     boton_add: "res/SVG/add_players.svg",
