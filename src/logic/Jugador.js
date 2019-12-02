@@ -1,6 +1,6 @@
 class Jugador {
 
-    constructor(teamCode, smallTeamCode, strokeColor, fillColor, climate, fondoBoton) {
+    constructor(teamCode, smallTeamCode, strokeColor, fillColor, climate, fondoBoton, soldado_izquierda, soldado_derecha, dispararIzquierda, derrotaIzquierda, dispararDerecha, derrotaDerecha) {
         this.teamCode = teamCode;
         this.smallTeamCode = smallTeamCode;
         this.climateBonus = climate;
@@ -12,6 +12,12 @@ class Jugador {
         this.strokeColor = strokeColor;
         this.fillColor = fillColor;
         this.fondoBoton = new FondoSVG(fondoBoton, 600 * 0.725, 320 * 0.965, 36, 36);
+        this.soldado_izquierda = soldado_izquierda;
+        this.soldado_derecha = soldado_derecha;
+        this.dispararIzquierda = dispararIzquierda;
+        this.derrotaIzquierda = derrotaIzquierda;
+        this.dispararDerecha = dispararDerecha;
+        this.derrotaDerecha = derrotaDerecha;
     }
 
     calculateTotalPoints() {

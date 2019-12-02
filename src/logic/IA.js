@@ -1,7 +1,7 @@
 class IA {
 
     constructor() {
-        this.playerIA = new Jugador("IA", "IA", colores[5].strokeColor, colores[5].fillColor, climates[Math.floor(Math.random() * climates.length)], colores[5].buttonBackground);
+        this.playerIA = new Jugador("IA", "IA", colores[5].strokeColor, colores[5].fillColor, climates[Math.floor(Math.random() * climates.length)], colores[5].buttonBackground, colores[5].soldado_izquierda, colores[5].soldado_derecha, colores[5].dispararIzquierda, colores[5].derrotaIzquierda, colores[5].dispararDerecha, colores[5].derrotaDerecha);
         this.gestorDeTerritorios = null;
         this.gestorDeTurnos = null;
     }

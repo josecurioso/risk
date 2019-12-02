@@ -40,7 +40,7 @@ class GameLayer extends Layer {
         this.numeroJugadores = playerAmount;
         this.jugadores = [];
         for (let i = 0; i < this.numeroJugadores; i++)
-            this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)], colores[i].buttonBackground));
+            this.jugadores.push(new Jugador("Jugador " + i, "J" + i, colores[i].strokeColor, colores[i].fillColor, climates[Math.floor(Math.random() * climates.length)], colores[i].buttonBackground, colores[i].soldado_izquierda, colores[i].soldado_derecha, colores[i].dispararIzquierda, colores[i].derrotaIzquierda, colores[i].dispararDerecha, colores[i].derrotaDerecha));
         this.ia = new IA();
         this.jugadores.push(this.ia.playerIA);
         this.jugadores = rdShuffle(this.jugadores);
