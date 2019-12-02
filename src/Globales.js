@@ -32,6 +32,12 @@ var colores = [
         fillColor: "#ff8600",
         strokeColor: "#c26100",
         buttonBackground: imagenes.btnBackNaranja,
+        dispararIzquierda: imagenes.disparar_izquierda_naranja,
+        dispararDerecha: imagenes.derrota_derecha_naranja,
+        derrotaIzquierda: imagenes.derrota_izquierda_naranja,
+        derrotaDerecha: imagenes.derrota_derecha_naranja,
+        soldado_izquierda: imagenes.soldado_izquierda_naranja,
+        soldado_derecha: imagenes.soldado_derecha_naranja,
     },
     {
         fillColor: "#109c00",
