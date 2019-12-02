@@ -60,20 +60,20 @@ class BattleLayer extends Layer {
         this.defenderTroops = [];
 
         if (this.ratio >= 3) {
-            this.attackerTroops = this.loadUnits(8, false);
-            this.defenderTroops = this.loadUnits(2, true);
+            this.attackerTroops = this.loadUnits(8, false, true);
+            this.defenderTroops = this.loadUnits(2, true, false);
         } else if (this.ratio >= 2 && this.ratio < 3) {
-            this.attackerTroops = this.loadUnits(7, false);
-            this.defenderTroops = this.loadUnits(3, true);
+            this.attackerTroops = this.loadUnits(7, false, true);
+            this.defenderTroops = this.loadUnits(3, true, false);
         } else if (this.ratio > 1 && this.ratio < 2) {
-            this.attackerTroops = this.loadUnits(6, false);
-            this.defenderTroops = this.loadUnits(4, true);
+            this.attackerTroops = this.loadUnits(6, false, true);
+            this.defenderTroops = this.loadUnits(4, true, false);
         } else if (this.ratio === 1) {
-            this.attackerTroops = this.loadUnits(5, false);
-            this.defenderTroops = this.loadUnits(5, true);
+            this.attackerTroops = this.loadUnits(5, false, true);
+            this.defenderTroops = this.loadUnits(5, true, false);
         } else if (this.ratio < 1) {
-            this.attackerTroops = this.loadUnits(4, false);
-            this.defenderTroops = this.loadUnits(6, true);
+            this.attackerTroops = this.loadUnits(4, false, true);
+            this.defenderTroops = this.loadUnits(6, true, false);
         }
     }
 
@@ -96,7 +96,7 @@ class BattleLayer extends Layer {
         });
 
         this.timeout--;
-        if (this.timeout === 33) {
+        if (this.timeout === 44) {
             this.startKilling();
         }
         if (this.timeout === 0) {

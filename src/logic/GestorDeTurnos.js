@@ -39,13 +39,15 @@ class GestorDeTurnos {
         this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Your turn");
         this.gestorDeEventos.randomEvents(this.jugadorActual);
 
-        // Turn Base
-        // Suma inicial del turno para unidades a colocar en el tablero
-        let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
-        this.unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
-        this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Select the province to place " + this.unitsToAdd + " units");
+        if (this.turnosCount >= this.playerOrder.length) { // en primera ronda no se colocan unidades
+            // Turn Base
+            // Suma inicial del turno para unidades a colocar en el tablero
+            let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
+            this.unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
+            this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Select the province to place " + this.unitsToAdd + " units");
 
-        console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + this.unitsToAdd);
+            console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + this.unitsToAdd);
+        }
 
         // Colocar las unidades en provincia aleatoria
         //let rdP = this.jugadorActual.conqueredTerritories[Math.floor(Math.random() * this.jugadorActual.getConqueredTerritoriesCount())];
