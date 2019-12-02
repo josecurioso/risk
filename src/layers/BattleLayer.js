@@ -1,11 +1,11 @@
 class BattleLayer extends Layer {
 
-    constructor(resultCode, climate, colorA, colorD) {
+    constructor(resultCode, climate, jugadorA, jugadorB) {
         super();
         this.resultCode = resultCode; // 1 attacker wins, 2 defender wins, 3 draw
         this.climate = climate;
-        this.colorA = colorA;
-        this.colorD = colorD;
+        this.jugadorA = jugadorA;
+        this.jugadorB = jugadorB;
         this.iniciar();
     }
 
@@ -82,7 +82,7 @@ class BattleLayer extends Layer {
         for (let i = 0; i < units; i++) {
             let x = !isLeft ? Math.floor(Math.random() * 260) + 20 : Math.floor(Math.random() * 260) + 320;
             let y = Math.floor(Math.random() * 280) + 20;
-            isAtt ? result.push(new Soldado(x, y, isLeft, this.colorA)) : result.push(new Soldado(x, y, isLeft, this.colorD));
+            isAtt ? result.push(new Soldado(x, y, isLeft, this.jugadorA)) : result.push(new Soldado(x, y, isLeft, this.jugadorB));
         }
         return result;
     }
