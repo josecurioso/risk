@@ -28,7 +28,7 @@ class Animacion {
     }
 
     actualizar() {
-        this.debug ? console.log("ACTUALIZACION NUEVA ("+this.ultimaActualizacion+")") : undefined;
+        this.debug ? console.log("ACTUALIZACION NUEVA (" + this.ultimaActualizacion + ")") : undefined;
         this.ultimaActualizacion++;
 
         if (this.ultimaActualizacion > this.velocidadRefresco) {
@@ -54,18 +54,17 @@ class Animacion {
         // actualizar el rectangulo (siguiente frame)
         this.rectanguloDibujo.x = this.frameActual * this.frameAncho;
 
-
         this.debug ? console.log("   INFORMACION") : undefined;
-        this.debug ? console.log("       rectanguloDibujo.x"+this.rectanguloDibujo.x) : undefined;
-        this.debug ? console.log("       rectanguloDibujo.y"+this.rectanguloDibujo.y) : undefined;
-        this.debug ? console.log("       rectanguloDibujo.ancho"+this.rectanguloDibujo.ancho) : undefined;
-        this.debug ? console.log("       rectanguloDibujo.alto"+this.rectanguloDibujo.alto) : undefined;
-        this.debug ? console.log("       modeloAncho"+this.modeloAncho) : undefined;
-        this.debug ? console.log("       modeloAlto"+this.modeloAlto) : undefined;
+        this.debug ? console.log("       rectanguloDibujo.x" + this.rectanguloDibujo.x) : undefined;
+        this.debug ? console.log("       rectanguloDibujo.y" + this.rectanguloDibujo.y) : undefined;
+        this.debug ? console.log("       rectanguloDibujo.ancho" + this.rectanguloDibujo.ancho) : undefined;
+        this.debug ? console.log("       rectanguloDibujo.alto" + this.rectanguloDibujo.alto) : undefined;
+        this.debug ? console.log("       modeloAncho" + this.modeloAncho) : undefined;
+        this.debug ? console.log("       modeloAlto" + this.modeloAlto) : undefined;
     }
 
     dibujar(x, y) {
-        this.debug ? console.log("   DIBUJANDO EN ("+x+", "+y+")") : undefined;
+        this.debug ? console.log("   DIBUJANDO EN (" + x + ", " + y + ")") : undefined;
         contexto.drawImage(
             this.imagen,
             this.rectanguloDibujo.x,

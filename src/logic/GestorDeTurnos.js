@@ -94,22 +94,22 @@ class GestorDeTurnos {
         this.gestorDeTextos.writeGameAction("Throw: Attk(" + throwA[0] + ", " + throwA[1] + ", " + throwA[2] + ") - Def(" + throwD[0] + ", " + throwD[1] + ")");
         this.gestorDeTextos.writeGameAction("Result: Attk(" + provinceA.code + ", -" + toSubstract[0] + "u) - Def(" + provinceB.code + ", -" + toSubstract[1] + "u)");
         let resultCode;
-        if(toSubstract[0] > toSubstract[1]) {
+        if (toSubstract[0] > toSubstract[1]) {
             resultCode = 2;
-        } else if(toSubstract[0] < toSubstract[1]) {
+        } else if (toSubstract[0] < toSubstract[1]) {
             resultCode = 1;
         } else {
             resultCode = 3;
         }
         // Resultado
         if (hasLost) {
-            battleLayer = new BattleLayer(resultCode, provinceB.climate, provinceA.owner.fillColor, provinceB.owner.fillColor);
+            battleLayer = new BattleLayer(resultCode, provinceB.climate, provinceA.owner, provinceB.owner);
             battleLayer.setBattleTroops(provinceA.units, provinceB.units);
             layer = battleLayer;
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "No more units to attack from " + provinceA.code);
             return 1;
         } else if (provinceB.units <= 0) {
-            battleLayer = new BattleLayer(resultCode, provinceB.climate, provinceA.owner.fillColor, provinceB.owner.fillColor);
+            battleLayer = new BattleLayer(resultCode, provinceB.climate, provinceA.owner, provinceB.owner);
             battleLayer.setBattleTroops(provinceA.units, provinceB.units);
             layer = battleLayer;
             this.gestorDeTextos.writeTurnAction(provinceA.owner, "You've conquered province " + provinceB.code);
@@ -119,7 +119,7 @@ class GestorDeTurnos {
             this.move(provinceA, provinceB, troopsToSend - toSubstract[0]);
             return 1;
         } else {
-            battleLayer = new BattleLayer(resultCode, provinceB.climate, provinceA.owner.fillColor, provinceB.owner.fillColor);
+            battleLayer = new BattleLayer(resultCode, provinceB.climate, provinceA.owner, provinceB.owner);
             battleLayer.setBattleTroops(provinceA.units, provinceB.units);
             layer = battleLayer;
             return 2;
