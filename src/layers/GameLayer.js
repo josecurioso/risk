@@ -50,7 +50,7 @@ class GameLayer extends Layer {
         }
 
         // Configurar gestores
-        this.gestorDeUnidades = new GestorDeUnidades(Object.keys(provincias).length, 3);
+        this.gestorDeUnidades = new GestorDeUnidades(continentes, provincias, 3);
 
         this.gestorDeTextos = new GestorDeTextos(this.summaryTextBase);
         let aux = "";

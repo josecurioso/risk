@@ -43,7 +43,7 @@ class GestorDeTurnos {
             // Turn Base
             // Suma inicial del turno para unidades a colocar en el tablero
             let playerTerritoriesCount = this.jugadorActual.getConqueredTerritoriesCount();
-            this.unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount);
+            this.unitsToAdd = this.gestorDeUnidades.calculateUnitsToBeAdded(playerTerritoriesCount) + this.gestorDeUnidades.calculateContinentBonusForPlayer(this.jugadorActual);
             this.gestorDeTextos.writeTurnAction(this.jugadorActual, "Select the province to place " + this.unitsToAdd + " units");
 
             console.log("P-TERR-COUNT: " + playerTerritoriesCount + " - U: " + this.unitsToAdd);
