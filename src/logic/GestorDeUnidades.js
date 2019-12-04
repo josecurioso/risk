@@ -10,20 +10,19 @@ class GestorDeUnidades {
     calculateContinentBonusForPlayer(player) {
         let playerP = player.conqueredTerritories;
         let continentsToAdd = [];
-        for (let key in this.continentes) {
-            if (this.continentes.hasOwnProperty(key)) {
-                let count = playerP.filter(p => p.tiles[0].continente === key);
-                let comp = this.continentes[key].provincias.length === count.length;
-                if (comp) {
+        for (let key in continentes) {
+            if (continentes.hasOwnProperty(key)) {
+                let count = playerP.filter(p => p.tiles[0].continente.code === key);
+                if (continentes[key].provincias.length === count.length) {
                     continentsToAdd.push(key);
                 }
             }
         }
         return continentsToAdd.reduce(function (accumulator, continent) {
-            for (let key in this.continentes) {
-                if (this.continentes.hasOwnProperty(key)) {
+            for (let key in continentes) {
+                if (continentes.hasOwnProperty(key)) {
                     if (key === continent) {
-                        return accumulator + this.continentes[key].bonus;
+                        return accumulator + continentes[key].bonus;
                     }
                 }
             }
